@@ -2,8 +2,8 @@ github.com/PuerkitoBio/goquery v1.8.1 h1:uQxhNlArOIdbrH1tr0UXwdVFgDcZDrZVdcpygAc
 github.com/PuerkitoBio/goquery v1.8.1/go.mod h1:Q8ICL1kNUJ2sXGoAhPGUdYDJvgQgHzJsnnd3H7Ho5jQ=
 github.com/TylerBrock/colorjson v0.0.0-20200706003622-8a50f05110d2 h1:ZBbLwSJqkHBuFDA6DUhhse0IGJ7T5bemHyNILUjvOq4=
 github.com/TylerBrock/colorjson v0.0.0-20200706003622-8a50f05110d2/go.mod h1:VSw57q4QFiWDbRnjdX8Cb3Ow0SFncRw+bA/ofY6Q83w=
-github.com/acedev0/GOGO/Gadgets v0.0.0-20230519165644-f328712eaa9a h1:SPYkRnGhCcNS4PUYamXcRYnmW6tJjo+3onn3O8Wi8X0=
-github.com/acedev0/GOGO/Gadgets v0.0.0-20230519165644-f328712eaa9a/go.mod h1:nMv3U0Re2oeVyaEvG1MWcqcBFc+LkUofobbZ50X1a4E=
+github.com/ace2z/GOGO/Gadgets v0.0.0-20230601032228-0f320eb46839 h1:gCHJRJ9QLP6Y7emfM2ocUG9vr902gseM21dBJUnhONk=
+github.com/ace2z/GOGO/Gadgets v0.0.0-20230601032228-0f320eb46839/go.mod h1:EFChithuFOvJNTy3QhFP9TmY0PkYCQMq4n2eb0AZ2gY=
 github.com/andybalholm/cascadia v1.3.1 h1:nhxRkql1kdYCc8Snf7D5/D3spOX+dBgjA6u8x004T2c=
 github.com/andybalholm/cascadia v1.3.1/go.mod h1:R4bJ1UQfqADjvDa4P6HZHLh/3OxWWEqc0Sk8XGwHqvA=
 github.com/atotto/clipboard v0.1.4 h1:EH0zSVneZPSuFR11BlR9YppQTVDbh5+16AmcJi4g1z4=

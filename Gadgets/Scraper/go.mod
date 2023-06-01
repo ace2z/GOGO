@@ -1,10 +1,10 @@
-module github.com/acedev0/GOGO/Gadgets/Scraper
+module github.com/ace2z/GOGO/Gadgets/Scraper
 
 go 1.20
 
 require (
 	github.com/PuerkitoBio/goquery v1.8.1
-	github.com/acedev0/GOGO/Gadgets v0.0.0-20230519165644-f328712eaa9a
+	github.com/ace2z/GOGO/Gadgets v0.0.0-20230601032228-0f320eb46839
 )
 
 require (
