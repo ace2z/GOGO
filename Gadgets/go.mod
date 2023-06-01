@@ -1,4 +1,4 @@
-module github.com/acedev0/GOGO/Gadgets
+module github.com/ace2z/GOGO/Gadgets
 
 go 1.20
 
