@@ -17,7 +17,7 @@ import (
     "github.com/aws/aws-sdk-go-v2/service/dynamodb/types"   
 
 
-    . "github.com/acedev0/GOGO/Gadgets"
+    . "github.com/ace2z/GOGO/Gadgets"
 
 )
 

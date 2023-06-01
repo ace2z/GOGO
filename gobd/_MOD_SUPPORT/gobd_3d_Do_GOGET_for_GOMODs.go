@@ -4,13 +4,13 @@ import (
 
 	. "local/_CORE"
 
-	. "github.com/acedev0/GOGO/Gadgets"
+	. "github.com/ace2z/GOGO/Gadgets"
 )
 
 /*
-	import . "github.com/acedev0/GOGO/Gadgets"
+	import . "github.com/ace2z/GOGO/Gadgets"
       or  
-  import Gadgets "github.com/acedev0/GOGO/Gadgets"
+  import Gadgets "github.com/ace2z/GOGO/Gadgets"
 
 */
 func RUN_GOGET_for_IMPORTS() {

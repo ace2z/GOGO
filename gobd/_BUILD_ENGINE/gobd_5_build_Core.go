@@ -10,7 +10,7 @@ import (
 	. "local/_CORE"
 	. "local/_MOD_SUPPORT"
 
-	. "github.com/acedev0/GOGO/Gadgets"
+	. "github.com/ace2z/GOGO/Gadgets"
 )
 
 

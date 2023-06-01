@@ -4,7 +4,7 @@ import (
 	"strings"
 	"os"
 
-	. "github.com/acedev0/GOGO/Gadgets"
+	. "github.com/ace2z/GOGO/Gadgets"
 )
 
 // Useful Globals

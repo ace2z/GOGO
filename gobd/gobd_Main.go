@@ -10,9 +10,9 @@ import (
     //. "local/_STOCKS"
     //. "local/_ECONOMICS"
 
-    . "github.com/acedev0/GOGO/Gadgets"
+    . "github.com/ace2z/GOGO/Gadgets"
 
-    //. "github.com/acedev0/GOGO/Gadgets/EMBED_Ops"
+    //. "github.com/ace2z/GOGO/Gadgets/EMBED_Ops"
 )
 var VERSION_NUM = ""
 

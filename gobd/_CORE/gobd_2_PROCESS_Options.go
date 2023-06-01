@@ -5,7 +5,7 @@ import (
 	"os"
 	"path/filepath"
 
-	. "github.com/acedev0/GOGO/Gadgets"
+	. "github.com/ace2z/GOGO/Gadgets"
 )
 
 var ARCH=""			// can be: arm64, or amd64

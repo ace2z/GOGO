@@ -19,8 +19,8 @@ import (
 		//"math/rand"
 
 	// = = = = = CUSTOM Libraries
-		. "github.com/acedev0/GOGO/Gadgets"
-		//. "github.com/acedev0/GOGO/Gadgets/StringOPS"
+		. "github.com/ace2z/GOGO/Gadgets"
+		//. "github.com/ace2z/GOGO/Gadgets/StringOPS"
 
 
 	// = = = = = 3rd Party Libraries

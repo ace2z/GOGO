@@ -32,7 +32,7 @@ import (
 		"encoding/json"
 
 	//2. = = = CUSTOM Libraries
-		. "github.com/acedev0/GOGO/Gadgets"
+		. "github.com/ace2z/GOGO/Gadgets"
 
 	//3. = = = 3rd Party Libraries	
 		"github.com/PuerkitoBio/goquery"

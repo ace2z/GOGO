@@ -6,7 +6,7 @@ import (
 	//"io/ioutil"
 	. "local/_CORE"
 
-	. "github.com/acedev0/GOGO/Gadgets"
+	. "github.com/ace2z/GOGO/Gadgets"
 )
 
 func QUIK_COMMIT() {

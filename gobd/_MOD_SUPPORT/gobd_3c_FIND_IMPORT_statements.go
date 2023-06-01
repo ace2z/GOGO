@@ -9,8 +9,8 @@ import (
 
 	. "local/_CORE"
 
-	. "github.com/acedev0/GOGO/Gadgets"
-	//. "github.com/acedev0/GOGO_Gadgets/FileOPS"
+	. "github.com/ace2z/GOGO/Gadgets"
+	//. "github.com/ace2z/GOGO_Gadgets/FileOPS"
 )
 
 
@@ -18,9 +18,9 @@ var PACKAGE_LIST []string
 
 
 /*
-	import . "github.com/acedev0/GOGO/Gadgets"
+	import . "github.com/ace2z/GOGO/Gadgets"
       or  
-  import Gadgets "github.com/acedev0/GOGO/Gadgets"
+  import Gadgets "github.com/ace2z/GOGO/Gadgets"
 
 */
 func FIND_all_GO_Files() []string {
