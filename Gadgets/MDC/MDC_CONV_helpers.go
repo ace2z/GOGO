@@ -100,6 +100,7 @@ func vsplit_delims(r rune) bool {
     return r == ' ' || r == ','
 }
 // checks for a verbose Date that looks like this: June 1, 2023
+// May 28, 2023
 func check_for_VERBOSE_DATE(input string) (bool, string, string, string, string, string, string) {
 
 	var sMon, sDay, sYear string
@@ -110,6 +111,8 @@ func check_for_VERBOSE_DATE(input string) (bool, string, string, string, string,
 	sd := strings.FieldsFunc(input, vsplit_delims)
 	mon_string, _ := GET_MONTH_NUM(input)
 
+	SHOW_STRUCT(sd)
+	PressAny()
 	// We have a verbose date! lets splitit out
 	if mon_string != "" && len(sd) >= 1 {
 

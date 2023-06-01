@@ -2,7 +2,7 @@ module github.com/ace2z/GOGO/Gadgets/MDC
 
 go 1.20
 
-require github.com/ace2z/GOGO/Gadgets v0.0.0-20230601073401-6ba65e461325
+require github.com/ace2z/GOGO/Gadgets v0.0.0-20230601142811-99c3a7de83da
 
 require (
 	github.com/TylerBrock/colorjson v0.0.0-20200706003622-8a50f05110d2 // indirect
