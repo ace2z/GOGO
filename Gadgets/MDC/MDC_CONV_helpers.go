@@ -97,9 +97,9 @@ func FIX_if_needed(input string) string {
 
 
 func vsplit_delims(r rune) bool {
-    return r == ' ' || r == ','
+    return r == '_' || r == ','
 }
-// checks for a verbose Date that looks like this: June 1, 2023
+// checks for a verbose Date that looks like this: June_1,_2023
 // May 28, 2023
 func check_for_VERBOSE_DATE(input string) (bool, string, string, string, string, string, string) {
 
