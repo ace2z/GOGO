@@ -1,5 +1,4 @@
 /*   GOGO_Gadgets  - Useful multi-purpose GO functions to make GO DEV easier
-	 by TerryCowboy
 
 ------------------------------------------------------------------------------------
 NOTE: For Functions or Variables to be globally availble. The MUST start with a capital letter. (This is a GO Thing)
@@ -7,7 +6,6 @@ NOTE: For Functions or Variables to be globally availble. The MUST start with a 
 	Nov 24, 2022	- MAJOR CLEANUP AND RIVSIONS 
 	
 	Oct 22, 2022	- Cleanup and revisions
-	Apr 22, 2022	- ... check out GET_FUNC_PARAM_DYNAMIC!!!
 	Aug 27, 2021	- Ripped out a bunch of stuff to make this smaller. They are 
 	Jun 05, 2014    - Initial Rollout
 

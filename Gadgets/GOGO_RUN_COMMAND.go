@@ -1,10 +1,3 @@
-/*   GOGO_Gadgets  - Useful multi-purpose GO functions to make GO DEV easier
-	 by TerryCowboy
-
-	 MISC Functions that i sometimes use.. but shouldnt be in the main file
-
-*/
-
 package CUSTOM_GO_MODULE
 
 import (
