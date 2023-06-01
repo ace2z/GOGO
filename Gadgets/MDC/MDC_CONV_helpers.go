@@ -21,7 +21,7 @@ import (
 
 	// = = = = = CUSTOM Libraries
 
-	//. "github.com/ace2z/GOGO/Gadgets"
+	. "github.com/ace2z/GOGO/Gadgets"
 
 
 	// = = = = = 3rd Party Libraries
@@ -74,6 +74,28 @@ func get_TZ_OBJECT(TZ_to_use string) (bool, *time.Location) {
 	return is_valid_input, TIMEZONE_OBJ
 }
 
+
+func FIX_if_needed(input string) string {
+
+	// error handling..we only want to FIX the single digits
+	if len(input) != 1 {
+		return input
+	}
+	tmp_num := STRING_to_INT(input)
+
+	if tmp_num < 10 {
+
+		fixed := "0" + input
+		return fixed
+	}
+
+
+	// otherwise return
+	return input
+}
+
+
+
 func conv_SPLIT_delims(r rune) bool {
     return r == '@' || r == ':' || r == '_' || r == '-' || r == '/'
 }
@@ -95,18 +117,31 @@ func have_DEFAULT_FORMAT(inputDate string) (bool, map[string]interface{}) {
 	sMin := "0"
 	sSec := "0"
 
+
+	// This will fix the parts of the date... if we have 5 .. we get 05 in return
+	part_a := sd[0]
+	part_b := sd[1]
+	part_c := sd[2]
+
 	//2. Check for british format first
-	if len(sd[0]) == 4 && len(sd[1]) == 2 {
+	if len(part_a) == 4 && ( len(part_b) == 2 || len(part_b) == 1 ) {
 
-		sYear = strings.TrimSpace(sd[0])
-		sMon = strings.TrimSpace(sd[1])
-		sDay = strings.TrimSpace(sd[2])		
+		sYear = strings.TrimSpace(part_a)
 
-	//3. else check for normal xx/yy/zzz  format
-	} else if len(sd[0]) == 2 && len(sd[1]) == 2 && len(sd[2]) == 4 {
-		sMon = strings.TrimSpace(sd[0])
-		sDay = strings.TrimSpace(sd[1])
-		sYear = strings.TrimSpace(sd[2])
+		sMon = FIX_if_needed(part_b)
+		sDay = FIX_if_needed(part_c)
+
+	//3. else check for normal xx/yy/zzzz  format
+	} else if ( len(part_a) == 2 || len(part_a) == 1)  && (len(part_b) == 2 || len(part_b) == 1) && ( len(part_c) == 4 || len(part_c) == 2 ) {
+		sMon = FIX_if_needed(part_a)
+		sDay = FIX_if_needed(part_b)
+		sYear = part_c
+
+		// If they passed a 2 digit year, fix this by prefixing it with 20
+		if len(part_c) == 2 {
+			sYear = "20" + part_c
+		}
+
 	} else {
 		return false, resMAP
 	}
@@ -117,7 +152,7 @@ func have_DEFAULT_FORMAT(inputDate string) (bool, map[string]interface{}) {
 		sHour = strings.TrimSpace(sd[3])
 		sMin = strings.TrimSpace(sd[4])
 
-		//4b.. If seconds was appended.. lets add those two
+		//4b.. If seconds was appended.. lets add those as well
 		if strings.Count(inputDate, ":") == 2 {
 			sSec = strings.TrimSpace(sd[5])
 		}
