@@ -1,8 +1,8 @@
-module github.com/acedev0/GOGO/Gadgets/EMBED_Ops
+module github.com/ace2z/GOGO/Gadgets/EMBED_Ops
 
 go 1.20
 
-require github.com/acedev0/GOGO/Gadgets v0.0.0-20230517174415-a386f021731a
+require github.com/ace2z/GOGO/Gadgets v0.0.0-20230601032124-795f23b5803d
 
 require (
 	github.com/TylerBrock/colorjson v0.0.0-20200706003622-8a50f05110d2 // indirect
