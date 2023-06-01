@@ -245,18 +245,12 @@ EXTRA_ARGS ...interface{}) {
 	var have_alt, alt_val = GET_EXTRA_ARG(0,  EXTRA_ARGS...)
 	var verbose, _  = GET_EXTRA_ARG("verbose", EXTRA_ARGS...)
 */
-func SAVE_Struct_2_DISK(dest_file string, v interface{}, EXTRA_ARGS ...interface{}) error {
+func SAVE_Struct_2_DISK(dest_file string, v interface{}) error {
 	// var lock sync.Mutex
 	// lock.Lock()
 	// defer lock.Unlock()	
+	var verbose = true
 
-	var have_verbose = GET_EXTRA_ARG("verbose", EXTRA_ARGS...).(bool)
-
-	var verbose = false
-
-	if have_verbose {
-		verbose = true
-	}
 
 	Y.Print(" SAVING Struct to file: ")
 	G.Println(dest_file)
