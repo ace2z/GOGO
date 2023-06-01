@@ -40,7 +40,7 @@ func CHECK_for_SUPPORTED_DATE_INPUT (inputDate string) (bool, map[string]interfa
 
 	// add new formats here as needed
 	is_EPOCH, emap := have_EPOCH_FORMAT(inputDate)
-	is_DEFAULT, dmap := have_DEFAULT_FORMAT(inputDate)	
+	is_DEFAULT, dmap := have_SUPPORTED_DEFAULT_FORMAT(inputDate)	
 
 	if is_EPOCH          { final_map = emap 		
 	} else if is_DEFAULT { final_map = dmap

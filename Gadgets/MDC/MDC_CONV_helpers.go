@@ -96,20 +96,25 @@ func FIX_if_needed(input string) string {
 
 
 
+func vsplit_delims(r rune) bool {
+    return r == ' ' || r == ','
+}
+// checks for a verbose Date that looks like this: June 1, 2023
+func check_for_VERBOSE_DATE(input string) (bool, string, string, string, string, string, string) {
+
+	sd := strings.FieldsFunc(inputDate, vsplit_delims)
+	
+	GET_MONTH
+	if have_TEXT_MONTH(
+}
+
 func conv_SPLIT_delims(r rune) bool {
     return r == '@' || r == ':' || r == '_' || r == '-' || r == '/'
 }
-func have_DEFAULT_FORMAT(inputDate string) (bool, map[string]interface{}) {
+func have_SUPPORTED_DEFAULT_FORMAT(inputDate string) (bool, map[string]interface{}) {
 
 	var resMAP map[string]interface{}
 	
-	//1. Do a split.. 
-	sd := strings.FieldsFunc(inputDate, conv_SPLIT_delims)	
-	//error handling check to see if we have enough items
-	if len(sd) < 3 {
-		return false, resMAP
-	}
-
 	sMon := ""
 	sDay := ""
 	sYear := ""
@@ -118,43 +123,59 @@ func have_DEFAULT_FORMAT(inputDate string) (bool, map[string]interface{}) {
 	sSec := "0"
 
 
-	// This will fix the parts of the date... if we have 5 .. we get 05 in return
-	part_a := sd[0]
-	part_b := sd[1]
-	part_c := sd[2]
 
-	//2. Check for british format first
-	if len(part_a) == 4 && ( len(part_b) == 2 || len(part_b) == 1 ) {
+	// First check to see if we have a date in verbose format: June 1, 2023
+	is_VERBOSE := false
+	is_VERBOSE, sMon, sDay, sYear, sHour, sMin, sSec  = check_for_VERBOSE_DATE(inputDate)
 
-		sYear = strings.TrimSpace(part_a)
+	//1. If it is NOT verbose...and is a MM/DD/YYYY   (or YYYY/MM/DD) format.. proceed with split
+	if is_VERBOSE == false {
 
-		sMon = FIX_if_needed(part_b)
-		sDay = FIX_if_needed(part_c)
-
-	//3. else check for normal xx/yy/zzzz  format
-	} else if ( len(part_a) == 2 || len(part_a) == 1)  && (len(part_b) == 2 || len(part_b) == 1) && ( len(part_c) == 4 || len(part_c) == 2 ) {
-		sMon = FIX_if_needed(part_a)
-		sDay = FIX_if_needed(part_b)
-		sYear = part_c
-
-		// If they passed a 2 digit year, fix this by prefixing it with 20
-		if len(part_c) == 2 {
-			sYear = "20" + part_c
+		//1. Do a split.. 
+		sd := strings.FieldsFunc(inputDate, conv_SPLIT_delims)	
+		//error handling check to see if we have enough items
+		if len(sd) < 3 {
+			return false, resMAP
 		}
 
-	} else {
-		return false, resMAP
-	}
+		// This will fix the parts of the date... if we have 5 .. we get 05 in return
+		part_a := sd[0]
+		part_b := sd[1]
+		part_c := sd[2]
+		
+		//2. Check for british format first
+		if len(part_a) == 4 && ( len(part_b) == 2 || len(part_b) == 1 ) {
 
-	
-	//4. Now determine if we have a TIME appended.. via the :
-	if strings.Contains(inputDate, ":") {
-		sHour = strings.TrimSpace(sd[3])
-		sMin = strings.TrimSpace(sd[4])
+			sYear = strings.TrimSpace(part_a)
 
-		//4b.. If seconds was appended.. lets add those as well
-		if strings.Count(inputDate, ":") == 2 {
-			sSec = strings.TrimSpace(sd[5])
+			sMon = FIX_if_needed(part_b)
+			sDay = FIX_if_needed(part_c)
+
+		//3. else check for normal xx/yy/zzzz  format
+		} else if ( len(part_a) == 2 || len(part_a) == 1)  && (len(part_b) == 2 || len(part_b) == 1) && ( len(part_c) == 4 || len(part_c) == 2 ) {
+			sMon = FIX_if_needed(part_a)
+			sDay = FIX_if_needed(part_b)
+			sYear = part_c
+
+			// If they passed a 2 digit year, fix this by prefixing it with 20
+			if len(part_c) == 2 {
+				sYear = "20" + part_c
+			}
+
+		} else {
+			return false, resMAP
+		}
+
+		
+		//4. Now determine if we have a TIME appended.. via the :
+		if strings.Contains(inputDate, ":") {
+			sHour = strings.TrimSpace(sd[3])
+			sMin = strings.TrimSpace(sd[4])
+
+			//4b.. If seconds was appended.. lets add those as well
+			if strings.Count(inputDate, ":") == 2 {
+				sSec = strings.TrimSpace(sd[5])
+			}
 		}
 	}
 
