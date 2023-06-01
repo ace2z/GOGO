@@ -1,0 +1,18 @@
+module github.com/acedev0/GOGO/Gadgets/APIce
+
+go 1.20
+
+require github.com/acedev0/GOGO/Gadgets v0.0.0-20230529065010-b5a354f28558
+
+require (
+	github.com/TylerBrock/colorjson v0.0.0-20200706003622-8a50f05110d2 // indirect
+	github.com/atotto/clipboard v0.1.4 // indirect
+	github.com/briandowns/spinner v1.23.0 // indirect
+	github.com/dustin/go-humanize v1.0.1 // indirect
+	github.com/fatih/color v1.15.0 // indirect
+	github.com/google/uuid v1.3.0 // indirect
+	github.com/mattn/go-colorable v0.1.13 // indirect
+	github.com/mattn/go-isatty v0.0.17 // indirect
+	golang.org/x/sys v0.6.0 // indirect
+	golang.org/x/term v0.1.0 // indirect
+)

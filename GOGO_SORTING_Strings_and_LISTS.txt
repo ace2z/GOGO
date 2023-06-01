@@ -1,0 +1,68 @@
+
+/*
+	SORTING Strings and Lists.. Cheat Sheet!
+
+	var NAMES []string
+
+	NAMES = append(NAMES, "Jenny")
+	NAMES = append(NAMES, "Alec")
+	NAMES = append(NAMES, "Kendal")
+	NAMES = append(NAMES, "Carter")
+
+	//4. To Sort the names in NAMES alphabetically, 
+	sort.Strings(NAMES)
+
+
+	// For sorting Structs Alphabetically 
+	type STOCK_OBJ struct {
+
+		SYMBOL		string
+		Date		string
+		Price		float64
+		TIME_OBJ	time.Time
+	}
+
+	var STOCKS []STOCK_OBJ
+
+	var S STOCK_OBJ
+
+	S.SYMBOL = "NFLX"
+	S.Date	= "12/05/2005"
+	S.Price = 353.24
+	STOCKS = append(STOCKS, S)
+
+	S.SYMBOL = "AAPL"
+	S.Date	= "10/10/2010"
+	S.Price = 210.24
+	STOCKS = append(STOCKS, S)
+
+	S.SYMBOL = "ZNFL"
+	S.Date	= "11/11/2002"
+	S.Price = 53.24
+	STOCKS = append(STOCKS, S)
+
+	S.SYMBOL = "BAC"
+	S.Date	= "01/05/2003"
+	S.Price 98.24
+	STOCKS = append(STOCKS, S)
+
+	// At this point the list is unordered (items are entered in the order shown above)
+	// To Sort ALPHABETICALLY do this: 
+	// (if you want to sort in DESCENDING/ REVERSE alpha order, use > (greater than)) 
+	
+	//  (Note, the same applies to INTS and Floats)
+
+    sort.Slice(STOCKS, func(i, j int) bool {
+        return STOCKS[i].SYMBOL < STOCKS[j].SYMBOL
+    })
+
+
+	// Finally to sort the above slice /struct by way of the time.Time TIME_OBJ:
+	
+	sort.Slice(STOCKS, func(i, j int) bool { return (STOCKS)[i].TIME_OBJ.Before((STOCKS)[j].TIME_OBJ)})	
+
+	(Will sort the slice by order of time/date the record was entered in say mongo)
+
+	
+	 
+*/
