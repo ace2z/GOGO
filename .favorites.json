@@ -1,0 +1,18 @@
+[
+    {
+        "type": "File",
+        "name": "/opt/DEVP/VUE_Toolbox/BETA_HPWEB/public/demo/data/_HORSE_DATA.json",
+        "parent_id": null,
+        "workspaceRoot": "/opt/DEVP/VUE_Toolbox",
+        "workspacePath": "BETA_HPWEB/public/demo/data/_HORSE_DATA.json",
+        "id": "m46Fck0CLzHvw2PA"
+    },
+    {
+        "type": "File",
+        "name": "/opt/DEVP/VUE_Toolbox/BETA_HPWEB/src/service/FileService.js",
+        "parent_id": null,
+        "workspaceRoot": "/opt/DEVP/VUE_Toolbox",
+        "workspacePath": "BETA_HPWEB/src/service/FileService.js",
+        "id": "oyWIvrXkz07MPB9b"
+    }
+]
