@@ -22,5 +22,13 @@
         "workspaceRoot": "/opt/DEVP/VUE_Toolbox",
         "workspacePath": "BETA_HPWEB/public/demo/data/file-management.json",
         "id": "RXeJ3tarzTYFOiBP"
+    },
+    {
+        "type": "File",
+        "name": "/opt/DEVP/VUE_Toolbox/BETA_HPWEB/src/views/dashboards/Dashboard.vue",
+        "parent_id": null,
+        "workspaceRoot": "/opt/DEVP/VUE_Toolbox",
+        "workspacePath": "BETA_HPWEB/src/views/dashboards/Dashboard.vue",
+        "id": "tNdXRfYEvgJPwl2q"
     }
 ]
