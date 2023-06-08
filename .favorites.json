@@ -14,5 +14,13 @@
         "workspaceRoot": "/opt/DEVP/VUE_Toolbox",
         "workspacePath": "BETA_HPWEB/src/service/FileService.js",
         "id": "oyWIvrXkz07MPB9b"
+    },
+    {
+        "type": "File",
+        "name": "/opt/DEVP/VUE_Toolbox/BETA_HPWEB/public/demo/data/file-management.json",
+        "parent_id": null,
+        "workspaceRoot": "/opt/DEVP/VUE_Toolbox",
+        "workspacePath": "BETA_HPWEB/public/demo/data/file-management.json",
+        "id": "RXeJ3tarzTYFOiBP"
     }
 ]
