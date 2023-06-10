@@ -94,7 +94,7 @@ func MONGO_INIT(mongo_host string) {
     }
     C.Println(" Ping Works!")
 
-    MONGO_SHOW_DATABASES()
+//    MONGO_SHOW_DATABASES()
 }
 
 /* BROKEN not yet working
