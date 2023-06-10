@@ -220,5 +220,6 @@ func CREATE_DATABASE(dbname string, collname string) {
 
     // Purge the index array  .. ALWAYS DO THIS!!!
     TEMP_INDEXES = []string{}
-    MONGO_SHOW_DATABASES()
+    
+    
 }
