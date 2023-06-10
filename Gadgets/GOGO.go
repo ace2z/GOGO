@@ -185,7 +185,7 @@ func GET_CURRENT_TIME(EXTRA_ARGS ...string) (string, time.Time) {
 
 	//1. Default ot the local machines time zone
 	dateOBJ := time.Now()
-	result, _ := SHOW_PRETTY_DATE(dateOBJ, "basic")
+	result, _ := SHOW_PRETTY_DATE(dateOBJ, "basic", "utc")
 
 	return result, dateOBJ
 
