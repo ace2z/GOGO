@@ -22,7 +22,7 @@ NOTE: For Functions or Variables to be globally availble. The MUST start with a 
 
 */
 
-package CUSTOM_GOMOD
+package CUSTOM_GO_MODULE
 
 import (
 
