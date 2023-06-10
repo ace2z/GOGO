@@ -44,13 +44,6 @@ import (
 	- - - -
 */
 
-var OSTYPE=""
-
-var CURRENT_OS = ""	
-var CURRENT_ARCH = ""
-
-var GOOS_VALUE = "" 		// Holds the current OS as reported by runtime.GOOS
-
 var PROG_START_TIME string
 var PROG_START_TIMEOBJ time.Time
 
@@ -294,30 +287,75 @@ func Sleep(seconds int, ALL_PARAMS ...bool) {
 
 
 
+// We need to determine what the CURRENT running platform is
+var ON_LINUX = false
+var ON_WINDOWS = false
+var ON_MAC = false
+var ON_ARM = false
+var USING_ARM = false
+var CURRENT_OS = ""
+var CURRENT_ARCH = ""
+func DETERMINE_Current_OS_and_PLATFORM() {
+
+	// First lets run uname. MAC and Linux always have this command
+	// so if it comes back as BLANK.. we know we are on windows
+	output, _ := RUN_COMMAND("uname -a")
+	res_out := strings.ToLower(output)
+
+	if strings.Contains(res_out, "darwin") {
+		ON_MAC = true
+		CURRENT_OS = "MAC"
+	} else 	if strings.Contains(res_out, "linux") {
+		ON_LINUX = true
+		CURRENT_OS = "LINUX"
+
+	// Otherwise.. this is WINDOWS!!
+	} else {
+		ON_WINDOWS = true
+		CURRENT_OS = "Windows"
+	}
+
+	// determine platform.. arm or amd
+	CURRENT_ARCH = "Intel/AMD"
+	if strings.Contains(res_out, "aarch64") || strings.Contains(res_out, "arm64") {
+		ON_ARM = true
+		USING_ARM = true
+		CURRENT_ARCH = "ARM"
+	}
+}
+
+
 
 // This gets the platform we are running on (mac, linux, windows)
-func GET_CURRENT_OS_INFO() {
+func GET_BINARY_BUILT_FOR() (string, string) {
+	OSTYPE := ""
+	ARCH_TYPE := ""
 
 	if runtime.GOOS == "linux" {
-		OSTYPE="linux"
+		OSTYPE="LINUX"
 
 	//2. Otherwise see if this is MAC
 	} else if runtime.GOOS == "darwin" {
-		OSTYPE="mac"
+		OSTYPE="MAC"
 
 	//3. otherwise.. its windows.. it wins by default!!	
 	} else if runtime.GOOS == "windows" {
-		OSTYPE="windows"
+		OSTYPE="Windows"
 
 	//4. If we get this far, means we have some weird unrecognizable OS:
 	} else {
 		OSTYPE="- - UNKNOWN OS - -"
 	}
 
-	//5. Another courtesy Alias
-	CURRENT_OS = OSTYPE
-	CURRENT_ARCH = runtime.GOARCH
-	GOOS_VALUE = runtime.GOOS
+	if strings.Contains(runtime.GOARCH, "amd64") {
+		ARCH_TYPE = "Intel/AMD"
+
+		// Otherwise this was built for ARM
+	} else {
+		ARCH_TYPE = "ARM"
+	}
+
+	return OSTYPE, ARCH_TYPE
 
 } //end of getOsType
 
@@ -410,31 +448,27 @@ func MASTER_INIT(PROGNAME string, VERSION string, ALL_PARAMS ...string) {
 	rand.Seed(time.Now().UTC().UnixNano())	
 
 	//3b. And get current OS Data
-	GET_CURRENT_OS_INFO()
+	DETERMINE_Current_OS_and_PLATFORM()
+	build_OS, build_ARCH := GET_BINARY_BUILT_FOR()
 
 	//4. Setup the prog start time globals
 	PROG_START_TIME, PROG_START_TIMEOBJ = GET_CURRENT_TIME()
 	GLOBAL_CURR_DATE = PROG_START_TIME
 
 
-	// Cosmetic beut easier to read
-	clower := strings.ToLower(CURRENT_ARCH)
-	ARCH_TEXT := CURRENT_ARCH
-	if strings.Contains(clower, "arm") {
-		ARCH_TEXT = "ARM"
-	}
-
 	if verbose {
 	
 
-		if VERSION_NUM != "" {
-			SHOW_BOX(PROGNAME, "|cyan|Ver:", "|green|" + VERSION_NUM,  "|cyan|Running On: " + CURRENT_OS + "," + ARCH_TEXT)	 
+		if VERSION_NUM == "" {
+			SHOW_BOX(PROGNAME, "|cyan|Current OS: " + CURRENT_OS + "," + CURRENT_ARCH)
+			
 		} else {
-			SHOW_BOX(PROGNAME, "|cyan|Running On: " + CURRENT_OS + "," + ARCH_TEXT)
+			SHOW_BOX(PROGNAME, "|cyan|Ver:", "|green|" + VERSION_NUM,  "|cyan|Current OS: " + CURRENT_OS + "," + CURRENT_ARCH)	 
 		}
+
 	} else {
 		if SHOW_ARCH && VERSION_NUM != "" {
-			SHOW_BOX(PROGNAME, "|green|ver: " + VERSION_NUM, "|bluewhite|" + ARCH_TEXT + " / " + CURRENT_OS)
+			SHOW_BOX(PROGNAME, "|green|ver: " + VERSION_NUM, "|bluewhite| Current OS: " + CURRENT_OS + " / " + CURRENT_ARCH + " (Built For: " + build_OS + ", " + build_ARCH + ") ")
 		
 		} else if VERSION_NUM != "" {
 			SHOW_BOX(PROGNAME, "|bluewhite|ver: " + VERSION_NUM)
