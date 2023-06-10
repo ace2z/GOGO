@@ -184,8 +184,8 @@ func MAKE_Sure_Running_As_ROOT() {
 func GET_CURRENT_TIME(EXTRA_ARGS ...string) (string, time.Time) {
 
 	//1. Default ot the local machines time zone
-	dateOBJ := time.Now()
-	result, _ := SHOW_PRETTY_DATE(dateOBJ, "basic", "utc")
+	dateOBJ := time.Now().UTC()
+	result, _ := SHOW_PRETTY_DATE(dateOBJ, "basic")
 
 	return result, dateOBJ
 
