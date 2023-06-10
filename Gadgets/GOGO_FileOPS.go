@@ -49,31 +49,6 @@ func GET_FILE_MD5(filePath string) (string, error) {
 }
 
 
-// Determines if a file is a sym link or not
-func IS_FILE_LINK(filename string) (bool, string) {
-
-	FINFO, err := os.Lstat(filename)
-	if err != nil {
-		R.Println("IS_FILE_LINK: ", err)
-		return false, ""
-	}
-
-	//2b. Detect if this is a symlink
-	if FINFO.Mode()&os.ModeSymlink != 0 {
-		originFile, err43 := os.Readlink(filename)
-		if err43 != nil {
-			R.Println(" IS_FILE_LINK Detect SymLink err: ", err43)
-			return false, ""
-		}
-
-		// Otherwise we have asymlink!
-		// Return true and the SOURCE the file points to
-
-		return true, originFile
-	}	
-
-	return false, ""
-}
 
 func TOUCH_FILE(filename string) {
 	currentTime := time.Now().Local()
@@ -87,20 +62,103 @@ func makeRound(num float64) int {
 	return int(num + math.Copysign(0.5, num))
 }
 
-func IS_DIR(filename string) bool {
+
+
+
+/*
+	= = = = =
+	= = = = =  Some useful 'does exist' helper functions
+	= = = = =
+*/
+
+// Determines if a file is a sym link or not
+func IS_FILE_LINK(filename string) bool {
 
 	FINFO, err := os.Lstat(filename)
 	if err != nil {
-		R.Println("IS_DIR: ", err)
+		R.Println("IS_FILE_LINK: ", err)
 		return false
 	}
 
-	if FINFO.IsDir() {
+	//2b. Detect if this is a symlink
+	if FINFO.Mode()&os.ModeSymlink != 0 {
+		_, err43 := os.Readlink(filename)
+		if err43 != nil {
+			R.Println(" IS_FILE_LINK Detect SymLink err: ", err43)
+			return false
+		}
+
+		// Otherwise we have asymlink!
+		// Return true and the SOURCE the file points to
+
 		return true
-	}
+	}	
 
 	return false
 }
+func HAVE_LINK(input string) bool {
+	return IS_FILE_LINK(input)
+}
+func IS_LINK(input string) bool {
+	return IS_FILE_LINK(input)
+}
+
+// Also gets the LINK_ORIGIN
+func LINK_ORIGIN(filename string) string {
+	if HAVE_LINK(filename) {
+
+		FINFO, err := os.Lstat(filename)
+		if err != nil {
+			R.Println("LINK_ORIGIN err: ", err)
+			return ""
+		}
+	
+		//2b. Detect if this is a symlink
+		if FINFO.Mode()&os.ModeSymlink != 0 {
+			origin_SOURCE, err43 := os.Readlink(filename)
+			if err43 != nil {
+				R.Println(" LINK_ORIGIN err: ", err43)
+				return ""
+			}
+	
+			// Otherwise we have a symlink so return the ORIGIN  of the link
+
+			return origin_SOURCE
+		}			
+
+	} else {
+		Y.Println(" WARNING: .. this is NOT a SYMLINK!!")		
+	}
+
+	return filename
+}
+
+
+
+func HAVE_DIR(input string) bool {
+	file, err := os.Open(input)
+	if err != nil {
+		Y.Println("Warning: ", err)
+		return false
+	}
+	defer file.Close()
+
+	fileInfo, err := file.Stat()
+	if err != nil {
+		Y.Println("Warning: ", err)
+	}
+	
+	if fileInfo.IsDir() {
+		return true
+	}
+	
+	return false
+}
+func IS_DIR(input string) bool {
+	return HAVE_DIR(input)
+}
+
+
 // This checks to see if a file or directory exists
 func FILE_EXISTS(path string) bool {
 	_, err := os.Stat(path)
