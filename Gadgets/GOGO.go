@@ -316,7 +316,7 @@ func DETERMINE_Current_OS_and_PLATFORM() {
 	}
 
 	// determine platform.. arm or amd
-	CURRENT_ARCH = "Intel/AMD"
+	CURRENT_ARCH = "Intel-AMD"
 	if strings.Contains(res_out, "aarch64") || strings.Contains(res_out, "arm64") {
 		ON_ARM = true
 		USING_ARM = true
@@ -348,7 +348,7 @@ func GET_BINARY_BUILT_FOR() (string, string) {
 	}
 
 	if strings.Contains(runtime.GOARCH, "amd64") {
-		ARCH_TYPE = "Intel/AMD"
+		ARCH_TYPE = "Intel-AMD"
 
 		// Otherwise this was built for ARM
 	} else {
@@ -463,12 +463,12 @@ func MASTER_INIT(PROGNAME string, VERSION string, ALL_PARAMS ...string) {
 			SHOW_BOX(PROGNAME, "|cyan|Current OS: " + CURRENT_OS + "," + CURRENT_ARCH)
 			
 		} else {
-			SHOW_BOX(PROGNAME, "|cyan|Ver:", "|green|" + VERSION_NUM,  "|cyan|Current OS: " + CURRENT_OS + "," + CURRENT_ARCH)	 
+			SHOW_BOX(PROGNAME, "|green|ver: " + VERSION_NUM, "|bluewhite| Current OS: " + CURRENT_OS + "," + CURRENT_ARCH ," |redyellow| ( Built For: " + build_OS + "," + build_ARCH + " ) ")
 		}
 
 	} else {
 		if SHOW_ARCH && VERSION_NUM != "" {
-			SHOW_BOX(PROGNAME, "|green|ver: " + VERSION_NUM, "|bluewhite| Current OS: " + CURRENT_OS + " / " + CURRENT_ARCH ," |bluewhite| ( Built For: " + build_OS + ", " + build_ARCH + ") ")
+			SHOW_BOX(PROGNAME, "|green|ver: " + VERSION_NUM, "|bluewhite| Current OS: " + CURRENT_OS + "," + CURRENT_ARCH ," |redyellow| ( Built For: " + build_OS + "," + build_ARCH + " ) ")
 		
 		} else if VERSION_NUM != "" {
 			SHOW_BOX(PROGNAME, "|bluewhite|ver: " + VERSION_NUM)

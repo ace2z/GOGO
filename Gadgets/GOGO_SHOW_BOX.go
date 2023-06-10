@@ -80,6 +80,9 @@ func helper_SHOW_with_COLOR(input string, SHOW_OUTPUT bool) (string, string) {
 			case "bluewhite":
 				BW.Print(JUST_STRING)
 				break
+			case "redyellow":
+				RY.Print(JUST_STRING)
+				break				
 
 			case "yellow":
 				Y.Print(JUST_STRING)
