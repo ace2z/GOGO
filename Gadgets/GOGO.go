@@ -468,7 +468,7 @@ func MASTER_INIT(PROGNAME string, VERSION string, ALL_PARAMS ...string) {
 
 	} else {
 		if SHOW_ARCH && VERSION_NUM != "" {
-			SHOW_BOX(PROGNAME, "|green|ver: " + VERSION_NUM, "|bluewhite| Current OS: " + CURRENT_OS + " / " + CURRENT_ARCH + " (Built For: " + build_OS + ", " + build_ARCH + ") ")
+			SHOW_BOX(PROGNAME, "|green|ver: " + VERSION_NUM, "|bluewhite| Current OS: " + CURRENT_OS + " / " + CURRENT_ARCH ," |bluewhite| ( Built For: " + build_OS + ", " + build_ARCH + ") ")
 		
 		} else if VERSION_NUM != "" {
 			SHOW_BOX(PROGNAME, "|bluewhite|ver: " + VERSION_NUM)
