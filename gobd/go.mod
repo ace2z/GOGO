@@ -2,7 +2,7 @@ module local
 
 go 1.20
 
-require github.com/acedev0/GOGO/Gadgets v0.0.0-20230517172645-ee1141fe70a4
+require github.com/ace2z/GOGO/Gadgets v0.0.0-20230610073425-420acfe86b79
 
 require (
 	github.com/TylerBrock/colorjson v0.0.0-20200706003622-8a50f05110d2 // indirect

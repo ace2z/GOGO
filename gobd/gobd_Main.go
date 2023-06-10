@@ -37,6 +37,7 @@ func main() {
     }
 
     CHECK_PreReqs()
+    
     if JUST_TEST { 
         GOMOD_Dependency_Engine()
         RUN_GO_Test()

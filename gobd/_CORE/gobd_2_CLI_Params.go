@@ -21,6 +21,16 @@ var DO_PURGE = false
 var JUST_CLEAN = false
 var JUST_PURGE = false
 
+
+// These are build overrides
+var BUILD_MAC = false
+var BUILD_LINUX = false
+var BUILD_WIN = false
+
+var BUILD_ARM = false
+var BUILD_INTEL = false
+
+var ALT_OUTPUT = ""
 func CLI_PARAMS_INIT() {
 
 	// Basic admin Params
@@ -42,4 +52,16 @@ func CLI_PARAMS_INIT() {
 	flag.StringVar(&COMMIT_MESSAGE,  "message", COMMIT_MESSAGE,      "  The message to git should use when you are publishing your GO MOD")	
 
 	flag.StringVar(&OPTIONS,  "opts", OPTIONS,      "  Specify modifier options for the build process (see --docs)")	
+
+	flag.StringVar(&ALT_OUTPUT,  "o", ALT_OUTPUT,      "  Specify an alternate FILENAME.. or DIRECTORY where the binary should be exported to")	
+	flag.StringVar(&ALT_OUTPUT,  "out", ALT_OUTPUT,      "  alias for --o")	
+
+	// Quick opts for building linux and windows
+	flag.BoolVar(&BUILD_MAC,  "mac", BUILD_LINUX,      "  Builds a MAC OS binary")	
+	flag.BoolVar(&BUILD_LINUX,  "linux", BUILD_LINUX,      "  Builds a LINUX binary")	
+	flag.BoolVar(&BUILD_WIN,  "windows", BUILD_WIN,      "  Builds for Windows")	
+	flag.BoolVar(&BUILD_WIN,  "win", BUILD_WIN,      "  alias to build for Windows")	
+
+	flag.BoolVar(&BUILD_ARM,  "arm", BUILD_ARM,     "  forces a ARM (or Apple Silicone) binary compile ")	
+	flag.BoolVar(&BUILD_INTEL,  "intel", BUILD_INTEL,   "  forces an INTEL/AMD Architecture binary compile")	
 }

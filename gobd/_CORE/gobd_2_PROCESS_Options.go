@@ -2,6 +2,7 @@ package _CORE
 
 import (
 	"strings"
+//	"strconv"
 	"os"
 	"path/filepath"
 
@@ -25,6 +26,7 @@ var EXTENSIONS = map[string]interface{} {
 }	
 
 
+
 func SET_VERSION_from_COMMIT() {
 	// Make sure we are in a git repo
 	result, _ := RUN_COMMAND("git status")
@@ -39,17 +41,41 @@ func SET_VERSION_from_COMMIT() {
 	}
 
 }
+
+/*
+CURRENT_OS = "MAC"
+	} else 	if strings.Contains(res_out, "linux") {
+		ON_LINUX = true
+		CURRENT_OS = "LINUX"
+
+	// Otherwise.. this is WINDOWS!!
+	} else {
+		ON_WINDOWS = true
+		CURRENT_OS = "Windows"
+*/
+
 func Set_DEFAULTS_based_on_PLATFORM() {
 
-	if CURRENT_OS == "windows" {
+	// We detect the current OS we are on.. And we build for THAT platform by default
+	// This can be overridden by --opts params
+	// Or --linux --intel
+	if CURRENT_OS == "Windows" {
 		BIN_TYPE = "windows"
 
-	} else if CURRENT_OS == "mac" {
+	} else if CURRENT_OS == "MAC" {
 		BIN_TYPE = "darwin"
-	} else if CURRENT_OS == "linux" {
+
+	} else if CURRENT_OS == "LINUX" {
 		BIN_TYPE = "linux"
 	}
-	ARCH = CURRENT_ARCH
+
+	if CURRENT_ARCH == "ARM" {
+		ARCH = "arm64"
+	} else {
+		ARCH = "amd64"
+	}
+	
+
 
 	// Get the current directory name.. This will be the name of the binary
 	cwd, _ := os.Getwd()
@@ -84,6 +110,7 @@ func GET_EXTENSION_for_FILE() {
 }
 
 
+
 func opts_delims(r rune) bool {
     return r == '=' || r == ','
 }
@@ -110,30 +137,38 @@ func PROCESS_OPTIONS () {
 			case "noext":
 				DONT_ADD_EXTENSION = true
 				USE_DEFAULTS=false
-			case "dest":
-				DESTDIR=VAL
-				USE_DEFAULTS=false
-			case "outfile":
-				FULL_DEST_FILE=VAL
-				JUST_FILE=VAL
-				USE_DEFAULTS=false
-			case "arch":
-				ARCH=VAL
-				// a little helper to allow arm and intel
-				if ARCH=="arm" {
-					ARCH="arm64"
-				} else if ARCH=="intel" {
-					ARCH="amd64"
-				}
-			case "platform":
-				if VAL=="windows" {
-					BIN_TYPE="windows"
-					ARCH="amd64"		//as of 05/2023 .. Windows arm isnt a thing.. just force this to intel for convenience
-				} else if (VAL=="mac" || VAL=="darwin") {
-					BIN_TYPE="darwin"
-				} else if VAL=="linux" {
-					BIN_TYPE="linux"
-				}
+		}
+	} //end of for
+
+	// for the alternate params that might be specified ..like --linux, --mac, --win
+	if BUILD_MAC {
+		BIN_TYPE = "darwin"
+	} else if BUILD_LINUX {
+		BIN_TYPE="linux"
+	} else if BUILD_WIN {
+		BIN_TYPE = "windows"
+		ARCH="amd64"
+	}
+
+	// Also specifies the ARCHITECTURE we need if --intel or --arm was specified
+	if BUILD_INTEL {
+		ARCH="amd64"
+	} else if BUILD_ARM {
+		ARCH="arm64"
+	}
+
+	//as of 05/2023 .. Windows arm isnt a thing yet.. just force this to intel for convenience
+	if BIN_TYPE == "windows" {
+		ARCH="amd64"
+	}
+
+
+
+	if ALT_OUTPUT != "" {
+		if HAVE_DIR(ALT_OUTPUT) {
+			FULL_DEST_FILE=ALT_OUTPUT + "/" + FULL_DEST_FILE
+		} else {
+			FULL_DEST_FILE=ALT_OUTPUT
 		}
 	}
 
