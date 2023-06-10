@@ -134,6 +134,15 @@ func LINK_ORIGIN(filename string) string {
 }
 
 
+func CURR_DIR() string {
+	currdir, err := os.Getwd()
+    if err != nil {
+		M.Print("CURR_DIR Cant determine current directory: ")
+		Y.Println(err)
+		return ""
+    }
+	return currdir
+}
 
 func HAVE_DIR(input string) bool {
 	file, err := os.Open(input)
