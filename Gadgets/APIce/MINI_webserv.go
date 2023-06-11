@@ -1,18 +1,3 @@
-/*	APIceBerg - A bunch of SUPER lean REST and JSON helper functions to make REST dev in GO ..FUN!
-
-	v1.54	Feb 22, 2021	- Removed SCrape Master.. moved a better version to TERRY_COMMON
-	v1.52	Feb 03, 2020	- Added JSON_DOWNLOAD. Downloads a json Byte object you can read or iterate
-	v1.50	Jan 06, 2020	- Rebranded just making this the generic name for this Module
-	v1.45	Dec 27, 2019	- Added parameter parse support. sends them in an array you can access
-	v1.40	Feb 02, 2019	- Now  This supports SSL and non-SSL (just http) mode.
-				              				If you need SSL, specifiy a PEM and KEY file on the command line
-							  				with SSL PEM and Key file specified
-
-	v1.30	Nov 05, 2018	- Added support for Spinnig up a micro webserver
-	v1.24	Sep 24, 2018	- Initial Release
-
-*/
-
 package CUSTOM_GOMOD
 
 import (

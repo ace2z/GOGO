@@ -2,7 +2,7 @@ module github.com/ace2z/GOGO/Gadgets/APIce
 
 go 1.20
 
-require github.com/ace2z/GOGO/Gadgets v0.0.0-20230601032046-67adc53db6d8
+require github.com/ace2z/GOGO/Gadgets v0.0.0-20230611144114-aa9b644f8f3d
 
 require (
 	github.com/TylerBrock/colorjson v0.0.0-20200706003622-8a50f05110d2 // indirect
