@@ -109,6 +109,12 @@ func SHOW_PRETTY_DATE(input_DATE time.Time, EXTRA_ARGS...string) (string, string
 			ADD_ZONE = false
 		}
 
+	//8b. Returns JUST the date with HYPHENS
+	} else if strings.Contains(output_FORMAT, "date_hyphen") {
+		result_TEXT = cMon + "-" + cDay + "-" + cYear
+		ADD_WEEKDAY = false
+		ADD_ZONE = false
+
 	//9. FULL Format: //Wednesday, 11/20/2020 @ 13:56 EST (-5 Hours)
 	} else if strings.Contains(output_FORMAT, "full") {
 		
