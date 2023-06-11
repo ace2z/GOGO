@@ -8,6 +8,8 @@ import (
 
 
 	. "github.com/ace2z/GOGO/Gadgets"
+
+	"github.com/TylerBrock/colorjson"
 )
 
 
@@ -28,6 +30,33 @@ var JSON_BOTTOM =`
 }
 `
 
+
+
+// This takes any struct and returns "regular" json and pretty colorized JSON
+func GEN_PRETTY_JSON(tmpOBJ interface{}) (string, string) {
+
+	// tmp_JSON_OBJ, err := json.Marshal(tmpOBJ)  // Marshall takes a struct and makes it into JSON
+	tmp_JSON_OBJ, err := json.MarshalIndent(tmpOBJ, "", "\t")  // Marshall takes a struct and makes it into JSON
+	
+	if err != nil {
+		R.Println(" error in the GEN_PRETTY_JSON ")
+		W.Println(err)
+		return "", ""
+	}
+	
+	var obj map[string]interface{}
+	json.Unmarshal(tmp_JSON_OBJ, &obj)		// Unmarshall takes json and puts it in a struct // marshall does the opposite
+
+	// Marshall the Colorized JSON, Make a custom formatter with indent set
+	f := colorjson.NewFormatter()
+	f.Indent = 4
+	colorTEMP, _ := f.Marshal(obj)
+	pretty_color_JSON := string(colorTEMP)
+	regular_JSON := string(tmp_JSON_OBJ)
+
+	return regular_JSON, pretty_color_JSON
+
+} //end of func
 
 
 func GEN_JSON_HEADER(first_element string) {
