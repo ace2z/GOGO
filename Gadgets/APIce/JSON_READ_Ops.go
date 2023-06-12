@@ -22,6 +22,10 @@ import (
 var MAX_JSON_RETRY_ATTEMPTS = 5
 var MAX_JSON_SLEEP_VAL = 10
 
+type HEADER_OBJ struct {
+	NAME    string
+	VALUE   string
+}
 
 
 

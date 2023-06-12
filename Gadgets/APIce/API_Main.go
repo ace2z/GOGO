@@ -3,15 +3,10 @@ package CUSTOM_GOMOD
 import (
 
 	"flag"
-//	"io/ioutil"
 	"net/http"
-	"net/url"
 	"os"
 	"strings"
-	"unicode"
-//	"context"
-//	"time"
-	"encoding/json"
+
 
 	. "github.com/ace2z/GOGO/Gadgets"
 )
@@ -30,113 +25,13 @@ var SSL_ENABLE_FLAG     = false	// If set to true.. we listen in SSL mode.. mean
 var SSL_CERT_PEM_FILE   = ""		// Full path to wherever this CERT/ pem file is			(this is just example: /opt/SSL_CERTS/biolab_COMBINED.pem  )
 var SSL_KEY_FILE        = ""		// Full path to wherever the KEY file of this cert is (this is just example: /opt/SSL_CERTS/biolab_ALPHA-SSL.key )
 
-type HEADER_OBJ struct {
-	NAME    string
-	VALUE   string
+
+type API_ENDPOINT_DEFINITION struct {
+	API_Endpoint string
+	API_Handler  GENERIC_API_ENDPOINT_HANDLER
 }
-type API_JSON_OBJ struct {
-	DATA 		[]interface{}		`json:"data"`
-}
-
-// This makes "API" json you can retrieve from jquery or VUEjs
-func MAKE_API_JSON(tmpOBJ interface{}) string {
-
-	var a API_JSON_OBJ
-	a.DATA = append(a.DATA, tmpOBJ)
-
-	JSON_RESULT, err := json.MarshalIndent(a, "", "\t")  // Marshall takes a struct and makes it into JSON
-	
-	if err != nil {
-		R.Println(" error in the MAKE_API_JSON ")
-		W.Println(err)
-		return ""
-	}	
-
-	return string(JSON_RESULT)
-}
-
-func MinifyJSON(str string) string {
-	return strings.Map(func(r rune) rune {
-		 if unicode.IsSpace(r) {
-			  return -1
-		 }
-		 
-		 return r
-	}, str)
-} //end of 
-
-
-/* This is meant to be passed a keymap of url.Values
-Returns true and expects a POINTER to hold the value that it finds
-If keyname is found in the map, its VALUE is returned
-NOTE: this lets you send URL vars of ANY case
-
-FIND_URL_key_using_POINTER("data", URL_MAP, &result):
-*/
-func FIND_URL_key(keyname string, UMAP url.Values, myresult *string) bool {
-
-	//1. this allows you to specify case INSENSITIVE keyNames
-	kUpper := strings.ToUpper(keyname)
-	klow := strings.ToLower(keyname)
-	firstLetter := UpperFirst(keyname)
-
-	if keyValue_ARRAY, ok := UMAP[kUpper]; ok {
-
-		*myresult = keyValue_ARRAY[0]
-
-		return true
-	}
-
-	if keyValue_ARRAY, ok := UMAP[klow]; ok {
-
-		*myresult = keyValue_ARRAY[0]
-
-		return true
-	}
-
-	if keyValue_ARRAY, ok := UMAP[firstLetter]; ok {
-
-		*myresult = keyValue_ARRAY[0]
-
-		return true
-	}
-
-	return false
-}
-
-/*
-
-	FIND_URL_key
-	Takes in a key to search for
-	this is similar to FIND_URL_key but doesnt use a pointer
-*/
-func Simple_FIND_URL_key(keyname string, UMAP url.Values) (bool, string) {
-
-	//1. this allows you to specify case INSENSITIVE keyNames
-	kUpper := strings.ToUpper(keyname)
-	klow := strings.ToLower(keyname)
-	firstLetter := UpperFirst(keyname)
-
-	if keyValue_ARRAY, ok := UMAP[kUpper]; ok {
-
-		return true, keyValue_ARRAY[0]
-	}
-
-	if keyValue_ARRAY, ok := UMAP[klow]; ok {
-
-		return true, keyValue_ARRAY[0]
-
-	}
-
-	if keyValue_ARRAY, ok := UMAP[firstLetter]; ok {
-
-		return true, keyValue_ARRAY[0]
-
-	}
-
-	return false, ""
-} //end of func
-
+var ALL_SERVICE_ENDPOINTS []API_ENDPOINT_DEFINITION
+var USE_PROD_MODE = false     // PROD MODE makes the listener listen on ALL interfaces (not just 127).. which is needd when running on windows locally
 
 
 /*
@@ -235,11 +130,6 @@ type GENERIC_API_ENDPOINT_HANDLER func([]URL_PARAMS) string
 	Start_LISTENER_SERVICE_Engine()
 
 */
-
-type URL_PARAMS struct {
-	KEY		string
-	Value	string
-}
 
 /*
  This parses the input prameters passed.. Supports the following formats
@@ -378,49 +268,7 @@ func (RouteEntry_Handler_FUNC_to_USE GENERIC_API_ENDPOINT_HANDLER) ServeHTTP(out
 
 } //end of http service / routing handler
 
-// Gets a value from URL params. Takes in a list of URL Params
-func GET_VALUE(KEY string, inputVARS []URL_PARAMS) string {
-	//1. FIrst we iterate through the Url Params looking for the one that matches they KEY speicfied
-	for _, x := range inputVARS {
-		if x.KEY == KEY {
-			return x.Value
-		}
-	} //end of for
 
-
-	//2. otherwise if we find nothing, return nothing
-	return ""
-
-} // end of func
-
-// Alias to GET_VALUE
-func FIND_VALUE(KEY string, inputVARS []URL_PARAMS) string {
-	return GET_VALUE(KEY, inputVARS)
-}
-func GET_KEY(KEY string, inputVARS []URL_PARAMS) string {
-	return GET_VALUE(KEY, inputVARS)
-}
-
-// This is mostly for debug, just shows all values in an URL_PARAMS list
-// returns  a json formatted string
-func SHOW_ALL_PARAMS(inputVARS []URL_PARAMS) string {
-
-	var JSON_OUTPUT = ``
-	for _, x := range inputVARS {
-		JSON_OUTPUT += "     " + x.KEY + `:` + x.Value + `,
-`		
-	} //end of 
-
-	return JSON_OUTPUT	
-} //edn of SHOW ALL
-
-
-type API_ENDPOINT_DEFINITION struct {
-	API_Endpoint string
-	API_Handler  GENERIC_API_ENDPOINT_HANDLER
-}
-
-var ALL_SERVICE_ENDPOINTS []API_ENDPOINT_DEFINITION
 
 /*
 	Call this to create a new REST API Endpoint /THISADDY 
@@ -434,7 +282,7 @@ func CREATE_SERVICE_ENDPOINT(api_endpoint string, handler_name GENERIC_API_ENDPO
 	ALL_SERVICE_ENDPOINTS = append(ALL_SERVICE_ENDPOINTS, etmp)
 } //end func
 
-var USE_PROD_MODE = false     // PROD MODE makes the listener listen on ALL interfaces (not just 127).. which is needd when running on windows locally
+
 func Start_LISTENER_SERVICE_Engine() { 
 
 	//1. Error handling
