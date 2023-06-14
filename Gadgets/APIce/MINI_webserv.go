@@ -12,7 +12,7 @@ import (
 
 
 // This is a mini/micro Web Server 
-func MINI_WEB(WEBROOT string, listenPort string, START_MESSAGE string) {
+func MINI_WEB(WEBROOT string, listenPort string, START_MESSAGE string, USE_PROD_MODE bool) {
 
 	listenPort = ":" + listenPort
 
@@ -56,7 +56,7 @@ func init() {
 		flag.StringVar(&SSL_CERT_PEM_FILE,   "cert", SSL_CERT_PEM_FILE,    "  Full path to the CERT / PEM file for SSL (requires --enableSSL )")
 		flag.StringVar(&SSL_KEY_FILE,        "key", SSL_KEY_FILE,        "    Full path to the KEY FILE for the SSL CERT (requires --enableSSL )")
 
-		flag.BoolVar(&USE_PROD_MODE,       "restapiprod", USE_PROD_MODE, "  Enables PROD MODE Rest service.. listens on ALL interfaces not just 127.0.0.1")
+		//flag.BoolVar(&USE_PROD_MODE,       "restapiprod", USE_PROD_MODE, "  Enables PROD MODE Rest service.. listens on ALL interfaces not just 127.0.0.1")
 
 	}
 

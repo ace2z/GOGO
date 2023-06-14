@@ -31,7 +31,7 @@ type API_ENDPOINT_DEFINITION struct {
 	API_Handler  GENERIC_API_ENDPOINT_HANDLER
 }
 var ALL_SERVICE_ENDPOINTS []API_ENDPOINT_DEFINITION
-var USE_PROD_MODE = false     // PROD MODE makes the listener listen on ALL interfaces (not just 127).. which is needd when running on windows locally
+//var USE_PROD_MODE = false     // PROD MODE makes the listener listen on ALL interfaces (not just 127).. which is needd when running on windows locally
 
 
 /*
@@ -283,7 +283,7 @@ func CREATE_SERVICE_ENDPOINT(api_endpoint string, handler_name GENERIC_API_ENDPO
 } //end func
 
 
-func Start_LISTENER_SERVICE_Engine() { 
+func Start_LISTENER_SERVICE_Engine(USE_PROD_MODE bool) { 
 
 	//1. Error handling
 	slen := len(ALL_SERVICE_ENDPOINTS)
@@ -380,7 +380,7 @@ func init() {
 		flag.StringVar(&SSL_CERT_PEM_FILE,   "cert", SSL_CERT_PEM_FILE,    "  Full path to the CERT / PEM file for SSL (requires --enableSSL )")
 		flag.StringVar(&SSL_KEY_FILE,        "key", SSL_KEY_FILE,        "    Full path to the KEY FILE for the SSL CERT (requires --enableSSL )")
 
-		flag.BoolVar(&USE_PROD_MODE,       "restapiprod", USE_PROD_MODE, "  Enables PROD MODE Rest service.. listens on ALL interfaces not just 127.0.0.1")
+		//flag.BoolVar(&USE_PROD_MODE,       "restapiprod", USE_PROD_MODE, "  Enables PROD MODE Rest service.. listens on ALL interfaces not just 127.0.0.1")
 
 	}
 
