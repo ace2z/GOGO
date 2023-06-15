@@ -181,11 +181,52 @@ func MAKE_Sure_Running_As_ROOT() {
 
 
 
-func GET_CURRENT_TIME(EXTRA_ARGS ...string) (string, time.Time) {
+func GET_CURRENT_TIME(ALL_PARAMS ...string) (string, time.Time) {
+	var LOCAL_Location_OBJ, _ = time.LoadLocation("Local")
+	var EST_Location_OBJ, _ = time.LoadLocation("America/New_York")
+	var CST_Location_OBJ, _ = time.LoadLocation("America/Chicago")			// aka CST	}
+	var MST_Location_OBJ, _ = time.LoadLocation("America/Denver") 		// MDT / Mountain Standard
+	var PST_Location_OBJ, _ = time.LoadLocation("America/Los_Angeles")		// aka PST
+	var UTC_Location_OBJ, _ = time.LoadLocation("UTC") 
+
+	var TZ_OBJECT = LOCAL_Location_OBJ
+
+	var output_format = "basic"
+	// Get the Prams
+	for _, param := range ALL_PARAMS {
+		
+		// If they specify a timezone to use
+		if param == "est" {
+			TZ_OBJECT = EST_Location_OBJ
+			continue
+		}
+		if param == "cst" {
+			TZ_OBJECT = CST_Location_OBJ
+			continue
+		}
+		if param == "mst" || param == "mdt" {
+			TZ_OBJECT = MST_Location_OBJ
+			continue
+		}
+		if param == "pst" || param == "pdt" {
+			TZ_OBJECT = PST_Location_OBJ
+			continue
+		}		
+		if param == "utc" {
+			TZ_OBJECT = UTC_Location_OBJ
+			continue
+		}							
+		
+
+		// Otherwise assume they are specifying the OUTPUT format to SHOW_PRETTY (defaults to basic)
+		// First paramn is always the STRUCT
+		output_format = param
+	}	
 
 	//1. Default ot the local machines time zone
-	dateOBJ := time.Now().UTC()
-	result, _ := SHOW_PRETTY_DATE(dateOBJ, "basic")
+
+	dateOBJ := time.Now().In(TZ_OBJECT)
+	result, _ := SHOW_PRETTY_DATE(dateOBJ, output_format)
 
 	return result, dateOBJ
 
