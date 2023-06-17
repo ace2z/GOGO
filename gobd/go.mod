@@ -2,10 +2,9 @@ module local
 
 go 1.20
 
-require github.com/ace2z/GOGO/Gadgets v0.0.0-20230610073425-420acfe86b79
+require github.com/ace2z/GOGO/Gadgets v0.0.0-20230617012040-3213da3a4c30
 
 require (
-	github.com/TylerBrock/colorjson v0.0.0-20200706003622-8a50f05110d2 // indirect
 	github.com/atotto/clipboard v0.1.4 // indirect
 	github.com/briandowns/spinner v1.23.0 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
