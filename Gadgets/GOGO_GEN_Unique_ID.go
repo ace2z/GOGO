@@ -20,10 +20,10 @@ func clearString(str string) string {
 func GEN_UNIQUE_ID(GENFROM ...interface{} ) (string, string) {
 	var result = ""
 
-	var USE_HYPHEN = false
+	var USE_PREFIX = ""
 	var USE_PIPE = false
-	var USE_UNDER = true
-	for _, field := range GENFROM {
+
+	for n, field := range GENFROM {
 		val_int, IS_INT := field.(int)
 		val_float, IS_FLOAT := field.(float64) 
 		val_string, IS_STRING := field.(string) 
@@ -41,10 +41,17 @@ func GEN_UNIQUE_ID(GENFROM ...interface{} ) (string, string) {
 
 		if IS_STRING {
 
-			if val_string == "__hyphen" || val_string == "__dash" {
-				USE_HYPHEN = true
+			if val_string == "-prefix" {
+				o := n + 1
+				if o < len(GENFROM) {
+					
+					tval_string, tfound := GENFROM[o].(string)
+					if tfound {
+						USE_PREFIX = tval_string
+					}
+				}
 				continue
-			} else if val_string == "__pipe" {
+			} else if val_string == "-pipe" {
 				USE_PIPE = true
 				continue
 			}
@@ -68,13 +75,9 @@ func GEN_UNIQUE_ID(GENFROM ...interface{} ) (string, string) {
 	//3. Also..generate the MD5 of this 'unique' id.. 
 	md5string := GET_MD5(result)	
 
-	//4. If we want we can add hyphen, pipe or _ underscore for the MD5 tthat is returned
-	delim := ""
-	if USE_HYPHEN {
-		delim = "-"
-	} else if USE_UNDER {
-		delim = "_"
-	} else if USE_PIPE {
+	//4. If we default to _ .. if we want we can use | as the seperator for the uniq id's
+	delim := "_"
+	if USE_PIPE {
 		delim = "|"
 	}
 	if delim != "" {
@@ -83,6 +86,11 @@ func GEN_UNIQUE_ID(GENFROM ...interface{} ) (string, string) {
 		}		
 	}
 
+	//5. And if a prefix was specified
+	if USE_PREFIX != "" {
+		result = USE_PREFIX + result
+		md5string = USE_PREFIX + md5string
+	}
 	
 
 	return result, md5string
