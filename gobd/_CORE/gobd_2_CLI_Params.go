@@ -30,13 +30,14 @@ var BUILD_WIN = false
 var BUILD_ARM = false
 var BUILD_INTEL = false
 
+var NOEXT = false
+
 var ALT_OUTPUT = ""
 func CLI_PARAMS_INIT() {
 
 	// Basic admin Params
     flag.BoolVar(&TEST_MOD,  "testmod", TEST_MOD,      "  Test the current Go Module you are in (must have a go.mod file) but doesnt commit it to the repo")
 	flag.BoolVar(&MAKE_MOD,  "initmod", MAKE_MOD,      "  Builds, Tests and commits module to repo (if successful)")
-	flag.BoolVar(&MAKE_MOD,  "makemod", MAKE_MOD,      "  alias for initmod")	
 	flag.BoolVar(&VERBOSE_MODE,  "verbose", VERBOSE_MODE,      "  Verbose Mode (more messages and errors)")	
 
 	flag.BoolVar(&JUST_TEST,  "test", JUST_TEST,      "  Runs a basic go test on the GO program or module")	
@@ -51,10 +52,12 @@ func CLI_PARAMS_INIT() {
 
 	flag.StringVar(&COMMIT_MESSAGE,  "message", COMMIT_MESSAGE,      "  The message to git should use when you are publishing your GO MOD")	
 
-	flag.StringVar(&OPTIONS,  "opts", OPTIONS,      "  Specify modifier options for the build process (see --docs)")	
-
+	// = = = LOTS OF OPTIONS
+	flag.StringVar(&OPTIONS,  "opts", OPTIONS,      "  Specify modifier options for the build process (see --docs)")
 	flag.StringVar(&ALT_OUTPUT,  "o", ALT_OUTPUT,      "  Specify an alternate FILENAME.. or DIRECTORY where the binary should be exported to")	
 	flag.StringVar(&ALT_OUTPUT,  "out", ALT_OUTPUT,      "  alias for --o")	
+
+	flag.BoolVar(&NOEXT,  "noext", NOEXT,      "  DOES NOT add an EXTENSION when generating the OUTPUT file")
 
 	// Quick opts for building linux and windows
 	flag.BoolVar(&BUILD_MAC,  "mac", BUILD_LINUX,      "  Builds a MAC OS binary")	

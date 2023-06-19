@@ -195,14 +195,16 @@ func PROCESS_OPTIONS () {
 		}
 
 		//
-		if DONT_ADD_EXTENSION == false {
+		if DONT_ADD_EXTENSION == false && NOEXT == false {
 			GET_EXTENSION_for_FILE()
 		}
 
 	// Else if we are using the setup defaults
 	} else {
 
-		GET_EXTENSION_for_FILE()
+		if NOEXT == false {
+			GET_EXTENSION_for_FILE()
+		}
 	}
 
 	//4. Finally.. safety REMOVE the DEST_FILE

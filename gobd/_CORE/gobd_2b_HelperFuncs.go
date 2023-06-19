@@ -89,8 +89,8 @@ func CHECK_PreReqs() {
 		DO_GOGET_INSTEAD = true
 	}
 
-	// All the magic happens here
-	GET_Proper_REPO_Paths()
+	// All the magic happens here for getting repo meta data
+	GET_REPO_MetaDATA()
 
 	
 

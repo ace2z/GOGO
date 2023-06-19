@@ -7,8 +7,9 @@ import (
 	. "github.com/ace2z/GOGO/Gadgets"
 )
 
+var MOD_LOCAL_PATH = ""
+var MOD_LOCAL_BASEDIR = ""
 
-var REPO_BASEDIR = ""
 var MOD_DIRPATH = ""
 var JUST_MOD_PACKAGE_NAME = ""
 var MODULE_IMPORT_NAME = "local"
@@ -24,14 +25,12 @@ func repo_delims(r rune) bool {
 func url_delims(r rune) bool {
 	return r == '@'
 }
-func GET_Proper_REPO_Paths() {
+func GET_REPO_MetaDATA() {
 	cwd, _ := os.Getwd()
 	
 
-	if VERBOSE_MODE {
-		C.Println("")
-		C.Print(PREFIX, "Determining GIT REPO Path data...")
-	}
+	Y.Println("   -| Determinig REPO Meta Data..")
+
 	
 	result, _ := RUN_COMMAND("git remote show origin 2>&1")
 
@@ -62,13 +61,29 @@ func GET_Proper_REPO_Paths() {
 		}
 	}
 
-	REPO_BASEDIR = strings.TrimSuffix(filepath.Base(res2), "\n")
-	msplit := strings.Split(cwd, REPO_BASEDIR)
+	MOD_LOCAL_PATH = strings.TrimSuffix(res2, "\n")	
+	MOD_LOCAL_BASEDIR = strings.TrimSuffix(filepath.Base(res2), "\n")
+	msplit := strings.Split(cwd, MOD_LOCAL_BASEDIR)
 	MOD_DIRPATH = strings.TrimPrefix(msplit[1], "/")
 	JUST_MOD_PACKAGE_NAME = filepath.Base(MOD_DIRPATH)
 
 	// Gets the module IMPORT name based on the Github service being used
 	WHAT_GIT_Service_Being_Used()
+
+
+	//3. Fix.. If we are in the ROOT dir of the repo.. We will change the offical module name accordingly
+	// We check this by looking at MOD_DIRPATH.. if it is blank.. means we are in ROOT
+	IN_REPO_ROOT := false
+	if MOD_DIRPATH == "" {
+		IN_REPO_ROOT = true
+	}
+
+
+	if IN_REPO_ROOT {
+		MODULE_IMPORT_NAME = strings.TrimSuffix(MODULE_IMPORT_NAME, "/")		
+	}
+
+
 
 	if VERBOSE_MODE {
 		C.Print(PREFIX, "REPO_URL" + ": ")
@@ -79,8 +94,13 @@ func GET_Proper_REPO_Paths() {
 		Y.Println(REPO_URL)
 		C.Print(PREFIX, "PARENT_REPO_NAME" + ": ")
 		Y.Println(PARENT_REPO_NAME)
-		C.Print(PREFIX, "REPO_BASEDIR" + ": ")
-		Y.Println(REPO_BASEDIR)
+		C.Print(PREFIX, "MOD_LOCAL_PATH" + ": ")
+		if IN_REPO_ROOT {
+			Y.Println(MOD_LOCAL_PATH)
+		} else {
+			Y.Println(MOD_LOCAL_PATH + "/" + MOD_DIRPATH)
+			
+		}
 	}
 
 	if MODULE_IMPORT_NAME == "local" {
@@ -88,12 +108,8 @@ func GET_Proper_REPO_Paths() {
 		G.Println("Yes!")
 	} else {
 		
-		C.Print(PREFIX, "MOD_DIRPATH" + ": ")
-		Y.Println(MOD_DIRPATH)	
-		C.Print(PREFIX, "JUST_MOD_PACKAGE_NAME" + ": ")
-		Y.Println(JUST_MOD_PACKAGE_NAME)	
-		C.Print(PREFIX, "MODULE_IMPORT_NAME" + ": ")
-		Y.Println(MODULE_IMPORT_NAME)
+		C.Print(PREFIX, "Official MODULE Name" + ": ")
+		G.Println(MODULE_IMPORT_NAME)
 	}
 }
 
