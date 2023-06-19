@@ -97,6 +97,10 @@ func SHOW_PRETTY_DATE(input_DATE time.Time, EXTRA_ARGS...string) (string, string
 		cSec = "00"
 	}
 
+	//if we want a two digit year
+	if strings.Contains(output_FORMAT, "twoyear") || strings.Contains(output_FORMAT, "shortyear") {
+		cYear = cYear[len(cYear)-2:]
+	}
 
 	//8. BASIC Format just returns the following.. no weekday or Tzone
 	if strings.Contains(output_FORMAT, "basic") || strings.Contains(output_FORMAT, "simple") {	
