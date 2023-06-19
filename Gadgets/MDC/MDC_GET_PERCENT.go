@@ -156,21 +156,113 @@ func GET_INCDEC_PERCENT(ALL_PARAMS ...interface{}) (string, float64, float64) {
 
 //GET_INC_DEC_PERCENT(ALL_PARAMS ...interface{})
 // Alias to GET_INCDEC_PERCENT
-func GET_PERCENT(ALL_PARAMS ...interface{}) (string, float64, float64) {
+func GET_INCDEC_PERC(ALL_PARAMS ...interface{}) (string, float64, float64) {
 	return GET_INCDEC_PERCENT(ALL_PARAMS...)
 }
 
-// Alias Hypbrid... JUST returns JUST the DIFF of the two numbers
-func GET_DIFF(ALL_PARAMS ...interface{}) float64 {
-	_, _, diff := GET_INCDEC_PERCENT(ALL_PARAMS...)
+
+
+// Ultimate get diff of two dumbers
+func GET_DIFF (ALL_PARAMS ...interface{}) float64 {
+	var small float64
+	var large float64
+
+	for n, param := range ALL_PARAMS {
+		int_val, IS_INT := param.(int)
+		float_val, IS_FLOAT := param.(float64)
+		string_val, IS_STRING := param.(string)
+
+		// Must be first anad second num  (for n == 0 and n == 1)
+		if n == 0 {
+			if IS_INT {
+				small = float64(int_val)
+			} else if IS_FLOAT {
+				small = float_val
+			}
+			continue
+		}
+
+		if n == 1 {
+			if IS_INT {
+				large = float64(int_val)
+			} else if IS_FLOAT {
+				large = float_val
+			}
+			continue
+		}
+
+		// PLACEHOLDER .. if a string is passed.. do something with it
+		if IS_STRING && string_val != "" {
+			
+		}
+
+	} //end of params
+
+	// Error handling
+	if small == large {
+		return 0.0
+	}
+
+	diff := large - small
+	if diff < 0.0 {
+		diff = small - large
+	}
+	diff = FIX_FLOAT_PRECISION(diff, 2)
+
 	return diff
+
 }
 
-// alias Hybrid.. returns JUST the perc of two numbers
-func GET_PERC(ALL_PARAMS ...interface{}) float64 {
-	_, perc, _ := GET_INCDEC_PERCENT(ALL_PARAMS...)
+// Ultimate percentage of two numbers
+func PERCENT_OF (ALL_PARAMS ...interface{}) float64 {
+	var small float64
+	var large float64
+
+	for n, param := range ALL_PARAMS {
+		int_val, IS_INT := param.(int)
+		float_val, IS_FLOAT := param.(float64)
+		string_val, IS_STRING := param.(string)
+
+		// Must be first anad second num  (for n == 0 and n == 1)
+		if n == 0 {
+			if IS_INT {
+				small = float64(int_val)
+			} else if IS_FLOAT {
+				small = float_val
+			}
+			continue
+		}
+
+		if n == 1 {
+			if IS_INT {
+				large = float64(int_val)
+			} else if IS_FLOAT {
+				large = float_val
+			}
+			continue
+		}
+
+		// PLACEHOLDER .. if a string is passed.. do something with it
+		if IS_STRING && string_val != "" {
+			
+		}
+
+	} //end of params
+
+	// Error handling
+	if small == large {
+		return 0.0
+	}
+	if small == 0.0 {
+		return 0.0
+	}
+
+	// DONT FLIP THE NUMBERS automatically.. this returns an INACCURATE PERCENTAGE
+
+	divis :=  small / large
+	perc := divis * 100
+	perc = FIX_FLOAT_PRECISION(perc, 2)
+
 	return perc
+
 }
-
-
-
