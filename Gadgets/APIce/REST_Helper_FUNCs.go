@@ -40,12 +40,6 @@ func GEN_PRETTY_JSON(tmpOBJ interface{}) (string, string) {
 	//tmp_JSON_OBJ, err := json.MarshalIndent(tmpOBJ, "", "\t")  // Marshall takes a struct and makes it into JSON
 	tmp_JSON_OBJ, err := json.Marshal(tmpOBJ)  // Marshall takes a struct and makes it into JSON
 	
-	if DEBUG_MODE {
-		Y.Println(tmp_JSON_OBJ)
-		W.Println("ABOVE is the inbound struct")
-	}
-
-
 	if err != nil {
 		R.Println(" error in the GEN_PRETTY_JSON ")
 		W.Println(err)
