@@ -29,4 +29,7 @@ func DO_BULK_DELETE(dbname string, coll_name string, search_filter interface{} )
         G.Println(" = =| BULK DELETE Success!")
         G.Println("")
     }
+
+    // Always pause for a second after deleting.
+    Sleep(1, false)
 }
