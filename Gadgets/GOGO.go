@@ -329,7 +329,9 @@ func Sleep(seconds int, ALL_PARAMS ...bool) {
 // a simple placeholder.. if you arent using anything in GOGO Gadgets main (at the moment)
 // this will prevent you getting a "imported but not used" error
 func PLACE_HOLDER() {
-
+}
+func PLACEHOLDER() {
+	
 }
 
 // We need to determine what the CURRENT running platform is
