@@ -31,5 +31,5 @@ func DO_BULK_DELETE(dbname string, coll_name string, search_filter interface{} )
     }
 
     // Always pause for a second after deleting.
-    Sleep(1, false)
+    //Sleep(1, false)
 }
