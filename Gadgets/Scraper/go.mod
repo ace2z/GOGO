@@ -4,11 +4,10 @@ go 1.20
 
 require (
 	github.com/PuerkitoBio/goquery v1.8.1
-	github.com/ace2z/GOGO/Gadgets v0.0.0-20230610080804-5d5dae3446d1
+	github.com/ace2z/GOGO/Gadgets v0.0.0-20230622030934-cfc5eebd52ad
 )
 
 require (
-	github.com/TylerBrock/colorjson v0.0.0-20200706003622-8a50f05110d2 // indirect
 	github.com/andybalholm/cascadia v1.3.1 // indirect
 	github.com/atotto/clipboard v0.1.4 // indirect
 	github.com/briandowns/spinner v1.23.0 // indirect
