@@ -16,8 +16,10 @@ import (
 	As of MAY 2023.. This is the ULTIMATE GET PERCENTAGE function (replaces the previous GET_PRECENT)
 	Also returns the DIFF between two numbers and if it was an INCREASE or DECERASE based on which number was passed FIRST
 
+	RETURNS:
+	res_PERC, changeTYPE, res_DESC, res_diff
 */
-func GET_INCDEC_PERCENT(ALL_PARAMS ...interface{}) (string, float64, float64) {
+func GET_INCDEC_PERCENT(ALL_PARAMS ...interface{}) (float64, string, string, float64) {
 	
 	var firstNUM = 0.0
 	var secNUM = 0.0
@@ -74,7 +76,7 @@ func GET_INCDEC_PERCENT(ALL_PARAMS ...interface{}) (string, float64, float64) {
 	//1. First get the diff... if they are equal, we return
 	if firstNUM == secNUM {
 
-		return res_DESC, res_PERC, res_diff
+		return res_PERC, "no_change", res_DESC, res_diff
 	}
 	//2. This is for convenience and makes it easier to remember what number is what (large or small)
 	var smallNUM = firstNUM
@@ -149,15 +151,10 @@ func GET_INCDEC_PERCENT(ALL_PARAMS ...interface{}) (string, float64, float64) {
 		SHOW_BOX("GET_PERCENTAGE", "|cyan|" + firstSTRING + " --> " + secSTRING, "|yellow|" + mode + " by", "|green|" + percSTRING, "DIFF: ", "|yellow|" + diffstring)
 	}
 
+	var changeTYPE = mode
+
 	// Finally return everything
-	return res_DESC, res_PERC, res_diff
-}
-
-
-//GET_INC_DEC_PERCENT(ALL_PARAMS ...interface{})
-// Alias to GET_INCDEC_PERCENT
-func GET_INCDEC_PERC(ALL_PARAMS ...interface{}) (string, float64, float64) {
-	return GET_INCDEC_PERCENT(ALL_PARAMS...)
+	return res_PERC, changeTYPE, res_DESC, res_diff
 }
 
 
