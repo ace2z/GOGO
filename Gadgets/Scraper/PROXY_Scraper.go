@@ -1,7 +1,7 @@
 package CUSTOM_GO_MODULE
 
 import (
-    "os"
+    //"os"
     "time"
     "strings"
     "encoding/json"
@@ -157,27 +157,28 @@ func PROXY_SCRAPE( url string, ALL_PARAMS ...interface{}) (bool, *goquery.Docume
     
     //3. and if specified, savev the body to the filename
     if p_filename != "" {
-
-        // OLD way
-        // WRITE_FILE(p_filename, BODY_TEXT)
+        
+        WRITE_FILE(p_filename, BODY_TEXT)
 
         //Create a empty file.. delete any existing
-        if FILE_EXISTS(p_filename) {
-            os.Remove(p_filename)            
-        }
-        file, err := os.Create(p_filename)
-        if err != nil {
-            M.Println("PROXY_FILE_ERROR: ", err)
-            return false, doc, ""
-        }
-        defer file.Close()
+        /* this doesnt work 
+            if FILE_EXISTS(p_filename) {
+                os.Remove(p_filename)            
+            }
+            file, err := os.Create(p_filename)
+            if err != nil {
+                M.Println("PROXY_FILE_ERROR: ", err)
+                return false, doc, ""
+            }
+            defer file.Close()
 
-        //Write the bytes to the fiel
-        _, err = io.Copy(file, resp.Body)
-        if err != nil {
-            M.Println("PROXY_FILE_ERROR_SAVE_to_DISK: ", err)
-            return false, doc, ""
-        }
+            //Write the bytes to the fiel
+            _, err = io.Copy(file, resp.Body)
+            if err != nil {
+                M.Println("PROXY_FILE_ERROR_SAVE_to_DISK: ", err)
+                return false, doc, ""
+            }
+        */
 
     }
     
