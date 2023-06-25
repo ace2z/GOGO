@@ -23,7 +23,7 @@ import (
 
 
 var API_KEY = "f26e62fe199a53b7746d712da5c2a5fde4320703"
-var COUNTRY = "us"   // Check zenrows if you need another country
+var COUNTRY = ""          // Check zenrows if you need another country  .. otherise select 'us'  ..or leave blank!
 
 var TIMEOUT = 120   //60 
 var RESP_ERROR_MATRIX = []string{
@@ -95,10 +95,10 @@ func PROXY_SCRAPE( url string, ALL_PARAMS ...interface{}) (bool, *goquery.Docume
 
 
 	var country_url_section = "&proxy_country=" + COUNTRY
-    if country_url_section == "" {}
 	if COUNTRY == "" {
 		country_url_section = ""
 	}
+    if country_url_section == "" {}
 
 	FULL_URL := "http://" + API_KEY + ":js_render=true&antibot=true&premium_proxy=true" + country_url_section + "@proxy.zenrows.com:8001"
     // W.Println("URL: ")
