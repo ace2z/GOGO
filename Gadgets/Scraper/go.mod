@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/PuerkitoBio/goquery v1.8.1
-	github.com/ace2z/GOGO/Gadgets v0.0.0-20230622050251-2a1e6c922804
+	github.com/ace2z/GOGO/Gadgets v0.0.0-20230628002908-8c135637375c
 )
 
 require (

@@ -137,7 +137,7 @@ func PROXY_SCRAPE( url string, ALL_PARAMS ...interface{}) (bool, *goquery.Docume
     if err2 != nil {
 		M.Print("ERROR in PROXY_ RESSP ")
 		Y.Println(err2)
-		return false, doc, ""
+		return false, doc, err2.Error()
     }
 
     // otherwise
@@ -145,7 +145,7 @@ func PROXY_SCRAPE( url string, ALL_PARAMS ...interface{}) (bool, *goquery.Docume
     if err3 != nil {
 		M.Print("ERROR in PROXY_ BODY ")
 		Y.Println(err3)
-		return false, doc, ""
+		return false, doc, err3.Error()
     }    
 
     // Finally almost at the end. cpature the body
