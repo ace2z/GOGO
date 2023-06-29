@@ -2,10 +2,9 @@ module github.com/ace2z/GOGO/Gadgets/EMBED_Ops
 
 go 1.20
 
-require github.com/ace2z/GOGO/Gadgets v0.0.0-20230601032124-795f23b5803d
+require github.com/ace2z/GOGO/Gadgets v0.0.0-20230629124012-47e5697effc1
 
 require (
-	github.com/TylerBrock/colorjson v0.0.0-20200706003622-8a50f05110d2 // indirect
 	github.com/atotto/clipboard v0.1.4 // indirect
 	github.com/briandowns/spinner v1.23.0 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
