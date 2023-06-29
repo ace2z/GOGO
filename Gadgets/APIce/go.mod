@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/TylerBrock/colorjson v0.0.0-20200706003622-8a50f05110d2
-	github.com/ace2z/GOGO/Gadgets v0.0.0-20230629031003-79000eded369
+	github.com/ace2z/GOGO/Gadgets v0.0.0-20230629124034-d8cdabd73543
 )
 
 require (
