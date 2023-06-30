@@ -65,23 +65,13 @@ func GET_DB_DATE_UTC(input_DATE_OBJ time.Time) (time.Time, string, string, strin
 }
 
 
-func CALC_RATIO(smallNUM float64, bigNUM float64, FORCE_DETECT_LARGEST_NUM ...bool) float64 {
 
-	divid := smallNUM / bigNUM
-	if FORCE_DETECT_LARGEST_NUM[0] == true {
-		if smallNUM > bigNUM {
-			divid = bigNUM / smallNUM
-		}
-	}
+func GET_RATIO(smallNUM float64, bigNUM float64) float64 {
 
-	perc := divid * 100.0
-	fixed_PERC := FIX_FLOAT_PRECISION(perc, 2)
+	res := smallNUM / bigNUM
+	fixed_PERC := FIX_FLOAT_PRECISION(res, 2)
 
-	return fixed_PERC
-} //end of func
-	
-func GET_RATIO(smallNUM float64, bigNUM float64, FORCE_DETECT_LARGEST_NUM ...bool) float64 {
-	return CALC_RATIO(smallNUM, bigNUM, FORCE_DETECT_LARGEST_NUM...)
+	return fixed_PERC	
 }
 
 
