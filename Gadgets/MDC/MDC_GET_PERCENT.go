@@ -248,7 +248,7 @@ func PERCENT_OF (ALL_PARAMS ...interface{}) float64 {
 
 	// Error handling
 	if small == large {
-		return 0.0
+		return 99.9
 	}
 	if small == 0.0 {
 		return 0.0
