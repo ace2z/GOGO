@@ -247,6 +247,9 @@ func PERCENT_OF (ALL_PARAMS ...interface{}) float64 {
 	} //end of params
 
 	// Error handling
+	if small == 0.0 && large == 0.0 {
+		return 0.0
+	}
 	if small == large {
 		return 99.9
 	}
