@@ -1,7 +1,7 @@
 package CUSTOM_GO_MODULE
 
 import (
-    //"os"
+    "os"
     "time"
     "strings"
     "encoding/json"
@@ -158,6 +158,7 @@ func PROXY_SCRAPE( url string, ALL_PARAMS ...interface{}) (bool, *goquery.Docume
     //3. and if specified, savev the body to the filename
     if p_filename != "" {
         
+        os.Remove(p_filename) 
         WRITE_FILE(p_filename, BODY_TEXT)
 
         //Create a empty file.. delete any existing
