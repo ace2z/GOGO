@@ -11,6 +11,7 @@ import (
 	"os"
 	"time"
 	"io"
+	"io/ioutil"
 	"encoding/hex"
 	"math"
 	"crypto/md5"
@@ -20,7 +21,27 @@ import (
 	"encoding/json"
 	"bytes"
 	"errors"	
+	"strings"
 )
+
+
+
+func DOES_FILE_CONTAIN(filename string, lookfor string) bool {
+	b, err := ioutil.ReadFile(filename)
+    if err != nil {
+		M.Print("DOES_FILE_CONTAIN Error: ")
+		Y.Println(err)
+		return false        
+    }
+	
+    found_string := string(b)
+	if strings.Contains(found_string, lookfor) {
+		return true
+	}
+
+
+	return false
+}
 
 // Easy way to get teh MD5 of a file
 func GET_FILE_MD5(filePath string) (string, error) {
