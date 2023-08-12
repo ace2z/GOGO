@@ -17,9 +17,10 @@ import (
 type FILE_INFO_OBJ struct {
 	NAME 	string
 	TYPE 	string
+	IS_DIR 		bool
 	IS_LINK 	bool
 	LINK_ORIGIN string
-	IS_DIR 		bool
+	
 	PATH 	string
 	FULL_PATH string
 	SIZE 	float64
