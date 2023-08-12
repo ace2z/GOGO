@@ -7,9 +7,18 @@ import (
 	"crypto/md5"
 	"encoding/hex"		
 	"strconv"
+	"unicode/utf8"
 )
 
 
+func GET_LAST_CHARs(s string, c int) string {
+    j := len(s)
+    for i := 0; i < c && j > 0; i++ {
+        _, size := utf8.DecodeLastRuneInString(s[:j])
+        j -= size
+    }
+    return s[j:]
+}
 
 // Returns true if the string contains ONLY numbers
 func HasOnlyNumbers(s string) bool {
