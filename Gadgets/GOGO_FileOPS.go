@@ -24,7 +24,33 @@ import (
 	"strings"
 )
 
+func COPY_FILE(source_file string, dest_file_name string) {
 
+	source, err := os.Open(source_file)
+	dest, err2 := os.Create(dest_file_name)
+	if err != nil || err2 != nil {
+		M.Print(" ERROR with OVERRIDE FILE Create in JTO Thread: ")
+		W.Println(err, err2)
+		return
+	}
+	defer source.Close()
+	defer dest.Close()
+
+	_, cerr := io.Copy(dest, source)
+	if cerr != nil {
+		M.Print(" ERROR Copying SOURCE_to_DEST: ", )
+		W.Println(source_file)
+		Y.Println(dest_file_name)
+		Y.Println(cerr)
+		return
+	}
+
+	G.Print(" Copied: ")
+	Y.Println(source_file)
+	G.Print(" to ")
+	Y.Println(dest_file_name)
+	Y.Println("")
+}
 
 func DOES_FILE_CONTAIN(filename string, lookfor string) bool {
 	b, err := ioutil.ReadFile(filename)
