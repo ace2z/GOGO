@@ -21,7 +21,6 @@ func GEN_UNIQUE_ID(GENFROM ...interface{} ) (string, string) {
 	var result = ""
 
 	var USE_PREFIX = ""
-	var USE_PIPE = false
 
 	for n, field := range GENFROM {
 		val_int, IS_INT := field.(int)
@@ -51,9 +50,6 @@ func GEN_UNIQUE_ID(GENFROM ...interface{} ) (string, string) {
 					}
 				}
 				continue
-			} else if val_string == "-pipe" {
-				USE_PIPE = true
-				continue
 			}
 
 			val_string = clearString(val_string)
@@ -75,16 +71,19 @@ func GEN_UNIQUE_ID(GENFROM ...interface{} ) (string, string) {
 	//3. Also..generate the MD5 of this 'unique' id.. 
 	md5string := GET_MD5(result)	
 
+	
+	/* Not doing this anymore.. not needed
 	//4. If we default to _ .. if we want we can use | as the seperator for the uniq id's
-	delim := "_"
-	if USE_PIPE {
-		delim = "|"
-	}
-	if delim != "" {
-		for i := 5; i < len(md5string); i += 6 {
-			md5string = md5string[:i] + delim + md5string[i:]
-		}		
-	}
+	 delim := "_"
+	 if USE_PIPE {
+	 	delim = "|"
+	 }
+	 if delim != "" {
+	 	for i := 5; i < len(md5string); i += 6 {
+	 		md5string = md5string[:i] + delim + md5string[i:]
+	 	}		
+	 }
+	*/
 
 	//5. And if a prefix was specified
 	if USE_PREFIX != "" {
