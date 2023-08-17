@@ -66,7 +66,40 @@ func GET_DB_DATE_UTC(input_DATE_OBJ time.Time) (time.Time, string, string, strin
 
 
 
-func GET_RATIO(smallNUM float64, bigNUM float64) float64 {
+func GET_RATIO(smallNUM float64, bigNUM float64, EXTRA_ARGS ...bool) float64 {
+
+	var do_invert = false
+
+	//1. First parameter is always the interval. We use this to "force" the value returned
+	for n, VAL := range EXTRA_ARGS {
+		if n == 0 {
+			if VAL == true {
+				do_invert = true
+			}
+			continue
+		}		
+	}
+
+	// Error handling
+	if smallNUM == 0.0 || bigNUM == 0.0 {
+		return 100.0
+	}
+	if smallNUM == bigNUM {
+		return 100.0
+	}
+
+	//if do_invert was specified (as first param)
+	if do_invert {
+		first := smallNUM
+		sec := bigNUM 
+
+		if first > sec {
+			bigNUM = first
+			smallNUM = sec
+		}
+	}
+
+	// else if invert is true
 
 	res := smallNUM / bigNUM
 	fixed_PERC := FIX_FLOAT_PRECISION(res, 2)
