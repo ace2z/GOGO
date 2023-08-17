@@ -85,7 +85,7 @@ func GET_RATIO(smallNUM float64, bigNUM float64, EXTRA_ARGS ...bool) float64 {
 		return 100.0
 	}
 	if smallNUM == bigNUM {
-		return 100.0
+		return 0.0
 	}
 
 	//if do_invert was specified (as first param)
