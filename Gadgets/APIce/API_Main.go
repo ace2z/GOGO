@@ -25,6 +25,8 @@ var SSL_ENABLE_FLAG     = false	// If set to true.. we listen in SSL mode.. mean
 var SSL_CERT_PEM_FILE   = ""		// Full path to wherever this CERT/ pem file is			(this is just example: /opt/SSL_CERTS/biolab_COMBINED.pem  )
 var SSL_KEY_FILE        = ""		// Full path to wherever the KEY file of this cert is (this is just example: /opt/SSL_CERTS/biolab_ALPHA-SSL.key )
 
+var API_DEBUG_ENABLED = false
+
 
 type API_ENDPOINT_DEFINITION struct {
 	API_Endpoint string
@@ -32,6 +34,15 @@ type API_ENDPOINT_DEFINITION struct {
 }
 var ALL_SERVICE_ENDPOINTS []API_ENDPOINT_DEFINITION
 //var USE_PROD_MODE = false     // PROD MODE makes the listener listen on ALL interfaces (not just 127).. which is needd when running on windows locally
+
+
+func ENABLE_API_DEBUG() {
+	API_DEBUG_ENABLED = true
+}
+func DISABLE_API_DEBUG() {
+	API_DEBUG_ENABLED = false
+}
+
 
 
 /*
@@ -245,10 +256,13 @@ func (RouteEntry_Handler_FUNC_to_USE GENERIC_API_ENDPOINT_HANDLER) ServeHTTP(out
 	//2. This splits the URL path and vars on the forward slash	
 	REQ_PARAMS := PARAM_PARSER(inReq.URL.RawQuery, inReq.URL.Path)
 	for _, p := range REQ_PARAMS {
-		W.Print("\n **DEBUG PARAMS** KEY: ")
-		Y.Print(p.KEY)
-		W.Print(" | Value: ")
-		G.Println(p.Value)
+
+		if API_DEBUG_ENABLED {
+			W.Print("\n **DEBUG PARAMS** KEY: ")
+			Y.Print(p.KEY)
+			W.Print(" | Value: ")
+			G.Println(p.Value)
+		}
 
 
 		//2b. hard coded means of turning "pretty" json on and off.. pretty shows the json however you formatted it in your handler
@@ -337,7 +351,7 @@ func Start_LISTENER_SERVICE_Engine(USE_PROD_MODE bool) {
 	//3. If we are running in default mode.. we WONT be using SSL
 	if SSL_ENABLE_FLAG == false {
 
-			G.Println(" REST API is now Ready!")			
+			G.Println(" API is now Listening!")			
 			
 			err := http.ListenAndServe(colon_PORT, SERVICE_MUX_OBJ)
 
