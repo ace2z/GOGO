@@ -78,12 +78,19 @@ func GET_REPO_MetaDATA() {
 		IN_REPO_ROOT = true
 	}
 
+	//C.Println(" Before: ", MODULE_IMPORT_NAME, "cwd: ", cwd, MOD_DIRPATH, "basedir: ", MOD_LOCAL_BASEDIR, "LOCAL: ", MOD_LOCAL_PATH)
 
 	if IN_REPO_ROOT {
 		MODULE_IMPORT_NAME = strings.TrimSuffix(MODULE_IMPORT_NAME, "/")		
 	}
 
 
+	//4. Now.. lets check to see if we are in the ROOT of the repo.. or a subdirectory of the repo
+	if MOD_LOCAL_PATH != cwd && BUILD_BASIC_GO_PROGRAM == false {
+		tmp_basedir := filepath.Base(cwd)
+		//Y.Println("tmpbasedir: ", tmp_basedir)
+		MODULE_IMPORT_NAME += "/" + tmp_basedir
+	}
 
 	if VERBOSE_MODE {
 		C.Print(PREFIX, "REPO_URL" + ": ")

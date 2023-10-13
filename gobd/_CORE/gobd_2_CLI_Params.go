@@ -4,6 +4,7 @@ import (
 	"flag"
 )
 
+var BUILD_BASIC_GO_PROGRAM = true
 var TEST_MOD = false
 var MAKE_MOD = false
 var DO_NORMALIZE = false

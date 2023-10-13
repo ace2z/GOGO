@@ -49,6 +49,7 @@ func main() {
     
     if TEST_MOD || MAKE_MOD { 
 
+        BUILD_BASIC_GO_PROGRAM = false
         GOMOD_Core_Ops() 
     
     } else {
