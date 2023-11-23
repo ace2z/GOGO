@@ -1,5 +1,10 @@
 #!/bin/bash
-GOEXEC="/opt/SCRIPTS/gobd.mac"
+rm go.mod
+rm go.sum
+rm /opt/SCRIPTS/go.mod
+rm /opt/SCRIPTS/go.sum
 
-$GOEXEC -o /opt/SCRIPTS/gobd --intel
-$GOEXEC -o /opt/SCRIPTS/gobd_ARM --arm
+
+gobuild.sh --intel --d /opt/SCRIPTS -name gobd.mac
+gobuild.sh --arm64 --d /opt/SCRIPTS -name gobd_ARM.mac
+

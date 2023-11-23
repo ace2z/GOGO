@@ -12,7 +12,7 @@ var MOD_LOCAL_BASEDIR = ""
 
 var MOD_DIRPATH = ""
 var JUST_MOD_PACKAGE_NAME = ""
-var MODULE_IMPORT_NAME = "local"
+var OFFICIAL_MODULE_IMPORT_NAME = "local"
 var REPO_URL = ""
 var PARENT_REPO_NAME = ""
 
@@ -67,21 +67,41 @@ func GET_REPO_MetaDATA() {
 	MOD_DIRPATH = strings.TrimPrefix(msplit[1], "/")
 	JUST_MOD_PACKAGE_NAME = filepath.Base(MOD_DIRPATH)
 
+
+	curr_wd, _ := os.Getwd()
+	//C.Println("MOD_LOCAL_BASEDIR: ", MOD_LOCAL_BASEDIR, " and", MOD_DIRPATH, "|", MOD_LOCAL_PATH, "|", curr_wd)
+
+	tmp_wd := strings.Replace(curr_wd, MOD_LOCAL_PATH, "", -1)
+	MOD_LOCAL_PATH = MOD_LOCAL_PATH + tmp_wd
+
+
+
+
+
 	// Gets the module IMPORT name based on the Github service being used
 	WHAT_GIT_Service_Being_Used()
+
+	OFFICIAL_MODULE_IMPORT_NAME = OFFICIAL_MODULE_IMPORT_NAME + tmp_wd
+	OFFICIAL_MODULE_IMPORT_NAME = strings.Replace(OFFICIAL_MODULE_IMPORT_NAME, "//", "/", -1)
+
+	// Remove lsat character if there is an extra /
+	OFFICIAL_MODULE_IMPORT_NAME = strings.TrimSuffix(OFFICIAL_MODULE_IMPORT_NAME, "/")
+
 
 
 	//3. Fix.. If we are in the ROOT dir of the repo.. We will change the offical module name accordingly
 	// We check this by looking at MOD_DIRPATH.. if it is blank.. means we are in ROOT
+
 	IN_REPO_ROOT := false
+/*
 	if MOD_DIRPATH == "" {
 		IN_REPO_ROOT = true
 	}
 
-	//C.Println(" Before: ", MODULE_IMPORT_NAME, "cwd: ", cwd, MOD_DIRPATH, "basedir: ", MOD_LOCAL_BASEDIR, "LOCAL: ", MOD_LOCAL_PATH)
+	//C.Println(" Before: ", OFFICIAL_MODULE_IMPORT_NAME, "cwd: ", cwd, MOD_DIRPATH, "basedir: ", MOD_LOCAL_BASEDIR, "LOCAL: ", MOD_LOCAL_PATH)
 
 	if IN_REPO_ROOT {
-		MODULE_IMPORT_NAME = strings.TrimSuffix(MODULE_IMPORT_NAME, "/")		
+		OFFICIAL_MODULE_IMPORT_NAME = strings.TrimSuffix(OFFICIAL_MODULE_IMPORT_NAME, "/")		
 	}
 
 
@@ -89,8 +109,9 @@ func GET_REPO_MetaDATA() {
 	if MOD_LOCAL_PATH != cwd && BUILD_BASIC_GO_PROGRAM == false {
 		tmp_basedir := filepath.Base(cwd)
 		//Y.Println("tmpbasedir: ", tmp_basedir)
-		MODULE_IMPORT_NAME += "/" + tmp_basedir
+		OFFICIAL_MODULE_IMPORT_NAME += "/" + tmp_basedir
 	}
+*/
 
 	if VERBOSE_MODE {
 		C.Print(PREFIX, "REPO_URL" + ": ")
@@ -110,13 +131,13 @@ func GET_REPO_MetaDATA() {
 		}
 	}
 
-	if MODULE_IMPORT_NAME == "local" {
+	if OFFICIAL_MODULE_IMPORT_NAME == "local" {
 		C.Print(PREFIX, "Regular GO Program (not module)" + ": ")
 		G.Println("Yes!")
 	} else {
 		
 		C.Print(PREFIX, "Official MODULE Name" + ": ")
-		G.Println(MODULE_IMPORT_NAME)
+		G.Println(OFFICIAL_MODULE_IMPORT_NAME)
 	}
 }
 
@@ -135,18 +156,18 @@ func WHAT_GIT_Service_Being_Used() {
 
 	if TEST_MOD == false && MAKE_MOD == false {
 		
-		MODULE_IMPORT_NAME = "local"
+		OFFICIAL_MODULE_IMPORT_NAME = "local"
 
 	// Else we determine the proper module name path based on the git service
 	} else {
 
 		if strings.Contains(PARENT_REPO_NAME, "github.com") {
 			
-			MODULE_IMPORT_NAME = GITHUB_Proper_GOMOD_Path_Name()
+			OFFICIAL_MODULE_IMPORT_NAME = GITHUB_Proper_GOMOD_Path_Name()
 
 		} else if strings.Contains(PARENT_REPO_NAME, "dev.azure") {
 
-			MODULE_IMPORT_NAME = AZURE_Proper_GOMOD_Path_Name()
+			OFFICIAL_MODULE_IMPORT_NAME = AZURE_Proper_GOMOD_Path_Name()
 		}
 
 	}	

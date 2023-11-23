@@ -64,11 +64,11 @@ func RUN_GO_Test() bool {
 func DO_GOMOD_Init() {
 	C.Print(PREFIX, "Running: ")
 	W.Print("go mod init ")
-	Y.Println(MODULE_IMPORT_NAME)
+	Y.Println(OFFICIAL_MODULE_IMPORT_NAME)
 	os.Remove("go.mod")
 	os.Remove("go.sum")	
 
-	RUN_COMMAND("go mod init " + MODULE_IMPORT_NAME)	
+	RUN_COMMAND("go mod init " + OFFICIAL_MODULE_IMPORT_NAME)	
 }
 
 

@@ -39,6 +39,7 @@ func CLI_PARAMS_INIT() {
 	// Basic admin Params
     flag.BoolVar(&TEST_MOD,  "testmod", TEST_MOD,      "  Test the current Go Module you are in (must have a go.mod file) but doesnt commit it to the repo")
 	flag.BoolVar(&MAKE_MOD,  "initmod", MAKE_MOD,      "  Builds, Tests and commits module to repo (if successful)")
+	flag.BoolVar(&MAKE_MOD,  "initmods", MAKE_MOD,      "  Builds, Tests and commits module to repo (if successful)")
 	flag.BoolVar(&VERBOSE_MODE,  "verbose", VERBOSE_MODE,      "  Verbose Mode (more messages and errors)")	
 
 	flag.BoolVar(&JUST_TEST,  "test", JUST_TEST,      "  Runs a basic go test on the GO program or module")	
