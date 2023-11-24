@@ -71,10 +71,11 @@ func GET_REPO_MetaDATA() {
 	MOD_DIRPATH = strings.TrimPrefix(msplit[1], "/")
 
 	MOD_LOCAL_BASEDIR = MOD_DIRPATH
-	//JUST_MOD_PACKAGE_NAME = filepath.Base(MOD_DIRPATH)
 
 
 	//3. If we are in same directory as REPO LOCAL Root.. and trying to initalize a module
+	// Note: right now we're only supporting GITHUB ... for Azure, Gitlab and Bitbucket, we have different paths that are 
+	// used for the "official module import name".. and need adjust accordingly
 	if INIT_MOD {
 		if REPO_LOCAL_ROOT == cwd  {
 			MOD_LOCAL_BASEDIR = cwd
