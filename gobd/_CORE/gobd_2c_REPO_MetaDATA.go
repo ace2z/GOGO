@@ -124,38 +124,6 @@ func GET_REPO_MetaDATA() {
 	//DO_EXIT()
 }
 
-/*
-	Determine which GIT service we are on:
-
-	Currently just supporting github.com .. eventually will properly support
-	- azure devops
-	- bitbucket
-	- gitlab
-
-	This is due to the fact the path you use to refer to modules when you import and go get them.. DIFFERS with these services
-	Github.com tends to just work
-*/
-func WHAT_GIT_Service_Being_Used() {
-
-	if TEST_MOD == false && INIT_MOD == false {
-		
-		OFFICIAL_MODULE_IMPORT_NAME = "local"
-
-	// Else we determine the proper module name path based on the git service
-	} else {
-
-		if strings.Contains(PARENT_REPO_NAME, "github.com") {
-			
-			OFFICIAL_MODULE_IMPORT_NAME = GITHUB_Proper_GOMOD_Path_Name()
-
-		} else if strings.Contains(PARENT_REPO_NAME, "dev.azure") {
-
-			OFFICIAL_MODULE_IMPORT_NAME = AZURE_Proper_GOMOD_Path_Name()
-		}
-
-	}	
-
-}
 	
 
 		
