@@ -1,18 +1,18 @@
-module github.com/ace2z/GOGO/Gadgets
+module github.com/ace2z/GOGO/Gadgets/Gadgets
 
-go 1.20
+go 1.21.4
 
 require (
 	github.com/atotto/clipboard v0.1.4
 	github.com/briandowns/spinner v1.23.0
 	github.com/dustin/go-humanize v1.0.1
-	github.com/fatih/color v1.15.0
-	github.com/google/uuid v1.3.0
+	github.com/fatih/color v1.16.0
+	github.com/google/uuid v1.4.0
 )
 
 require (
 	github.com/mattn/go-colorable v0.1.13 // indirect
-	github.com/mattn/go-isatty v0.0.17 // indirect
-	golang.org/x/sys v0.6.0 // indirect
+	github.com/mattn/go-isatty v0.0.20 // indirect
+	golang.org/x/sys v0.14.0 // indirect
 	golang.org/x/term v0.1.0 // indirect
 )

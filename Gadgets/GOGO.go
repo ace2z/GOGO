@@ -52,6 +52,13 @@ var GLOBAL_CURR_DATE = ""		// Current Actual Date in the Timezone we specified
 var CHECK_VERSION = false
 var DEBUG_MODE = false
 
+
+// Generic null ints and floats to use .. when using just 0 isnt sufficient
+var null_INT = -69696969
+var null_FLOAT = -69.69696969
+
+
+
 func NEW_UUID() string {
 
 	return uuid.New().String()
