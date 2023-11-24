@@ -11,7 +11,7 @@ var MOD_LOCAL_PATH = ""
 var MOD_LOCAL_BASEDIR = ""
 
 var MOD_DIRPATH = ""
-var JUST_MOD_PACKAGE_NAME = ""
+//var JUST_MOD_PACKAGE_NAME = ""
 var OFFICIAL_MODULE_IMPORT_NAME = "local"
 var REPO_URL = ""
 var PARENT_REPO_NAME = ""
@@ -63,68 +63,37 @@ func GET_REPO_MetaDATA() {
 		}
 	}
 
+	//2. Need all this stuff as is and in this order.. dont change it
 	MOD_LOCAL_PATH = strings.TrimSuffix(res2, "\n")	
 	REPO_LOCAL_ROOT := MOD_LOCAL_PATH
 	MOD_LOCAL_BASEDIR = strings.TrimSuffix(filepath.Base(res2), "\n")
 	msplit := strings.Split(cwd, MOD_LOCAL_BASEDIR)
 	MOD_DIRPATH = strings.TrimPrefix(msplit[1], "/")
-	JUST_MOD_PACKAGE_NAME = filepath.Base(MOD_DIRPATH)
+
+	MOD_LOCAL_BASEDIR = MOD_DIRPATH
+	//JUST_MOD_PACKAGE_NAME = filepath.Base(MOD_DIRPATH)
 
 
-	
+	//3. If we are in same directory as REPO LOCAL Root.. and trying to initalize a module
+	if INIT_MOD {
+		if REPO_LOCAL_ROOT == cwd  {
+			MOD_LOCAL_BASEDIR = cwd
+			OFFICIAL_MODULE_IMPORT_NAME = PARENT_REPO_NAME
+		} else {
+			OFFICIAL_MODULE_IMPORT_NAME = PARENT_REPO_NAME + "/" + MOD_LOCAL_BASEDIR
+		}
 
-	curr_wd, _ := os.Getwd()
-	C.Println("REPO LOCAL ROOT: ", REPO_LOCAL_ROOT)
-	C.Println(" CWD: ", curr_wd)
-	//C.Println("MOD_LOCAL_BASEDIR: ", MOD_LOCAL_BASEDIR, " and", MOD_DIRPATH, "|", MOD_LOCAL_PATH, "|", curr_wd)
-
-	if curr_wd != REPO_LOCAL_ROOT {
-		tmp_wd := strings.Replace(curr_wd, MOD_LOCAL_PATH, "", -1)
-		MOD_LOCAL_PATH = MOD_LOCAL_PATH + tmp_wd
-	}
-
-
-
-
-
-	// Gets the module IMPORT name based on the Github service being used
-	WHAT_GIT_Service_Being_Used()
-
-
-	if strings.Contains(OFFICIAL_MODULE_IMPORT_NAME, "local") == false {
-
-		OFFICIAL_MODULE_IMPORT_NAME = OFFICIAL_MODULE_IMPORT_NAME + tmp_wd
+		//3b Cleanup
 		OFFICIAL_MODULE_IMPORT_NAME = strings.Replace(OFFICIAL_MODULE_IMPORT_NAME, "//", "/", -1)
-
 		// Remove lsat character if there is an extra /
 		OFFICIAL_MODULE_IMPORT_NAME = strings.TrimSuffix(OFFICIAL_MODULE_IMPORT_NAME, "/")
 	}
 
+	
 
+	// Gets the module IMPORT name based on the Github service being used
+	//WHAT_GIT_Service_Being_Used()
 
-	//3. Fix.. If we are in the ROOT dir of the repo.. We will change the offical module name accordingly
-	// We check this by looking at MOD_DIRPATH.. if it is blank.. means we are in ROOT
-
-	IN_REPO_ROOT := false
-/*
-	if MOD_DIRPATH == "" {
-		IN_REPO_ROOT = true
-	}
-
-	//C.Println(" Before: ", OFFICIAL_MODULE_IMPORT_NAME, "cwd: ", cwd, MOD_DIRPATH, "basedir: ", MOD_LOCAL_BASEDIR, "LOCAL: ", MOD_LOCAL_PATH)
-
-	if IN_REPO_ROOT {
-		OFFICIAL_MODULE_IMPORT_NAME = strings.TrimSuffix(OFFICIAL_MODULE_IMPORT_NAME, "/")		
-	}
-
-
-	//4. Now.. lets check to see if we are in the ROOT of the repo.. or a subdirectory of the repo
-	if MOD_LOCAL_PATH != cwd && BUILD_BASIC_GO_PROGRAM == false {
-		tmp_basedir := filepath.Base(cwd)
-		//Y.Println("tmpbasedir: ", tmp_basedir)
-		OFFICIAL_MODULE_IMPORT_NAME += "/" + tmp_basedir
-	}
-*/
 
 	if VERBOSE_MODE {
 		C.Print(PREFIX, "REPO_URL" + ": ")
@@ -137,13 +106,8 @@ func GET_REPO_MetaDATA() {
 		Y.Println(REPO_LOCAL_ROOT)
 		C.Print(PREFIX, "PARENT_REPO_NAME" + ": ")
 		Y.Println(PARENT_REPO_NAME)
-		C.Print(PREFIX, "MOD_LOCAL_PATH" + ": ")
-		if IN_REPO_ROOT {
-			Y.Println(MOD_LOCAL_PATH)
-		} else {
-			Y.Println(MOD_LOCAL_PATH + "/" + MOD_DIRPATH)
-			
-		}
+		C.Print(PREFIX, "MOD_LOCAL_BASEDIR" + ": ")
+		Y.Println(MOD_LOCAL_BASEDIR)
 	}
 
 	if OFFICIAL_MODULE_IMPORT_NAME == "local" {
@@ -154,6 +118,9 @@ func GET_REPO_MetaDATA() {
 		C.Print(PREFIX, "Official MODULE Name" + ": ")
 		G.Println(OFFICIAL_MODULE_IMPORT_NAME)
 	}
+
+	// Debug till we have all this right
+	//DO_EXIT()
 }
 
 /*
@@ -169,7 +136,7 @@ func GET_REPO_MetaDATA() {
 */
 func WHAT_GIT_Service_Being_Used() {
 
-	if TEST_MOD == false && MAKE_MOD == false {
+	if TEST_MOD == false && INIT_MOD == false {
 		
 		OFFICIAL_MODULE_IMPORT_NAME = "local"
 
