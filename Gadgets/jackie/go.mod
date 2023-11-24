@@ -1,4 +1,4 @@
-module github.com/ace2z/GOGO/Gadgets/jackie/Gadgets/jackie
+module github.com/ace2z/GOGO/Gadgets/jackie
 
 go 1.21.4
 
