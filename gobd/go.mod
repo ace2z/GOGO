@@ -1,17 +1,17 @@
 module local
 
-go 1.21.0
+go 1.21.4
 
-require github.com/ace2z/GOGO/Gadgets v0.0.0-20231123145557-6ce0326790db
+require github.com/ace2z/GOGO/Gadgets v0.0.0-20231124015529-4821013a3ccc
 
 require (
 	github.com/atotto/clipboard v0.1.4 // indirect
 	github.com/briandowns/spinner v1.23.0 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
-	github.com/fatih/color v1.15.0 // indirect
-	github.com/google/uuid v1.3.0 // indirect
+	github.com/fatih/color v1.16.0 // indirect
+	github.com/google/uuid v1.4.0 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
-	github.com/mattn/go-isatty v0.0.17 // indirect
-	golang.org/x/sys v0.6.0 // indirect
+	github.com/mattn/go-isatty v0.0.20 // indirect
+	golang.org/x/sys v0.14.0 // indirect
 	golang.org/x/term v0.1.0 // indirect
 )

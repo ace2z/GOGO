@@ -68,7 +68,9 @@ func DO_GOMOD_Init() {
 	os.Remove("go.mod")
 	os.Remove("go.sum")	
 
+	
 	RUN_COMMAND("go mod init " + OFFICIAL_MODULE_IMPORT_NAME)	
+	RUN_COMMAND("go mod tidy")	
 }
 
 

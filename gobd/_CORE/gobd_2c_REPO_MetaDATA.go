@@ -16,6 +16,8 @@ var OFFICIAL_MODULE_IMPORT_NAME = "local"
 var REPO_URL = ""
 var PARENT_REPO_NAME = ""
 
+var REPO_LOCAL_ROOT = ""
+
 
 
 func repo_delims(r rune) bool {
@@ -62,17 +64,24 @@ func GET_REPO_MetaDATA() {
 	}
 
 	MOD_LOCAL_PATH = strings.TrimSuffix(res2, "\n")	
+	REPO_LOCAL_ROOT := MOD_LOCAL_PATH
 	MOD_LOCAL_BASEDIR = strings.TrimSuffix(filepath.Base(res2), "\n")
 	msplit := strings.Split(cwd, MOD_LOCAL_BASEDIR)
 	MOD_DIRPATH = strings.TrimPrefix(msplit[1], "/")
 	JUST_MOD_PACKAGE_NAME = filepath.Base(MOD_DIRPATH)
 
 
+	
+
 	curr_wd, _ := os.Getwd()
+	C.Println("REPO LOCAL ROOT: ", REPO_LOCAL_ROOT)
+	C.Println(" CWD: ", curr_wd)
 	//C.Println("MOD_LOCAL_BASEDIR: ", MOD_LOCAL_BASEDIR, " and", MOD_DIRPATH, "|", MOD_LOCAL_PATH, "|", curr_wd)
 
-	tmp_wd := strings.Replace(curr_wd, MOD_LOCAL_PATH, "", -1)
-	MOD_LOCAL_PATH = MOD_LOCAL_PATH + tmp_wd
+	if curr_wd != REPO_LOCAL_ROOT {
+		tmp_wd := strings.Replace(curr_wd, MOD_LOCAL_PATH, "", -1)
+		MOD_LOCAL_PATH = MOD_LOCAL_PATH + tmp_wd
+	}
 
 
 
@@ -81,11 +90,15 @@ func GET_REPO_MetaDATA() {
 	// Gets the module IMPORT name based on the Github service being used
 	WHAT_GIT_Service_Being_Used()
 
-	OFFICIAL_MODULE_IMPORT_NAME = OFFICIAL_MODULE_IMPORT_NAME + tmp_wd
-	OFFICIAL_MODULE_IMPORT_NAME = strings.Replace(OFFICIAL_MODULE_IMPORT_NAME, "//", "/", -1)
 
-	// Remove lsat character if there is an extra /
-	OFFICIAL_MODULE_IMPORT_NAME = strings.TrimSuffix(OFFICIAL_MODULE_IMPORT_NAME, "/")
+	if strings.Contains(OFFICIAL_MODULE_IMPORT_NAME, "local") == false {
+
+		OFFICIAL_MODULE_IMPORT_NAME = OFFICIAL_MODULE_IMPORT_NAME + tmp_wd
+		OFFICIAL_MODULE_IMPORT_NAME = strings.Replace(OFFICIAL_MODULE_IMPORT_NAME, "//", "/", -1)
+
+		// Remove lsat character if there is an extra /
+		OFFICIAL_MODULE_IMPORT_NAME = strings.TrimSuffix(OFFICIAL_MODULE_IMPORT_NAME, "/")
+	}
 
 
 
@@ -120,6 +133,8 @@ func GET_REPO_MetaDATA() {
 		}
 	
 		Y.Println(REPO_URL)
+		C.Print(PREFIX, "REPO_LOCAL_ROOT" + ": ")
+		Y.Println(REPO_LOCAL_ROOT)
 		C.Print(PREFIX, "PARENT_REPO_NAME" + ": ")
 		Y.Println(PARENT_REPO_NAME)
 		C.Print(PREFIX, "MOD_LOCAL_PATH" + ": ")
