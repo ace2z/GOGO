@@ -54,8 +54,8 @@ var DEBUG_MODE = false
 
 
 // Generic null ints and floats to use .. when using just 0 isnt sufficient
-var null_INT = -69696969
-var null_FLOAT = -69.69696969
+var NULL_INT = -69696969
+var NULL_FLOAT = -69.69696969
 
 
 
