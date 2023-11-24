@@ -1,4 +1,4 @@
-module github.com/ace2z/GOGO/Gadgets
+module github.com/ace2z/GOGO/Gadgets/Gadgets
 
 go 1.21.4
 
