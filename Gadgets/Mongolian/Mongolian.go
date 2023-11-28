@@ -39,8 +39,8 @@ type GAME_OBJ struct {
 
 var MONGO_PORT = "27017" // defualt mongo port.. can be overrided if you ever need to for some reason
 
-var MONGO_DBNAME = "" // name of the database to use
-var MONGO_HOST = ""   // hostname of the DB to use
+var DBNAME = ""     // name of the database to use
+var MONGO_HOST = "" // hostname of the DB to use
 
 var MONGO_CLIENT *mongo.Client
 var MONGO_CLIENT_OPTIONS *options.ClientOptions
