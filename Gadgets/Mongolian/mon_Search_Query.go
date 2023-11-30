@@ -1,27 +1,24 @@
 package CUSTOM_GOMOD
 
-import (    
-    "strings"
+import (
+	"strings"
 
-    // For MOnGO using Latest Driver
-    
-    "go.mongodb.org/mongo-driver/mongo"
-    "go.mongodb.org/mongo-driver/bson"
-    "go.mongodb.org/mongo-driver/mongo/options"
+	// For MOnGO using Latest Driver
 
-    . "github.com/ace2z/GOGO/Gadgets"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
+
+	. "github.com/ace2z/GOGO/Gadgets"
 )
 
-
 // Gets a COUNT of documents based on filter.. MAKE SURE AN INDEX IS SETUP ON TEH FIELD BEING QUERIED
-func MON_COUNT(dbname string, coll_name string, search_filter interface{}) int{
- 
+func MON_COUNT(dbname string, coll_name string, search_filter interface{}) int {
+
 	SHOW_BOX("Performing MONGO Count MONGO ")
 	SHOW_STRUCT(search_filter)
 
-	
 	//2. Defualt options we alway ssetup
-	
 
 	var tmp_collection_obj = MONGO_CLIENT.Database(dbname).Collection(coll_name)
 	var itemCOUNT, err = tmp_collection_obj.CountDocuments(MONGO_CONTEXT, search_filter)
@@ -35,14 +32,14 @@ func MON_COUNT(dbname string, coll_name string, search_filter interface{}) int{
 
 /*
 1. This is a basic query function. You provide it a custom Mongo Filter like this:
-	
+
 		filter = bson.D{
 			{
 				"PRICE.Open", bson.D{
 					{"$eq", 19.31},
 				},
 			},
-		}	
+		}
 
 	NOTE: if you want to query an array within a collection..use tTHIS format:
 
@@ -59,7 +56,7 @@ func MON_COUNT(dbname string, coll_name string, search_filter interface{}) int{
 
 	AND.. if you need to compound several query elements together..use this:
 
-		var filter bson.D	
+		var filter bson.D
 		filter = append(filter, bson.E {
 			"ID", bson.D {
 				{ "$in", LIST },
@@ -69,18 +66,17 @@ func MON_COUNT(dbname string, coll_name string, search_filter interface{}) int{
 2. Invoke as follows (it returns a cursor with objects you can iterate over)
 
 	var RES []FV_NEWS_OBJ		// object of whatever struct you're pulling back
-	RES_CURSOR := MON_SEARCH(DBNAME, NEWS_COLL, filter)	
+	RES_CURSOR := MON_SEARCH(DBNAME, NEWS_COLL, filter)
 	RES_CURSOR.All(MONGO_CONTEXT, &RES)
 
 	for _, res := range RES {
 		C.Println(" HEadline is: ", res.Headline)
 	}
+*/
+func MON_SEARCH(dbname string, coll_name string, search_filter interface{}, CLAUSES ...string) (error, *mongo.Cursor) {
 
- */
-func MON_SEARCH(dbname string, coll_name string, search_filter interface{}, CLAUSES ...string) *mongo.Cursor {
-
-	//Extract any clauses (like sort or limit)	
-	var SORT_KEY = ""	
+	//Extract any clauses (like sort or limit)
+	var SORT_KEY = ""
 	var SORT_DIRECTION = -9
 	var LIMIT = 0
 	var BE_VERBOSE = false
@@ -110,7 +106,6 @@ func MON_SEARCH(dbname string, coll_name string, search_filter interface{}, CLAU
 		}
 	}
 
-
 	if BE_VERBOSE {
 		SHOW_BOX("Querying MONGO ")
 		C.Println(search_filter)
@@ -137,6 +132,5 @@ func MON_SEARCH(dbname string, coll_name string, search_filter interface{}, CLAU
 		Y.Println(err)
 	}
 
-	return tmp_cursor
+	return err, tmp_cursor
 }
-

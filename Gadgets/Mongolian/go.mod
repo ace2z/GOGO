@@ -3,7 +3,7 @@ module github.com/ace2z/GOGO/Gadgets/Mongolian
 go 1.21.4
 
 require (
-	github.com/ace2z/GOGO/Gadgets v0.0.0-20231128035418-fc95e136cde3
+	github.com/ace2z/GOGO/Gadgets v0.0.0-20231128035459-1ee7f226272c
 	go.mongodb.org/mongo-driver v1.13.0
 )
 
