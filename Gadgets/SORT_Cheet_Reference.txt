@@ -1,0 +1,18 @@
+	
+# When sorting a STRUCT using either a DATE_OBJ.. or a numeric value .. Use .After to get DESC
+# For the DATE_OBJ.. use .After to get DESC mode
+# for Number, use the other > bracket
+
+sort.Slice(FIN_LIST, func(i, j int) bool { return (FIN_LIST)[i].DATE_OBJ.Before((FIN_LIST)[j].DATE_OBJ) })
+
+sort.Slice(TS_LIST, func(i, j int) bool { return TS_LIST[i].MINS < TS_LIST[j].MINS })
+
+
+# For sorting just an array of strings alphabetically... use this
+
+sort.Strings(ARR_STRINGS) 
+
+
+# And if you want to sort the strings in REVERSE (z - a):
+
+sort.Sort(sort.Reverse(sort.StringSlice(ARR_STRINGS)))

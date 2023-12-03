@@ -1,14 +1,13 @@
 package CUSTOM_GO_MODULE
 
 import (
-	"os"
-	"strings"
-	"math/rand"
 	"bufio"
 	"encoding/json"
+	"math/rand"
+	"os"
+	"strings"
 
 	"github.com/atotto/clipboard"
-	
 )
 
 // When called, copies a specified string to the users CLIPBOARD
@@ -124,11 +123,25 @@ func GET_INPUT() string {
 
 
 // Simple PressAny Key function
-func PressAny() {
+func PressAny(ALL_PARAMS ...interface{}) {
+	var be_quiet = false 
 
-	W.Println("")
-	W.Println("         ...Press Enter to Continue...")
-	W.Println("")
+
+	for _, param := range ALL_PARAMS {
+		//string_val, is_string := param.(string)
+
+		bool_val, is_bool := param.(bool)
+
+		if is_bool {
+			be_quiet = bool_val
+		}
+	}	
+
+	if be_quiet == false {
+		W.Println("")
+		W.Println("         ...Press Enter to Continue...")
+		W.Println("")
+	}
 
 	//1. New way of doing PAK
 	b := make([]byte, 10)
