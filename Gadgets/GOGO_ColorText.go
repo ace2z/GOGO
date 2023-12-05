@@ -1,14 +1,12 @@
 /*   GOGO_Gadgets  - Useful multi-purpose GO functions to make GO DEV easier
-	 by TerryCowboy
+by TerryCowboy
 
 */
 
 package CUSTOM_GO_MODULE
 
 import (
-
 	"github.com/fatih/color"
-
 )
 
 // -=-=-= COMMON COLOR GLOBAL references =-=-=-=-
@@ -30,13 +28,14 @@ var Mu = color.New(color.FgMagenta, color.Underline)
 var Cu = color.New(color.FgCyan, color.Underline)
 var Wu = color.New(color.FgWhite, color.Underline)
 
-
 // Some helpful REVERSe colors
 
 var RY = color.New(color.FgRed, color.BgYellow, color.Bold)
 var GB = color.New(color.FgGreen, color.BgBlue, color.Bold)
 var BW = color.New(color.FgBlue, color.BgWhite, color.Bold)
 var MW = color.New(color.FgMagenta, color.BgWhite, color.Bold)
+
+var BG = color.New(color.BgBlue, color.FgGreen, color.Bold)
 
 var WB = color.New(color.FgWhite, color.BgBlue, color.Bold)
 var WM = color.New(color.FgWhite, color.BgMagenta, color.Bold)
@@ -59,8 +58,6 @@ var YBu = color.New(color.FgYellow, color.BgBlue, color.Bold, color.Underline)
 var YRu = color.New(color.FgYellow, color.BgRed, color.Bold, color.Underline)
 var YMu = color.New(color.FgYellow, color.BgMagenta, color.Bold, color.Underline)
 
-
-
 // This makes foreground and background color text
 /*
 func SetForeBack_COLOR(fore string, back string) {
@@ -72,13 +69,11 @@ func SetForeBack_COLOR(fore string, back string) {
 
 	/ Use handy standard colors
 	color.Set(s_fore, s_back, color.Bold)
-	
+
 
 	fmt.Println("Existing text will now be in yellow")
 	fmt.Printf("This one %s\n", "too")
-	
-	color.Unset() // Don't forget to unset	
+
+	color.Unset() // Don't forget to unset
 }
 */
-
-
