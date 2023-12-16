@@ -210,7 +210,8 @@ func CREATE_DATABASE(dbname string, collname string) {
 
 		Y.Print(MON_PREFIX, "Created INDEX: ")
 		G.Print(indexName)
-		C.Println("", field_type)
+		Y.Print(" as ")
+		C.Println(field_type)
 
 	} //end of for
 
