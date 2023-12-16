@@ -51,6 +51,8 @@ var MONGO_TIMEOUT_SECS = 20
 var MON_PREFIX = " --| "
 var err error
 
+var MONGO_VERBOSE = false // when set to true, more verbose messages are shown
+
 func TestFUNC() {
 	C.Println("MOngolian TESTFUNC")
 }

@@ -48,8 +48,10 @@ func DO_BULK_DELETE(dbname string, coll_name string, search_filter interface{}) 
 		M.Println("BULK DELETE ERROR: ", err2.Error())
 		return
 	} else {
-		G.Println(" = =| BULK DELETE Success!")
-		G.Println("")
+		if MONGO_VERBOSE {
+			G.Println(" = =| BULK DELETE Success!")
+			G.Println("")
+		}
 	}
 
 	// Always pause for a second after deleting.
