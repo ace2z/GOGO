@@ -40,7 +40,7 @@ func helper_GET_SINCE_UNTIL(future time.Time, curr_time time.Time, otype string,
 		result_until = duration.Seconds()
 	}
 
-	result_until = FIX_FLOAT_PRECISION(result_until, 1)
+	result_until = FIX_FLOAT_PRECISION(result_until, 2)
 
 	return result_until
 }
