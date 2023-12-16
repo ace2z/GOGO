@@ -34,9 +34,11 @@ import (
 
 func DO_BULK_DELETE(dbname string, coll_name string, search_filter interface{}) {
 
-	C.Println("")
-	C.Print(" = =| Attempting BULK DELETE/PURGE using: ")
-	Y.Println(search_filter)
+	if MONGO_VERBOSE {
+		C.Println("")
+		C.Print(" = =| Attempting BULK DELETE/PURGE using: ")
+		Y.Println(search_filter)
+	}
 
 	var MONGO_DB_OBJ = MONGO_CLIENT.Database(dbname)
 	var MONGO_COLL_OBJ = MONGO_DB_OBJ.Collection(coll_name)
@@ -48,9 +50,9 @@ func DO_BULK_DELETE(dbname string, coll_name string, search_filter interface{}) 
 		M.Println("BULK DELETE ERROR: ", err2.Error())
 		return
 	} else {
+
 		if MONGO_VERBOSE {
 			G.Println(" = =| BULK DELETE Success!")
-			G.Println("")
 		}
 	}
 
