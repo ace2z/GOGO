@@ -1,15 +1,12 @@
 package GOGO_MDC
 
 import (
-		//"strings"
-		"math"
-		//"strconv"
+	//"strings"
+	"math"
+	//"strconv"
 
-		. "github.com/ace2z/GOGO/Gadgets"
+	. "github.com/ace2z/GOGO/Gadgets"
 )
-
-
-
 
 // Returns Percentages INCREASE DECREASE for stocks etc... Takes in floats or INTs
 /*
@@ -20,7 +17,7 @@ import (
 	res_PERC, changeTYPE, res_DESC, res_diff
 */
 func GET_INCDEC_PERCENT(ALL_PARAMS ...interface{}) (float64, string, string, float64) {
-	
+
 	var firstNUM = 0.0
 	var secNUM = 0.0
 	var SHOW_OUTPUT = false
@@ -31,7 +28,7 @@ func GET_INCDEC_PERCENT(ALL_PARAMS ...interface{}) (float64, string, string, flo
 
 	var precision = 1
 
-	// If true is passed, we show the output of this function 
+	// If true is passed, we show the output of this function
 	for n, param := range ALL_PARAMS {
 		intval, IS_INT := param.(int)
 		floatval, IS_FLOAT := param.(float64)
@@ -40,16 +37,22 @@ func GET_INCDEC_PERCENT(ALL_PARAMS ...interface{}) (float64, string, string, flo
 		// First paramn is always FIRSTNUM
 		if n == 0 || n == 1 {
 
-			if IS_INT { 
+			if IS_INT {
 
-				       if n == 0 { firstNUM = float64(intval) 
-                } else if n == 1 { secNUM   = float64(intval) }
+				if n == 0 {
+					firstNUM = float64(intval)
+				} else if n == 1 {
+					secNUM = float64(intval)
+				}
 
 			} else if IS_FLOAT {
-				       if n == 0 { firstNUM = floatval
-				} else if n == 1 { secNUM = floatval }
+				if n == 0 {
+					firstNUM = floatval
+				} else if n == 1 {
+					secNUM = floatval
+				}
 
-			// Hard exit for error handling
+				// Hard exit for error handling
 			} else {
 				M.Println(" ERROR: Invalid values setn to GET_DIFF")
 				Y.Println(" Must be INT or FLOAT")
@@ -60,7 +63,7 @@ func GET_INCDEC_PERCENT(ALL_PARAMS ...interface{}) (float64, string, string, flo
 
 		// If an integer was passed (that isnt first and secnum) assume this is precision
 		if IS_INT {
-			
+
 			precision = intval
 			continue
 		}
@@ -72,7 +75,7 @@ func GET_INCDEC_PERCENT(ALL_PARAMS ...interface{}) (float64, string, string, flo
 		}
 	}
 
-	// ERROR HANLDING 
+	// ERROR HANLDING
 	//1. First get the diff... if they are equal, we return
 	if firstNUM == secNUM {
 
@@ -81,35 +84,35 @@ func GET_INCDEC_PERCENT(ALL_PARAMS ...interface{}) (float64, string, string, flo
 	//2. This is for convenience and makes it easier to remember what number is what (large or small)
 	var smallNUM = firstNUM
 	var largeNUM = secNUM
-    var mode = "INCREASE"
+	var mode = "INCREASE"
 
 	if firstNUM > secNUM {
-        mode = "DECREASE"
+		mode = "DECREASE"
 	}
 
 	var ERROR_HANDLE_OVERRIDE_FLAG = false
 	// ERROR HANLDING for 0.0
 	//3. Also if one number is 0.0 .. we return.. obviously this is 100%
-    res_PERC = 100.0    
-    res_DESC = "100% ( " + mode + " from zero ) "
+	res_PERC = 100.0
+	res_DESC = "100% ( " + mode + " from zero ) "
 
 	if smallNUM == 0.0 {
-        res_diff = largeNUM
+		res_diff = largeNUM
 		ERROR_HANDLE_OVERRIDE_FLAG = true
 		//return res_DESC, res_PERC, res_diff
 
 	} else if largeNUM == 0.0 {
-        res_diff = smallNUM
+		res_diff = smallNUM
 		ERROR_HANDLE_OVERRIDE_FLAG = true
 		//return res_DESC, res_PERC, res_diff
-	}	
-    
+	}
+
 	if ERROR_HANDLE_OVERRIDE_FLAG == false {
 		// ERROR HANDLING for negative numbers
 		// If both numbers are NEGATIVE.. flip them to positive
 		if smallNUM < 0.0 && largeNUM < 0.0 {
-			smallNUM = math.Abs(smallNUM) 
-			largeNUM = math.Abs(largeNUM) 
+			smallNUM = math.Abs(smallNUM)
+			largeNUM = math.Abs(largeNUM)
 
 		}
 
@@ -121,17 +124,16 @@ func GET_INCDEC_PERCENT(ALL_PARAMS ...interface{}) (float64, string, string, flo
 
 		//4b If negative number... we flip it to positive..
 		if mperc < 0.0 {
-			mperc = math.Abs(mperc) 
+			mperc = math.Abs(mperc)
 		}
 
 		//5. Convert the percentages into readable objects
 		res_PERC = FIX_FLOAT_PRECISION(mperc, precision)
-		
+
 		// Now, lets adjust percSTRING so we have a leading % char
-		// (must be done AFTER the call to parseFLoat)		
+		// (must be done AFTER the call to parseFLoat)
 		ptemp := FLOAT_to_STRING(res_PERC)
 		res_DESC = mode + " by " + ptemp
-
 
 		//6. Return the DIFFERENCE between the two numbers
 		res_diff = FIX_FLOAT_PRECISION(tdiff, precision)
@@ -140,15 +142,15 @@ func GET_INCDEC_PERCENT(ALL_PARAMS ...interface{}) (float64, string, string, flo
 
 	//6b fix for res_diff
 	if res_diff < 0.0 {
-		res_diff = math.Abs(res_diff) 
-	}	
+		res_diff = math.Abs(res_diff)
+	}
 	//7. If we are showing the output
 	if SHOW_OUTPUT {
 		firstSTRING := FLOAT_to_STRING(firstNUM)
 		secSTRING := FLOAT_to_STRING(secNUM)
-		diffstring := FLOAT_to_STRING(res_diff)	
-		percSTRING := FLOAT_to_STRING(res_PERC) + "%"                           
-		SHOW_BOX("GET_PERCENTAGE", "|cyan|" + firstSTRING + " --> " + secSTRING, "|yellow|" + mode + " by", "|green|" + percSTRING, "DIFF: ", "|yellow|" + diffstring)
+		diffstring := FLOAT_to_STRING(res_diff)
+		percSTRING := FLOAT_to_STRING(res_PERC) + "%"
+		SHOW_BOX("GET_PERCENTAGE", "|cyan|"+firstSTRING+" --> "+secSTRING, "|yellow|"+mode+" by", "|green|"+percSTRING, "DIFF: ", "|yellow|"+diffstring)
 	}
 
 	var changeTYPE = mode
@@ -157,12 +159,12 @@ func GET_INCDEC_PERCENT(ALL_PARAMS ...interface{}) (float64, string, string, flo
 	return res_PERC, changeTYPE, res_DESC, res_diff
 }
 
-
-
 // Ultimate get diff of two dumbers
-func GET_DIFF (ALL_PARAMS ...interface{}) float64 {
+func GET_DIFF(ALL_PARAMS ...interface{}) float64 {
 	var small float64
 	var large float64
+
+	var precision = 1
 
 	for n, param := range ALL_PARAMS {
 		int_val, IS_INT := param.(int)
@@ -188,9 +190,15 @@ func GET_DIFF (ALL_PARAMS ...interface{}) float64 {
 			continue
 		}
 
+		// Must be an int.. this is for preceission
+		if n == 2 {
+
+			precision = int_val
+		}
+
 		// PLACEHOLDER .. if a string is passed.. do something with it
 		if IS_STRING && string_val != "" {
-			
+
 		}
 
 	} //end of params
@@ -204,14 +212,14 @@ func GET_DIFF (ALL_PARAMS ...interface{}) float64 {
 	if diff < 0.0 {
 		diff = small - large
 	}
-	diff = FIX_FLOAT_PRECISION(diff, 2)
+	diff = FIX_FLOAT_PRECISION(diff, precision)
 
 	return diff
 
 }
 
 // Ultimate percentage of two numbers
-func PERCENT_OF (ALL_PARAMS ...interface{}) float64 {
+func PERCENT_OF(ALL_PARAMS ...interface{}) float64 {
 	var small float64
 	var large float64
 
@@ -241,7 +249,7 @@ func PERCENT_OF (ALL_PARAMS ...interface{}) float64 {
 
 		// PLACEHOLDER .. if a string is passed.. do something with it
 		if IS_STRING && string_val != "" {
-			
+
 		}
 
 	} //end of params
@@ -259,7 +267,7 @@ func PERCENT_OF (ALL_PARAMS ...interface{}) float64 {
 
 	// DONT FLIP THE NUMBERS automatically.. this returns an INACCURATE PERCENTAGE
 
-	divis :=  small / large
+	divis := small / large
 	perc := divis * 100
 	perc = FIX_FLOAT_PRECISION(perc, 2)
 
