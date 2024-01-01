@@ -208,13 +208,13 @@ func GET_DIFF(ALL_PARAMS ...interface{}) float64 {
 		return 0.0
 	}
 
-	diff := large - small
+	diff := float64(large) - float64(small)
 	if diff < 0.0 {
 		diff = small - large
 	}
-	diff = FIX_FLOAT_PRECISION(diff, precision)
+	final_diff := FIX_FLOAT_PRECISION(diff, precision)
 
-	return diff
+	return final_diff
 
 }
 
