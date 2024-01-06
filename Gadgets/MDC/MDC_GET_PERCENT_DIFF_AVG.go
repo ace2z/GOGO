@@ -10,7 +10,7 @@ import (
 
 // Returns Percentages INCREASE DECREASE for stocks etc... Takes in floats or INTs
 /*
-	As of MAY 2023.. This is the ULTIMATE GET PERCENTAGE function (replaces the previous GET_PRECENT)
+	As of MAY 2023.. This is the ULTIMATE GET PERCENTAGE INC/DEC function
 	Also returns the DIFF between two numbers and if it was an INCREASE or DECERASE based on which number was passed FIRST
 
 	RETURNS:
@@ -160,6 +160,7 @@ func GET_INCDEC_PERCENT(ALL_PARAMS ...interface{}) (float64, string, string, flo
 }
 
 // Ultimate get diff of two dumbers
+// Pass 1st num, sec num... and if desired, int for decimal precision of output
 func GET_DIFF(ALL_PARAMS ...interface{}) float64 {
 	var small float64
 	var large float64
@@ -219,10 +220,12 @@ func GET_DIFF(ALL_PARAMS ...interface{}) float64 {
 }
 
 // Ultimate percentage of two numbers
+// pass small num first... THEN large num
 func PERCENT_OF(ALL_PARAMS ...interface{}) float64 {
 	var small float64
 	var large float64
 
+	var precision = 2
 	for n, param := range ALL_PARAMS {
 		int_val, IS_INT := param.(int)
 		float_val, IS_FLOAT := param.(float64)
@@ -247,6 +250,12 @@ func PERCENT_OF(ALL_PARAMS ...interface{}) float64 {
 			continue
 		}
 
+		// Must be an int.. this is for preceission
+		if n == 2 {
+
+			precision = int_val
+		}
+
 		// PLACEHOLDER .. if a string is passed.. do something with it
 		if IS_STRING && string_val != "" {
 
@@ -269,8 +278,70 @@ func PERCENT_OF(ALL_PARAMS ...interface{}) float64 {
 
 	divis := small / large
 	perc := divis * 100
-	perc = FIX_FLOAT_PRECISION(perc, 2)
+	perc = FIX_FLOAT_PRECISION(perc, precision)
 
 	return perc
+
+}
+
+// alias
+func GET_PERCENT_OF(ALL_PARAMS ...interface{}) float64 {
+	return PERCENT_OF(ALL_PARAMS...)
+}
+
+// Ultimate get AVG function.. Pass either an ARRAY OF FLOAT or ARRAY of INT (and a precision int if you need to for output)
+func GET_AVG(ALL_PARAMS ...interface{}) float64 {
+
+	var precision = 2
+	var float_arr []float64
+	var int_arr []int
+
+	var use_float = false
+	for n, param := range ALL_PARAMS {
+		tmp_int, IS_INT := param.([]int)
+		tmp_float, IS_FLOAT := param.([]float64)
+
+		prec_int, IS_PREC := param.(int)
+
+		if n == 0 {
+			// If they passed an array of int
+			if IS_INT {
+				int_arr = tmp_int
+			} else if IS_FLOAT {
+				float_arr = tmp_float
+				use_float = true
+			}
+
+			continue
+		}
+
+		//if they also passed an int for precisions
+		if n == 1 && IS_PREC {
+			precision = prec_int
+		}
+	}
+
+	//2. Now get the sum
+	var sum = 0.0
+	var total_items = 0
+	if use_float {
+		for _, x := range float_arr {
+			sum += x
+		}
+		total_items = len(float_arr)
+	} else {
+		for _, x := range int_arr {
+			sum += float64(x)
+		}
+		total_items = len(int_arr)
+	}
+
+	//3. Now get average
+
+	avg := sum / float64(total_items)
+
+	final_avg := FIX_FLOAT_PRECISION(avg, precision)
+
+	return final_avg
 
 }
