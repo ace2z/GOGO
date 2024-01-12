@@ -35,6 +35,8 @@ var GB = color.New(color.FgGreen, color.BgBlue, color.Bold)
 var BW = color.New(color.FgBlue, color.BgWhite, color.Bold)
 var MW = color.New(color.FgMagenta, color.BgWhite, color.Bold)
 
+var BY = color.New(color.FgBlue, color.BgYellow, color.Bold)
+
 var BG = color.New(color.BgBlue, color.FgGreen, color.Bold)
 
 var WB = color.New(color.FgWhite, color.BgBlue, color.Bold)
