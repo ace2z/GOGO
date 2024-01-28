@@ -54,7 +54,6 @@ type HEADER_OBJ struct {
 */
 func JSON_DOWNLOAD(API_URL string, PARAMS ...interface{}) (bool, []byte, string, error) {
 
-	C.Println(" = = JSON Download = =")
 	var WAS_SUCCESS = false
 	var final_ERROR error
 	var TIMEOUT_SECS = 30
