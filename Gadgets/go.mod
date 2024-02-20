@@ -1,13 +1,13 @@
 module github.com/ace2z/GOGO/Gadgets
 
-go 1.21.5
+go 1.21.7
 
 require (
 	github.com/atotto/clipboard v0.1.4
 	github.com/briandowns/spinner v1.23.0
 	github.com/dustin/go-humanize v1.0.1
 	github.com/fatih/color v1.16.0
-	github.com/google/uuid v1.5.0
+	github.com/google/uuid v1.6.0
 )
 
 require (
