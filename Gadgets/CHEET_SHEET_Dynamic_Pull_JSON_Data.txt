@@ -1,0 +1,143 @@
+package MBOUM
+
+import (
+	"fmt"
+	. "local/CORE"
+
+	"encoding/json"
+	. "local/TWCOMMON"
+
+	. "github.com/ace2z/GOGO/Gadgets"
+	//"github.com/buger/jsonparser"
+)
+
+// // Item struct; we want to create these from the JSON above
+// type Item struct {
+// 	Item1 string
+// 	Item2 int
+// }
+
+// // Implement the String interface for pretty printing Items
+// func (i Item) String() string {
+
+// 	return fmt.Sprintf("Item: %s, %d", i.Item1, i.Item2)
+// }
+
+// Have to pull price data this way using a dynamic Struct because price data is using multiple keys instead of array
+func Pull_RAW_PriceData(tmp_symbol string) []PRICE_OBJ {
+	URL := MB_CORE_URL("/hi/history", tmp_symbol)
+	URL += "&interval=1d&diffandsplits=true"
+
+	var PRICES []PRICE_OBJ
+
+	is_valid, JSON_BYTE, _ := GET_JSON_w_RETRY(URL, PREFIX)
+	if is_valid == false {
+		return PRICES
+	}
+
+	// Unmarshal using a generic interface
+	var f interface{}
+	err := json.Unmarshal(JSON_BYTE, &f)
+	if err != nil {
+		fmt.Println("Error parsing JSON: ", err)
+	}
+
+	// JSON object parses into a map with string keys
+	itemsMap := f.(map[string]interface{})
+
+	//2. Tmp values cached for the Page
+	var tmp_PERIOD = ""
+	var tmp_TYPE = ""
+	var tmp_SYMBOL = ""
+	var tmp_TZ = ""
+	var tmp_TZ_LOCALE = ""
+
+	// Loop through the Items; we're not interested in the key, just the values
+	for _, v := range itemsMap {
+
+		// Use type assertions to ensure that the value's a JSON object
+		switch jsonObj := v.(type) {
+		// The value is an Item, represented as a generic interface
+		case interface{}:
+
+			// Access the values in the JSON object and place them in an Item
+			for itemKey, itemValue := range jsonObj.(map[string]interface{}) {
+				//C.Print(itemKey, " ")
+				//Y.Println(itemValue)
+
+				if itemKey == "instrumentType" {
+					tmp_TYPE = itemValue.(string)
+				} else if itemKey == "exchangeTimezoneName" {
+					tmp_TZ_LOCALE = itemValue.(string)
+				} else if itemKey == "symbol" {
+					tmp_SYMBOL = itemValue.(string)
+				} else if itemKey == "dataGranularity" {
+					tmp_PERIOD = itemValue.(string)
+				} else if itemKey == "timezone" {
+					tmp_TZ = itemValue.(string)
+
+					// otherwise if this is a key map
+				} else {
+					switch mVal := itemValue.(type) {
+					case map[string]interface{}:
+						M.Println(mVal, " ")
+						var d PRICE_OBJ
+						d.SYMBOL = tmp_SYMBOL
+						d.TYPE = tmp_TYPE
+						d.META.TZ = tmp_TZ
+						d.META.ZONE = tmp_TZ_LOCALE
+						d.PERIOD = tmp_PERIOD
+
+						for tmp_key, tmp_val := range mVal {
+
+							G.Print(tmp_key, ": ")
+							W.Println(tmp_val)
+
+							if tmp_key == "date" {
+								d.META.RAW_DATE = tmp_val.(string)
+								continue
+							}
+							if tmp_key == "date_utc" {
+								d.META.RAW_EPOCH = tmp_val.(float64)
+								continue
+							}
+
+							if tmp_key == "open" {
+								d.OHLV.OPEN = tmp_val.(float64)
+								continue
+							}
+							if tmp_key == "close" {
+								d.CLOSE = tmp_val.(float64)
+								continue
+							}
+							if tmp_key == "high" {
+								d.OHLV.HIGH = tmp_val.(float64)
+								continue
+							}
+							if tmp_key == "low" {
+								d.OHLV.LOW = tmp_val.(float64)
+								continue
+							}
+							if tmp_key == "volume" {
+								d.OHLV.VOLUME = tmp_val.(float64)
+								continue
+							}
+						}
+						//PressAny()
+						// Now make a Unique id out of the Raw EpoCh and the Symp
+						_, d.ID = GEN_UNIQUE_ID(d.META.RAW_EPOCH, d.SYMBOL, d.PERIOD)
+						PRICES = append(PRICES, d)
+					}
+				}
+			}
+
+		// Not a JSON object; handle the error
+		default:
+			Y.Print(" WARNING in Pull Price Data: ")
+			M.Println("Expecting a JSON object; got something else")
+			DO_EXIT()
+		}
+	} //end of itemsmap Loop
+
+	return PRICES
+}
