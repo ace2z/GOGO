@@ -158,7 +158,7 @@ func have_SUPPORTED_DEFAULT_FORMAT(inputDate string) (bool, map[string]interface
 			sDay = FIX_if_needed(part_c)
 
 			// Now lets see if we have a full british format date with time
-			if len(sd) == 6 {
+			if len(sd) >= 5 {
 				sHour = FIX_if_needed(sd[3])
 				sMin = FIX_if_needed(sd[4])
 				skip_check_time = true
