@@ -145,7 +145,7 @@ func CONVERT_DATE(ALL_PARAMS ...interface{}) (string, string, time.Time) {
 	orig_INPUT := STRING_input
 	if need_STRING_convert {
 		//1. Remove all spaces in this string just in case
-		STRING_input = UNICODE_REMOVE_ALL_SPACES(STRING_input)
+		//STRING_input = UNICODE_REMOVE_ALL_SPACES(STRING_input)
 
 		isVALID, pmap := CHECK_for_SUPPORTED_DATE_INPUT(STRING_input)
 		// errro handling
