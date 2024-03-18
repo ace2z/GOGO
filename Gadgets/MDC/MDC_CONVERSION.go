@@ -130,9 +130,9 @@ func CONVERT_DATE(ALL_PARAMS ...interface{}) (string, string, time.Time) {
 
 	} //end of for
 
-	C.Println(output_FORMAT)
-	Y.Println(STRING_input)
-	DO_EXIT()
+	// C.Println(output_FORMAT)
+	// Y.Println(STRING_input)
+	// DO_EXIT()
 
 	/*
 		= = =
@@ -158,6 +158,9 @@ func CONVERT_DATE(ALL_PARAMS ...interface{}) (string, string, time.Time) {
 			DO_EXIT()
 			//return "", "", time.Time{}
 		}
+
+		SHOW_STRUCT(pmap)
+		DO_EXIT()
 
 		var num_Mon = pmap["month"].(int)
 		var num_Day = pmap["day"].(int)
