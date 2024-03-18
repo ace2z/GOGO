@@ -43,7 +43,9 @@ TZONE: Specify cst, est, mdt or pst if you need to override the timezone format 
 STRING format for the Date must be in one of the following or you will error:
 
   - MM-DD-YYYY
+
   - 2024-03-15 18:30:00		( ISO Full British Format )
+
   - YYYY-MM-DD		(ISO / British format)
 
   - MM/DD/YYYY
@@ -55,8 +57,6 @@ STRING format for the Date must be in one of the following or you will error:
   - XXXXX_18:05
 
   - XXXXX@18:05
-
-
 
 Final param is for FORMAT specifiy: basic, simple, full, nano, british, justtime, justdate, timestamp
 (this uses SHOW_PRETTY_DATE )
@@ -113,11 +113,13 @@ func CONVERT_DATE(ALL_PARAMS ...interface{}) (string, string, time.Time) {
 			is_supported, tmp_obj := get_TZ_OBJECT(string_val)
 			if is_supported {
 				TIMEZONE_OBJ = tmp_obj
-				continue
+
 			} else {
 				M.Println("Invalid TZ Sent to Convert Date")
 				Y.Println(string_val)
+				DO_EXIT()
 			}
+			continue
 		}
 
 		//3. last param is the outformat to use.. (short, simple, nano etc)
