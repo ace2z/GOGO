@@ -148,6 +148,10 @@ func have_SUPPORTED_DEFAULT_FORMAT(inputDate string) (bool, map[string]interface
 		part_b := sd[1]
 		part_c := sd[2]
 
+		part_a = strings.TrimSpace(part_a)
+		part_b = strings.TrimSpace(part_b)
+		part_c = strings.TrimSpace(part_c)
+
 		//2. Check for british format first
 		skip_check_time := false
 		if len(part_a) == 4 && (len(part_b) == 2 || len(part_b) == 1) {
