@@ -180,13 +180,15 @@ func have_SUPPORTED_DEFAULT_FORMAT(inputDate string) (bool, map[string]interface
 		}
 
 		//4. Now determine if we have a TIME appended.. via the :
-		if strings.Contains(inputDate, ":") && skip_check_time == false {
-			sHour = strings.TrimSpace(sd[3])
-			sMin = strings.TrimSpace(sd[4])
+		if skip_check_time == false {
+			if strings.Contains(inputDate, ":") {
+				sHour = strings.TrimSpace(sd[3])
+				sMin = strings.TrimSpace(sd[4])
 
-			//4b.. If seconds was appended.. lets add those as well
-			if strings.Count(inputDate, ":") == 2 {
-				sSec = strings.TrimSpace(sd[5])
+				//4b.. If seconds was appended.. lets add those as well
+				if strings.Count(inputDate, ":") == 2 {
+					sSec = strings.TrimSpace(sd[5])
+				}
 			}
 		}
 	}
