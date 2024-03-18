@@ -130,6 +130,10 @@ func CONVERT_DATE(ALL_PARAMS ...interface{}) (string, string, time.Time) {
 
 	} //end of for
 
+	C.Println(output_FORMAT)
+	Y.Println(STRING_input)
+	DO_EXIT()
+
 	/*
 		= = =
 		= = =	This is handling for the DEFAULT two date formats

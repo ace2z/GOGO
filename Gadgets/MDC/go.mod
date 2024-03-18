@@ -2,7 +2,7 @@ module github.com/ace2z/GOGO/Gadgets/MDC
 
 go 1.22.1
 
-require github.com/ace2z/GOGO/Gadgets v0.0.0-20240318043845-d113dc20ac42
+require github.com/ace2z/GOGO/Gadgets v0.0.0-20240318044109-214ea3326e03
 
 require (
 	github.com/atotto/clipboard v0.1.4 // indirect
