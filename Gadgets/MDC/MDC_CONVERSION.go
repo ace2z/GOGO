@@ -159,6 +159,8 @@ func CONVERT_DATE(ALL_PARAMS ...interface{}) (string, string, time.Time) {
 			//return "", "", time.Time{}
 		}
 
+		C.Println(output_FORMAT)
+		Y.Println(STRING_input)
 		SHOW_STRUCT(pmap)
 		DO_EXIT()
 
