@@ -142,6 +142,7 @@ func CONVERT_DATE(ALL_PARAMS ...interface{}) (string, string, time.Time) {
 
 	//4. If a STRING was passed..w e convert it to a DATE_OBJ
 	//dummyLOC, _ := time.LoadLocation("Local")
+	orig_INPUT := STRING_input
 	if need_STRING_convert {
 		//1. Remove all spaces in this string just in case
 		STRING_input = UNICODE_REMOVE_ALL_SPACES(STRING_input)
@@ -159,6 +160,7 @@ func CONVERT_DATE(ALL_PARAMS ...interface{}) (string, string, time.Time) {
 			//return "", "", time.Time{}
 		}
 
+		G.Println(orig_INPUT)
 		C.Println(output_FORMAT)
 		Y.Println(STRING_input)
 		SHOW_STRUCT(pmap)
