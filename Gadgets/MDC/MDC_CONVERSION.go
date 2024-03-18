@@ -141,7 +141,7 @@ func CONVERT_DATE(ALL_PARAMS ...interface{}) (string, string, time.Time) {
 	*/
 
 	//4. If a STRING was passed..w e convert it to a DATE_OBJ
-	dummyLOC, _ := time.LoadLocation("Local")
+	//dummyLOC, _ := time.LoadLocation("Local")
 	if need_STRING_convert {
 		//1. Remove all spaces in this string just in case
 		STRING_input = UNICODE_REMOVE_ALL_SPACES(STRING_input)
@@ -166,7 +166,7 @@ func CONVERT_DATE(ALL_PARAMS ...interface{}) (string, string, time.Time) {
 		var num_Min = pmap["min"].(int)
 		var num_Sec = pmap["sec"].(int)
 		monthObj := time.Month(num_Mon)
-		date_OBJ := time.Date(num_Year, monthObj, num_Day, num_Hour, num_Min, num_Sec, 0, dummyLOC)
+		date_OBJ := time.Date(num_Year, monthObj, num_Day, num_Hour, num_Min, num_Sec, 0, TIMEZONE_OBJ)
 		date_OBJ = date_OBJ.In(TIMEZONE_OBJ)
 
 		//12. Now pass to show_Pretty_Date with the output format if specified
