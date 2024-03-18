@@ -72,7 +72,7 @@ func CONVERT_DATE(ALL_PARAMS ...interface{}) (string, string, time.Time) {
 	var EPOCH_input int
 
 	var output_FORMAT = ""
-	var TIMEZONE_OBJ, _ = time.LoadLocation("Local") // we always default to local
+	var TIMEZONE_OBJ = UTC_Location_OBJ //, _ = time.LoadLocation("Local") // we always default to local
 
 	var need_DATE_convert = false
 	var need_STRING_convert = false
@@ -107,7 +107,13 @@ func CONVERT_DATE(ALL_PARAMS ...interface{}) (string, string, time.Time) {
 			continue
 		}
 
-		//2. All if est/cst/mdt is passed.. get THAT timezone object
+		//2. last param is the outformat to use.. (short, simple, nano etc)
+		if IS_STRING {
+			output_FORMAT = string_val
+			continue
+		}
+
+		//3. All if est/cst/mdt is passed.. get THAT timezone object
 		// Get the timezone object.. assuming est/cst etc is passed
 		if IS_STRING {
 			is_supported, tmp_obj := get_TZ_OBJECT(string_val)
@@ -122,10 +128,6 @@ func CONVERT_DATE(ALL_PARAMS ...interface{}) (string, string, time.Time) {
 			continue
 		}
 
-		//3. last param is the outformat to use.. (short, simple, nano etc)
-		if IS_STRING {
-			output_FORMAT = string_val
-		}
 	} //end of for
 
 	/*
