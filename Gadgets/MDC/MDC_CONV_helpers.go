@@ -149,6 +149,7 @@ func have_SUPPORTED_DEFAULT_FORMAT(inputDate string) (bool, map[string]interface
 		part_c := sd[2]
 
 		//2. Check for british format first
+		skip_check_time := false
 		if len(part_a) == 4 && (len(part_b) == 2 || len(part_b) == 1) {
 
 			sYear = strings.TrimSpace(part_a)
@@ -160,6 +161,7 @@ func have_SUPPORTED_DEFAULT_FORMAT(inputDate string) (bool, map[string]interface
 			if len(sd) == 6 {
 				sHour = FIX_if_needed(sd[3])
 				sMin = FIX_if_needed(sd[4])
+				skip_check_time = true
 			}
 
 			//3. else check for normal xx/yy/zzzz  format
@@ -178,7 +180,7 @@ func have_SUPPORTED_DEFAULT_FORMAT(inputDate string) (bool, map[string]interface
 		}
 
 		//4. Now determine if we have a TIME appended.. via the :
-		if strings.Contains(inputDate, ":") {
+		if strings.Contains(inputDate, ":") && skip_check_time == false {
 			sHour = strings.TrimSpace(sd[3])
 			sMin = strings.TrimSpace(sd[4])
 
