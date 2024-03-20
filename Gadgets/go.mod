@@ -1,6 +1,6 @@
 module github.com/ace2z/GOGO/Gadgets
 
-go 1.21.7
+go 1.22.1
 
 require (
 	github.com/atotto/clipboard v0.1.4
