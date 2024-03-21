@@ -147,7 +147,8 @@ func CREATE_DATABASE(dbname string, collname string) {
 
 	Y.Println("")
 	Y.Print(MON_PREFIX, "Creating DATABASE: ")
-	W.Println(dbname)
+	W.Print(dbname, " --> ")
+	C.Println(collname)
 
 	//3. Create a database:
 	var MONGO_DB_OBJ = MONGO_CLIENT.Database(dbname)
