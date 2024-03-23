@@ -32,6 +32,7 @@ func get_TZ_OBJECT(TZ_to_use string) (bool, *time.Location) {
 
 	//2. Time Zone logic
 	if TZ_to_use != "" {
+		TZ_to_use = strings.ToLower(TZ_to_use)
 		switch TZ_to_use {
 		case "est", "edt":
 			TIMEZONE_OBJ = EST_Location_OBJ
