@@ -33,27 +33,22 @@ func get_TZ_OBJECT(TZ_to_use string) (bool, *time.Location) {
 	//2. Time Zone logic
 	if TZ_to_use != "" {
 		switch TZ_to_use {
-		case "est":
+		case "est", "edt":
 			TIMEZONE_OBJ = EST_Location_OBJ
 			is_valid_input = true
 			break
 
-		case "cst":
+		case "cst", "cdt":
 			TIMEZONE_OBJ = CST_Location_OBJ
 			is_valid_input = true
 			break
 
-		case "mdt":
+		case "mst", "mdt":
 			TIMEZONE_OBJ = MST_Location_OBJ
 			is_valid_input = true
 			break
 
-		case "mst":
-			TIMEZONE_OBJ = MST_Location_OBJ
-			is_valid_input = true
-			break
-
-		case "pst":
+		case "pst", "pdt":
 			TIMEZONE_OBJ = PST_Location_OBJ
 			is_valid_input = true
 			break

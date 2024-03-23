@@ -59,11 +59,12 @@ STRING format for the Date must be in one of the following or you will error:
   - XXXXX@18:05
 
 Final param is for FORMAT specifiy: basic, simple, full, nano, british, justtime, justdate, timestamp
-(this uses SHOW_PRETTY_DATE )
-You can also modify format by adding:
+(this gets passed to SHOW_PRETTY_DATE )
+You can also add any of the following to modify output_format:
+
 _noday   (ie, basic_noweek) - Prevents the weekday info from showing
 _nozone   		- prevents the timezone info from showing
-_reset_time 		- For situations where you want to omit the HH:MM cause you dont need it...resets time to 00:00
+_reset_time 	- For situations where you want to omit the HH:MM cause you dont need it...resets time to 00:00
 */
 func CONVERT_DATE(ALL_PARAMS ...interface{}) (string, string, time.Time) {
 
@@ -107,23 +108,28 @@ func CONVERT_DATE(ALL_PARAMS ...interface{}) (string, string, time.Time) {
 			continue
 		}
 
-		//2. last param is the outformat to use.. (short, simple, nano etc)
-		if IS_STRING {
-			output_FORMAT = string_val
+		//2. Next param is the output format to use ... ie (short, basic, simple, nano etc)
+		// You can also tack on _est, _mst, _edt to return the date in THAT TZ
+		if n == 1 {
+			if IS_STRING {
+				output_FORMAT = string_val
+				continue
+			}
 			continue
 		}
 
-		//3. All if est/cst/mdt is passed.. get THAT timezone object
-		// Get the timezone object.. assuming est/cst etc is passed
-		if IS_STRING {
-			is_supported, tmp_obj := get_TZ_OBJECT(string_val)
-			if is_supported {
-				TIMEZONE_OBJ = tmp_obj
+		//3. Third param can be TZ time zone.. so you get the date back in est/cst/mdt
+		if n == 2 {
+			if IS_STRING {
+				is_supported, tmp_obj := get_TZ_OBJECT(string_val)
+				if is_supported {
+					TIMEZONE_OBJ = tmp_obj
 
-			} else {
-				M.Println("Invalid TZ Sent to Convert Date")
-				Y.Println(string_val)
-				DO_EXIT()
+				} else {
+					M.Println("Invalid TZ Sent to Convert Date")
+					Y.Println(string_val)
+					DO_EXIT()
+				}
 			}
 			continue
 		}
