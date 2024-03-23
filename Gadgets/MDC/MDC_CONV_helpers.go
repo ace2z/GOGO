@@ -115,7 +115,7 @@ func check_for_VERBOSE_DATE(input string) (bool, string, string, string, string,
 	return true, sMon, sDay, sYear, sHour, sMin, sSec
 }
 
-func conv_SPLIT_delims(r rune) bool {
+func MASTER_SPLIT_delims(r rune) bool {
 	return r == '@' || r == ':' || r == '_' || r == '-' || r == '/' || r == ' '
 }
 func have_SUPPORTED_DEFAULT_FORMAT(inputDate string) (bool, map[string]interface{}) {
@@ -137,7 +137,7 @@ func have_SUPPORTED_DEFAULT_FORMAT(inputDate string) (bool, map[string]interface
 	if is_VERBOSE == false {
 
 		//1. Do a split..
-		sd := strings.FieldsFunc(inputDate, conv_SPLIT_delims)
+		sd := strings.FieldsFunc(inputDate, MASTER_SPLIT_delims)
 		//error handling check to see if we have enough items
 		if len(sd) < 3 {
 			return false, resMAP
