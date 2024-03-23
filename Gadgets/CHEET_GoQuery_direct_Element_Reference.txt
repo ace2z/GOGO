@@ -1,0 +1,280 @@
+package SCRAPE
+
+import (
+	"strings"
+	"unicode"
+
+	//. "local/CORE"
+	//. "local/_STRUCTS"
+
+	. "github.com/ace2z/GOGO/Gadgets"
+
+	"github.com/PuerkitoBio/goquery"
+)
+
+func scrub_String_for_SCORE(input string) int {
+
+	// Create a new string builder
+	var builder strings.Builder
+
+	// Iterate over the input string
+	for _, r := range input {
+		// If the current character is a DIGIT .. save it to the builder
+		if unicode.IsDigit(r) {
+			builder.WriteRune(r)
+		}
+	}
+
+	result := builder.String()
+	num_result := STRING_to_INT(result)
+
+	return num_result
+}
+
+var valid_years = []string{
+	" 2020",
+	" 2021",
+	" 2022",
+	" 2023",
+	" 2024",
+	" 2025",
+	" 2026",
+	" 2027",
+	" 2028",
+}
+
+var valid_months = []string{
+	"january",
+	"february",
+	"march",
+	"april",
+	"may",
+	"june",
+	"july",
+	"august",
+	"september",
+	"october",
+	"november",
+	"december",
+}
+
+var countries = []string{
+	"united-states:US:USA",
+	"united-kingdom:GB:UK/GreatBritian",
+	"australia:AU:Australia",
+	"japan:JP:Japan",
+	"germany:DE:Germany",
+	"euro-area:EA:Euro Area",
+	"china:CN:China",
+	"canada:CA:Canada",
+}
+
+type RAW_ROW_OBJ struct {
+	UTC_TIME string
+	COU_ID   string
+	COUNTRY  string
+	DESC     string
+
+	ACTUAL    string
+	PREV      string
+	CONSENSUS string
+	FORE      string
+
+	CAL_REFERENCE string
+}
+type ECO_RAW struct {
+	DATE_HEADER string
+	NUM         int
+	ROWS        []RAW_ROW_OBJ
+}
+
+func have_day_header(inp string) bool {
+	valid_score := 0
+	test_inp := strings.ToLower(inp)
+
+	for _, tyear := range valid_years {
+		if strings.Contains(test_inp, tyear) {
+			valid_score++
+			break
+		}
+	}
+
+	// Check to make sure we have a valid Month as well
+	for _, tmon := range valid_months {
+		if strings.Contains(test_inp, tmon) {
+			valid_score++
+			break
+		}
+	}
+
+	if valid_score == 2 {
+		return true
+	}
+
+	return false
+}
+
+func have_SUPPORTED_COUNTRY(inp string) (bool, string, string) {
+	tmp_val := strings.ToLower(inp)
+
+	for _, x := range countries {
+		msplit := strings.Split(x, ":")
+		tmp_supported := msplit[0]
+		ID := msplit[1]
+		country_name := msplit[2]
+
+		if strings.Contains(tmp_val, tmp_supported) {
+			return true, ID, country_name
+		}
+	}
+
+	return false, "", ""
+}
+
+func header_DOESNT_EXIST(inp string, ECO *[]ECO_RAW) bool {
+	for _, x := range *ECO {
+		if x.DATE_HEADER == inp {
+			return false
+		}
+	}
+
+	return true
+}
+
+var ECO_LIST []ECO_RAW
+
+func Parse_ECO_PAGE(doc *goquery.Document) { // map[string]interface{} {
+
+	var E ECO_RAW
+
+	doc.Find("table[class^='table table-hover table-condensed'] > thead > tr > th").Each(func(a int, doc2 *goquery.Selection) {
+		val_text := strings.TrimSpace(doc2.Text())
+		if have_day_header(val_text) {
+			if header_DOESNT_EXIST(val_text, &ECO_LIST) {
+				E.NUM++
+				E.DATE_HEADER = val_text
+				ECO_LIST = append(ECO_LIST, E)
+			}
+		}
+	})
+
+	//2. We ONLY search the TR's that are directly after a TBODY
+	var BODY_NUM = 0
+	doc.Find("table[class^='table table-hover table-condensed'] > tbody").Each(func(a int, doc2 *goquery.Selection) {
+		BODY_NUM++
+		//val_text := strings.TrimSpace(doc2.Text())
+
+		doc2.Find("tr").Each(func(b int, doc4 *goquery.Selection) {
+			//val_text := strings.TrimSpace(doc4.Text())
+			// Now check the row for is_united_states
+			avalue, exists := doc4.Attr("data-url")
+			var proceed = false
+			var COUNTRY_ID = ""
+			var COUNTRY_NAME = ""
+			if exists {
+				is_supported, country_ID, c_name := have_SUPPORTED_COUNTRY(avalue)
+				if is_supported {
+					COUNTRY_ID = country_ID
+					COUNTRY_NAME = c_name
+					proceed = true
+				}
+			} else {
+				proceed = false
+			}
+
+			//3. Now.. if proceed is TRUE.. we know we have US news row... lets analyize this row
+			if proceed {
+				var R RAW_ROW_OBJ
+				R.COU_ID = COUNTRY_ID
+				R.COUNTRY = COUNTRY_NAME
+
+				// Search TD for Span and find the DATE of this line item
+				doc4.Find("td").Each(func(d int, doc5 *goquery.Selection) {
+					doc5.Find("span[class^='calendar-date']").Each(func(e int, doc6 *goquery.Selection) {
+						val_text := strings.TrimSpace(doc6.Text())
+						R.UTC_TIME = val_text
+					})
+
+					// Also search the AREF part of the td.. this gets the actual event name
+					doc5.Find("a[class^='calendar-event']").Each(func(e int, doc6 *goquery.Selection) {
+						val_text := strings.TrimSpace(doc6.Text())
+						R.DESC = val_text
+					})
+
+					// See if we have ACTUAL
+					doc5.Find("a > span").Each(func(e int, doc6 *goquery.Selection) {
+						avalue, exists := doc6.Attr("id")
+						val_text := strings.TrimSpace(doc6.Text())
+						if exists {
+							if avalue == "actual" {
+								R.ACTUAL = val_text
+							}
+						}
+					})
+
+					doc5.Find("span").Each(func(e int, doc6 *goquery.Selection) {
+						avalue, exists := doc6.Attr("id")
+						val_text := strings.TrimSpace(doc6.Text())
+						if exists {
+							if avalue == "previous" {
+								R.PREV = val_text
+							}
+						}
+					})
+
+					doc5.Find("a").Each(func(e int, doc6 *goquery.Selection) {
+						avalue, exists := doc6.Attr("id")
+						val_text := strings.TrimSpace(doc6.Text())
+						if exists {
+							if avalue == "consensus" {
+								R.CONSENSUS = val_text
+							} else if avalue == "forecast" {
+								R.FORE = val_text
+							}
+						}
+					})
+
+					// Gets the calendar reference
+					doc5.Find("span[class^='calendar-reference']").Each(func(e int, doc6 *goquery.Selection) {
+						val_text := strings.TrimSpace(doc6.Text())
+						R.CAL_REFERENCE = val_text
+					})
+
+				}) //== end
+
+				// Finally save to items.. We save it to the NUM in the ECO_LISt that matches the current BODY_BUN
+				if R.DESC != "" {
+					for n, x := range ECO_LIST {
+						if x.NUM == BODY_NUM {
+							ECO_LIST[n].ROWS = append(ECO_LIST[n].ROWS, R)
+							break
+						}
+					}
+				}
+			}
+
+		})
+
+	})
+
+	for _, x := range ECO_LIST {
+		Y.Println(x.DATE_HEADER)
+		for _, y := range x.ROWS {
+			C.Print("  --| ", y.UTC_TIME, " ")
+			G.Print(y.COUNTRY, ",", y.COU_ID, " ")
+			W.Print(y.DESC, " ")
+			M.Print(y.CAL_REFERENCE, " ")
+			Y.Print("p: ", y.PREV, " ")
+			C.Print("a: ", y.ACTUAL, " ")
+			Y.Print("c: ", y.CONSENSUS, " ")
+			C.Print("f: ", y.FORE, " ")
+			W.Println("")
+		}
+	}
+
+	//SHOW_STRUCT(ECO_LIST)
+	PressAny()
+
+	//4. And return the TS_LIST for futher processing
+
+} //end of func
