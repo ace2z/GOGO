@@ -34,12 +34,13 @@ import (
 )
 
 /*
-	- - - -
-	- - - -
-	- - - - START OF GLOBALS WE NEED - - - - - -
-	- - - -
-	- - - -
+- - - -
+- - - -
+- - - - START OF GLOBALS WE NEED - - - - - -
+- - - -
+- - - -
 */
+var GLOBAL_PREFIX = " ==| "
 
 var PROG_START_TIME string
 var PROG_START_TIMEOBJ time.Time
