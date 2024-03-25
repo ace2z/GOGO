@@ -58,10 +58,58 @@ func HAVE_ABORT_ERROR(jstext string, GLOBAL_PREFIX string) bool {
 	return false
 }
 
-func GET_JSON_w_RETRY(URL string) (bool, []byte, string) {
+// Retrieves JSON from API's using a retry method
+// Dont forget to append strings to LIMIT_ERRORS or ABORT_ERRORS arrays if needed
+func GET_JSON_w_RETRY(URL string, PARAMS ...interface{}) (bool, []byte, string) {
 	var JSON_BYTE_OBJ []byte
 	var byte_VALID = false
 	var result_JSON_TEXT = ""
+	var POST_PAYLOAD *strings.Reader
+
+	var retry_sleep = 15
+
+	var use_POST = false
+
+	// Get params if any
+
+	for n, field := range PARAMS {
+		//val_int, IS_INT := field.(int)
+		//val_float, IS_FLOAT := field.(float64)
+		val_string, IS_STRING := field.(string)
+		//val_bool, IS_BOOL := field.(bool)
+		val_reader, IS_POST_READER := field.(*strings.Reader)
+
+		if IS_POST_READER {
+			POST_PAYLOAD = val_reader
+			use_POST = true
+			continue
+		}
+		if IS_STRING {
+			not_enough_specified := false
+			o := n + 1
+			if o >= len(PARAMS) {
+				not_enough_specified = true
+			}
+
+			if val_string == "-sleep" && not_enough_specified == false {
+				extra_val, _ := PARAMS[o].(int)
+				retry_sleep = extra_val
+			}
+
+			if not_enough_specified {
+				M.Print("Error! invalid num params sent to GET_JSON_w_RETRY for ")
+				W.Println(val_string)
+				M.Println("Need an additional paremter value as INT")
+				DO_EXIT()
+			}
+
+			continue
+
+		}
+
+		// If this is an
+
+	} // end of params for
 
 	//1. We run this in a RETRY loop.. so we are able to work through the Limits imposed by 12Data
 	for r := 1; r < RETRY_MAX; r++ {
@@ -76,7 +124,15 @@ func GET_JSON_w_RETRY(URL string) (bool, []byte, string) {
 		var valid = false
 		var JSON_TEXT = ""
 		var err error
-		valid, JSON_BYTE_OBJ, JSON_TEXT, err = JSON_DOWNLOAD(URL)
+
+		// Default is to use a GET request. If however we want to use POST.. check for that here
+		if use_POST == false {
+			valid, JSON_BYTE_OBJ, JSON_TEXT, err = JSON_DOWNLOAD(URL)
+			// If using POST
+		} else {
+			valid, JSON_BYTE_OBJ, JSON_TEXT, err = JSON_DOWNLOAD(URL, POST_PAYLOAD)
+		}
+
 		if valid == false {
 			continue
 		}
@@ -87,7 +143,7 @@ func GET_JSON_w_RETRY(URL string) (bool, []byte, string) {
 		}
 
 		// Retry/ SLEEP conditions
-		if OVER_THE_LIMIT(JSON_TEXT, GLOBAL_PREFIX, 15) {
+		if OVER_THE_LIMIT(JSON_TEXT, GLOBAL_PREFIX, retry_sleep) {
 			continue
 		}
 
