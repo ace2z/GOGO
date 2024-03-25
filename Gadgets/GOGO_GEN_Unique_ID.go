@@ -24,7 +24,7 @@ Also accepts:
 -raw    - if you do DO NOT want to get an md5 generated value
 -delim  - if you want to use somethiing OTHER than | for the delimiter
 */
-func GEN_UNIQUE_ID(GENFROM ...interface{}) string {
+func GEN_UNIQUE_ID(PARAMS ...interface{}) string {
 	var result = ""
 	var use_raw_mode = false
 
@@ -32,7 +32,7 @@ func GEN_UNIQUE_ID(GENFROM ...interface{}) string {
 
 	var USE_PREFIX = ""
 
-	for n, field := range GENFROM {
+	for n, field := range PARAMS {
 		val_int, IS_INT := field.(int)
 		val_float, IS_FLOAT := field.(float64)
 		val_string, IS_STRING := field.(string)
@@ -54,9 +54,9 @@ func GEN_UNIQUE_ID(GENFROM ...interface{}) string {
 
 			if val_string == "-prefix" {
 				o := n + 1
-				if o < len(GENFROM) {
+				if o < len(PARAMS) {
 
-					tval_string, tfound := GENFROM[o].(string)
+					tval_string, tfound := PARAMS[o].(string)
 					if tfound {
 						USE_PREFIX = tval_string
 					}
