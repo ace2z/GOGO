@@ -58,8 +58,11 @@ func HAVE_ABORT_ERROR(jstext string, GLOBAL_PREFIX string) bool {
 	return false
 }
 
-// Retrieves JSON from API's using a retry method
-// Dont forget to append strings to LIMIT_ERRORS or ABORT_ERRORS arrays if needed
+/*
+Retrieves JSON from API's using a retry method
+Dont forget to append strings to LIMIT_ERRORS or ABORT_ERRORS arrays if needed
+Returns BOOL, Byte and JSON_TEXT
+*/
 func GET_JSON_w_RETRY(URL string, PARAMS ...interface{}) (bool, []byte, string) {
 	var JSON_BYTE_OBJ []byte
 	var byte_VALID = false
