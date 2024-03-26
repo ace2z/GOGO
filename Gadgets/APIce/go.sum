@@ -1,7 +1,7 @@
 github.com/TylerBrock/colorjson v0.0.0-20200706003622-8a50f05110d2 h1:ZBbLwSJqkHBuFDA6DUhhse0IGJ7T5bemHyNILUjvOq4=
 github.com/TylerBrock/colorjson v0.0.0-20200706003622-8a50f05110d2/go.mod h1:VSw57q4QFiWDbRnjdX8Cb3Ow0SFncRw+bA/ofY6Q83w=
-github.com/ace2z/GOGO/Gadgets v0.0.0-20240325233151-3d5c8fa20392 h1:qNFEmCMj6iqURvSlfZT3ZGV1QXxC4Faknbu+6HU3q4s=
-github.com/ace2z/GOGO/Gadgets v0.0.0-20240325233151-3d5c8fa20392/go.mod h1:s1cuZEHUYWzDBWg4teInP5dHQih+r9DoyBPBMaqdOuQ=
+github.com/ace2z/GOGO/Gadgets v0.0.0-20240325233342-76ec88f0569d h1:N6h0mSzMeEjXbCcDy5eQmCpJ+Dolo5Kud1vU4fjiuu8=
+github.com/ace2z/GOGO/Gadgets v0.0.0-20240325233342-76ec88f0569d/go.mod h1:s1cuZEHUYWzDBWg4teInP5dHQih+r9DoyBPBMaqdOuQ=
 github.com/atotto/clipboard v0.1.4 h1:EH0zSVneZPSuFR11BlR9YppQTVDbh5+16AmcJi4g1z4=
 github.com/atotto/clipboard v0.1.4/go.mod h1:ZY9tmq7sm5xIbd9bOK4onWV4S6X0u6GY7Vn0Yu86PYI=
 github.com/briandowns/spinner v1.23.0 h1:alDF2guRWqa/FOZZYWjlMIx2L6H0wyewPxo/CH4Pt2A=

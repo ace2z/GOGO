@@ -26,9 +26,7 @@ var LIMIT_ERRORS = []string{
 
 var ABORT_ERRORS = []string{
 	"deadline exceeded",
-	"**symbol** not found",
 	"Bad link",
-	"deadline exceeded",
 }
 
 // = = = =Mostly API secific checks
@@ -50,8 +48,9 @@ func HAVE_ABORT_ERROR(jstext string, GLOBAL_PREFIX string) bool {
 
 	for _, msg := range ABORT_ERRORS {
 		if strings.Contains(jstext, msg) {
-			Y.Println(GLOBAL_PREFIX, " CRITICAL ABORT Error:")
+			Y.Println(GLOBAL_PREFIX, " CRITICAL ABORT Error, detected:")
 			W.Println(jstext)
+			Y.Println(msg)
 			return true
 		}
 	}
