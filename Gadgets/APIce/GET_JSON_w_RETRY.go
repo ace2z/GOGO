@@ -22,10 +22,10 @@ type TMP_ERR_OBJ struct {
 
 var LIMIT_ERRORS = []string{
 	"You have run out of API credits",
+	"deadline exceeded",
 }
 
 var ABORT_ERRORS = []string{
-	"deadline exceeded",
 	"Bad link",
 }
 
