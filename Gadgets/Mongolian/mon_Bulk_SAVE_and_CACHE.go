@@ -31,6 +31,15 @@ func GMR(ID string, data interface{}) GENERIC_MONGO_RECORD {
 	return GEN_MONGO_RECORD(ID, data)
 }
 
+func SINGLE_to_BULK(recid string, wholerec interface{}) []GENERIC_MONGO_RECORD {
+	var RES_LIST []GENERIC_MONGO_RECORD
+	var g GENERIC_MONGO_RECORD
+	g.ID = recid
+	g.SAVE_DATA = wholerec
+	RES_LIST = append(RES_LIST, g)
+	return RES_LIST
+}
+
 func DB_not_EXIST(tmpid string, LIST *[]GENERIC_MONGO_RECORD) bool {
 	for _, x := range *LIST {
 		if x.ID == tmpid {
