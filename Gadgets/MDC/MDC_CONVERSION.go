@@ -204,7 +204,6 @@ func CONVERT_DATE(ALL_PARAMS ...interface{}) (string, string, time.Time) {
 
 		Y.Println(" DATEOBJ: ", date_OBJ)
 		Y.Println(" OUTPUT: ", OUTPUT)
-		PressAny()
 
 		return OUTPUT, weekday, date_OBJ
 
