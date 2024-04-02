@@ -202,14 +202,26 @@ func CONVERT_DATE(ALL_PARAMS ...interface{}) (string, string, time.Time) {
 		//12. Now pass to show_Pretty_Date with the output format if specified
 		OUTPUT, weekday := SHOW_PRETTY_DATE(date_OBJ, output_FORMAT)
 
-		Y.Println(" DATEOBJ: ", date_OBJ)
-		Y.Println(" OUTPUT: ", OUTPUT)
-		PressAny()
-
 		return OUTPUT, weekday, date_OBJ
 
 		//5. If were converting a date_OBJ to a string
 	} else if need_DATE_convert {
+
+		// if reset time was passed in output format
+		if strings.Contains(output_FORMAT, "reset_time") {
+
+			num_MON_OBJ := DATE_input.Month()
+			num_DAY := DATE_input.Day()
+			num_YEAR := DATE_input.Year()
+			num_Hour := 0
+			num_Min := 0
+			num_Sec := 0
+
+			DATE_input = time.Date(num_YEAR, num_MON_OBJ, num_DAY, num_Hour, num_Min, num_Sec, 0, UTC_Location_OBJ)
+			if do_tz_convert {
+				DATE_input = DATE_input.In(CONV_2_TIMEZONE_OBJ)
+			}
+		}
 
 		OUTPUT, weekday := SHOW_PRETTY_DATE(DATE_input, output_FORMAT)
 		return OUTPUT, weekday, DATE_input
