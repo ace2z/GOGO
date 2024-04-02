@@ -202,6 +202,10 @@ func CONVERT_DATE(ALL_PARAMS ...interface{}) (string, string, time.Time) {
 		//12. Now pass to show_Pretty_Date with the output format if specified
 		OUTPUT, weekday := SHOW_PRETTY_DATE(date_OBJ, output_FORMAT)
 
+		Y.Println(" DATEOBJ: ", date_OBJ)
+		Y.Println(" OUTPUT: ", OUTPUT)
+		PressAny()
+
 		return OUTPUT, weekday, date_OBJ
 
 		//5. If were converting a date_OBJ to a string
