@@ -195,6 +195,9 @@ func CONVERT_DATE(ALL_PARAMS ...interface{}) (string, string, time.Time) {
 
 		date_OBJ := time.Date(num_Year, monthObj, num_Day, num_Hour, num_Min, num_Sec, 0, UTC_Location_OBJ)
 
+		Y.Println(" DATEOBJ: ", date_OBJ)
+		PressAny()
+
 		if do_tz_convert {
 			date_OBJ = date_OBJ.In(CONV_2_TIMEZONE_OBJ)
 		}
