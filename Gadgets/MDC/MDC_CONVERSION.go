@@ -14,7 +14,9 @@ package GOGO_MDC
 import (
 
 	// = = = = = Native Libraries
+	"strings"
 	"time"
+
 	//"math/rand"
 
 	// = = = = = CUSTOM Libraries
@@ -183,6 +185,14 @@ func CONVERT_DATE(ALL_PARAMS ...interface{}) (string, string, time.Time) {
 		var num_Min = pmap["min"].(int)
 		var num_Sec = pmap["sec"].(int)
 		monthObj := time.Month(num_Mon)
+
+		// if reset time was passed in output format
+		if strings.Contains(output_FORMAT, "reset_time") {
+			num_Hour = 0
+			num_Min = 0
+			num_Sec = 0
+		}
+
 		date_OBJ := time.Date(num_Year, monthObj, num_Day, num_Hour, num_Min, num_Sec, 0, UTC_Location_OBJ)
 
 		if do_tz_convert {
