@@ -1,5 +1,9 @@
 package CUSTOM_GO_MODULE
 
+/*
+	Finally got excellent universal multi threading engine
+
+*/
 import (
 	"sync"
 )
