@@ -196,7 +196,7 @@ func MARK_END_TIME(start_TIME time.Time) {
 	B.Println(" " + PROG_START_TIME)
 	Y.Print("                End Time:")
 	M.Println(" " + endTime)
-	C.Print("      Total PROGRAM DURATION: ")
+	C.Print("                DURATION: ")
 	G.Println(" ", TIME_DIFF)
 	C.Println("******************************************************")
 }
