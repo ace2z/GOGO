@@ -91,9 +91,8 @@ func MT_Engine(desc string, MASTER_LIST []MT_THREAD_OBJ, child CHILD_IMPL_FUNC, 
 		text_CURR_THREAD := ShowNum(THREAD_COUNTER + 1)
 		item.THREAD_PREFIX = "[ Thrd: " + text_CURR_THREAD + " of " + INT_to_STRING(MAX_THREADS) + ", " + text_REMAINING_ITEMS + " left ] "
 
-		// Now if an extra flag is PASSED, we have to decide if we will use what was PASSED.
-		//but first check to see if we already have EXTRA_ITEM set in the list item
-		if item.EXTRA_FLAG == "" && PASSED_EXTRA != "" {
+		// Now if an extra flag is PASSED, we will use it instead of whatever was already set in the item
+		if PASSED_EXTRA != "" {
 			item.EXTRA_FLAG = PASSED_EXTRA
 		}
 		//2. Maks a map with payload you can pass to the child. Not really needed anymore
