@@ -41,7 +41,7 @@ EXAMPLE:
 func MT_Engine(desc string, MASTER_LIST []MT_THREAD_OBJ, child CHILD_IMPL_FUNC, PARAMS ...interface{}) {
 	var sleep_between_threads = false
 	var MAX_THREADS = 10
-	var extra_flag = ""
+	var PASSED_EXTRA = ""
 
 	// Get PARAMS
 	for _, field := range PARAMS {
@@ -64,7 +64,7 @@ func MT_Engine(desc string, MASTER_LIST []MT_THREAD_OBJ, child CHILD_IMPL_FUNC, 
 
 		// If a string is passed,  this is an extra_flag we pass along to the child function. The implemenation can do something with this if necessary
 		if IS_STRING {
-			extra_flag = val_string
+			PASSED_EXTRA = val_string
 			continue
 		}
 	}
@@ -90,8 +90,12 @@ func MT_Engine(desc string, MASTER_LIST []MT_THREAD_OBJ, child CHILD_IMPL_FUNC, 
 		text_REMAINING_ITEMS := ShowNum(tleft_num)
 		text_CURR_THREAD := ShowNum(THREAD_COUNTER + 1)
 		item.THREAD_PREFIX = "[ Thrd: " + text_CURR_THREAD + " of " + INT_to_STRING(MAX_THREADS) + ", " + text_REMAINING_ITEMS + " left ] "
-		item.EXTRA_FLAG = extra_flag
 
+		// Now if an extra flag is PASSED, we have to decide if we will use what was PASSED.
+		//but first check to see if we already have EXTRA_ITEM set in the list item
+		if item.EXTRA_FLAG == "" && PASSED_EXTRA != "" {
+			item.EXTRA_FLAG = PASSED_EXTRA
+		}
 		//2. Maks a map with payload you can pass to the child. Not really needed anymore
 		// var DYNDATA = map[string]interface{}{
 		// 	"SYMBOL":        tmp_symbol,
