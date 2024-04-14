@@ -1,4 +1,5 @@
-module go.mongodb.org/mongo-driver
+module github.com/ace2z/GOGO/Gadgets/_SPECIFIC_PKG/mongo-go-driver-1.14.0
+
 
 go 1.18
 
