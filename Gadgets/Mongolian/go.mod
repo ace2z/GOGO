@@ -3,8 +3,8 @@ module github.com/ace2z/GOGO/Gadgets/Mongolian
 go 1.22.1
 
 require (
-	github.com/ace2z/GOGO/Gadgets v0.0.0-20240414143527-850d806f48cc
-	go.mongodb.org/mongo-driver v1.15.0
+	github.com/ace2z/GOGO/Gadgets v0.0.0-20240330182513-6ec5f2a5401c
+	go.mongodb.org/mongo-driver v1.14.0
 )
 
 require (
