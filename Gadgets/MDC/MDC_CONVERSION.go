@@ -124,7 +124,7 @@ func CONVERT_DATE(ALL_PARAMS ...interface{}) (string, string, time.Time) {
 		//3. Third param can be TZ time zone.. so you get the date back in est/cst/mdt
 		if n == 2 {
 			if IS_STRING {
-				is_supported, tmp_obj := get_TZ_OBJECT(string_val)
+				is_supported, tmp_obj := GET_TZ_conv_OBJECT(string_val)
 				if is_supported {
 					CONV_2_TIMEZONE_OBJ = tmp_obj
 					do_tz_convert = true

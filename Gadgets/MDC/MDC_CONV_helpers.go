@@ -25,7 +25,7 @@ import (
 	// = = = = = 3rd Party Libraries
 )
 
-func get_TZ_OBJECT(TZ_to_use string) (bool, *time.Location) {
+func GET_TZ_conv_OBJECT(TZ_to_use string) (bool, *time.Location) {
 	var TIMEZONE_OBJ = UTC_Location_OBJ
 
 	is_valid_input := false
