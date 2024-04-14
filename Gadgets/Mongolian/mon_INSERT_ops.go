@@ -3,8 +3,7 @@ package CUSTOM_GOMOD
 import (
 
 	// For MOnGO using Latest Driver
-	//"go.mongodb.org/mongo-driver/mongo/options"
-	"github.com/ace2z/GOGO/Gadgets/_SPECIFIC_PKG/mongo-go-driver-1.14.0/mongo/options"
+	"go.mongodb.org/mongo-driver/mongo/options"
 
 	. "github.com/ace2z/GOGO/Gadgets"
 )
