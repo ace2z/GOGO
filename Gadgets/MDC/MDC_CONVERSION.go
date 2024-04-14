@@ -67,6 +67,8 @@ You can also add any of the following to modify output_format:
 _noday   (ie, basic_noweek) - Prevents the weekday info from showing
 _nozone   		- prevents the timezone info from showing
 _reset_time 	- For situations where you want to omit the HH:MM cause you dont need it...resets time to 00:00
+
+	Major BUGFIX done on 4/14/2024
 */
 func CONVERT_DATE(ALL_PARAMS ...interface{}) (string, string, time.Time) {
 
@@ -75,8 +77,7 @@ func CONVERT_DATE(ALL_PARAMS ...interface{}) (string, string, time.Time) {
 	var EPOCH_input int
 
 	var output_FORMAT = ""
-	var CONV_2_TIMEZONE_OBJ = UTC_Location_OBJ
-	var do_tz_convert = false
+	var TZ_2_USE = UTC_Location_OBJ
 
 	var need_DATE_convert = false
 	var need_STRING_convert = false
@@ -126,11 +127,10 @@ func CONVERT_DATE(ALL_PARAMS ...interface{}) (string, string, time.Time) {
 			if IS_STRING {
 				is_supported, tmp_obj := GET_TZ_conv_OBJECT(string_val)
 				if is_supported {
-					CONV_2_TIMEZONE_OBJ = tmp_obj
-					do_tz_convert = true
+					TZ_2_USE = tmp_obj
 
 				} else {
-					M.Println("Invalid TZ Sent to Convert Date")
+					M.Println("Invalid TZ Sent to CONVERT_DATE")
 					Y.Println(string_val)
 					DO_EXIT()
 				}
@@ -140,23 +140,8 @@ func CONVERT_DATE(ALL_PARAMS ...interface{}) (string, string, time.Time) {
 
 	} //end of for
 
-	// C.Println(output_FORMAT)
-	// Y.Println(STRING_input)
-	// DO_EXIT()
-
-	/*
-		= = =
-		= = =	This is handling for the DEFAULT two date formats
-		= = =
-	*/
-
-	//4. If a STRING was passed..w e convert it to a DATE_OBJ
-	//dummyLOC, _ := time.LoadLocation("Local")
-
 	if need_STRING_convert {
 		//1. Remove all spaces in this string just in case
-		//STRING_input = UNICODE_REMOVE_ALL_SPACES(STRING_input)
-
 		isVALID, pmap := CHECK_for_SUPPORTED_DATE_INPUT(STRING_input)
 		// errro handling
 		if isVALID == false {
@@ -169,14 +154,6 @@ func CONVERT_DATE(ALL_PARAMS ...interface{}) (string, string, time.Time) {
 			DO_EXIT()
 			//return "", "", time.Time{}
 		}
-
-		/*
-			G.Println(orig_INPUT)
-			C.Println(output_FORMAT)
-			Y.Println(STRING_input)
-			SHOW_STRUCT(pmap)
-			DO_EXIT()
-		*/
 
 		var num_Mon = pmap["month"].(int)
 		var num_Day = pmap["day"].(int)
@@ -193,11 +170,7 @@ func CONVERT_DATE(ALL_PARAMS ...interface{}) (string, string, time.Time) {
 			num_Sec = 0
 		}
 
-		date_OBJ := time.Date(num_Year, monthObj, num_Day, num_Hour, num_Min, num_Sec, 0, UTC_Location_OBJ)
-
-		if do_tz_convert {
-			date_OBJ = date_OBJ.In(CONV_2_TIMEZONE_OBJ)
-		}
+		date_OBJ := time.Date(num_Year, monthObj, num_Day, num_Hour, num_Min, num_Sec, 0, TZ_2_USE)
 
 		//12. Now pass to show_Pretty_Date with the output format if specified
 		OUTPUT, weekday := SHOW_PRETTY_DATE(date_OBJ, output_FORMAT)
@@ -217,10 +190,7 @@ func CONVERT_DATE(ALL_PARAMS ...interface{}) (string, string, time.Time) {
 			num_Min := 0
 			num_Sec := 0
 
-			DATE_input = time.Date(num_YEAR, num_MON_OBJ, num_DAY, num_Hour, num_Min, num_Sec, 0, UTC_Location_OBJ)
-			if do_tz_convert {
-				DATE_input = DATE_input.In(CONV_2_TIMEZONE_OBJ)
-			}
+			DATE_input = time.Date(num_YEAR, num_MON_OBJ, num_DAY, num_Hour, num_Min, num_Sec, 0, TZ_2_USE)
 		}
 
 		OUTPUT, weekday := SHOW_PRETTY_DATE(DATE_input, output_FORMAT)
@@ -231,7 +201,7 @@ func CONVERT_DATE(ALL_PARAMS ...interface{}) (string, string, time.Time) {
 
 		s64 := int64(EPOCH_input)
 		date_OBJ := time.Unix(s64, 0)
-		date_OBJ = date_OBJ.In(CONV_2_TIMEZONE_OBJ)
+		date_OBJ = date_OBJ.In(TZ_2_USE)
 
 		OUTPUT, weekday := SHOW_PRETTY_DATE(date_OBJ, output_FORMAT)
 		return OUTPUT, weekday, date_OBJ
