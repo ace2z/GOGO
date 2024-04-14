@@ -4,7 +4,7 @@ go 1.22.1
 
 require (
 	github.com/ace2z/GOGO/Gadgets v0.0.0-20240414171740-35d293e35469
-	go.mongodb.org/mongo-driver v1.15.0
+	go.mongodb.org/mongo-driver v1.14.0
 )
 
 require (
