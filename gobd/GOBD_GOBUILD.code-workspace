@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"name": "Gadgets",
+			"path": "../Gadgets"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"html.format.extraLiners": ""
+	}
+}
