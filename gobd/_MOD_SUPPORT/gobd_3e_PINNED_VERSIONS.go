@@ -51,7 +51,7 @@ func CORRELATE_PINNED(PINNED_LIST []string, GOMOD_CONTENTS []string) []string {
 				// gm_everything_else := msplit[1]
 
 				// gm_pack = strings.Replace(y, gm_pack, packname, -1)
-				GOMOD_CONTENTS[n] = "\t" + full_line + " // indirect"
+				GOMOD_CONTENTS[n] = "\t" + full_line + " // Pinned via _PINNED_VERSIONS.conf"
 			}
 		}
 	}
