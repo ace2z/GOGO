@@ -9,7 +9,7 @@ import (
 	. "github.com/ace2z/GOGO/Gadgets"
 )
 
-var PINNED_VER_FILE = "PINNED_VERSIONS.conf"
+var PINNED_VER_FILE = "_PINNED_VERSIONS.conf"
 
 func SAVE_PINNED(inp string, PINNED *[]string) {
 
