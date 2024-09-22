@@ -1,10 +1,10 @@
 module github.com/ace2z/GOGO/Gadgets/APIce
 
-go 1.22.5
+go 1.23.1
 
 require (
 	github.com/TylerBrock/colorjson v0.0.0-20200706003622-8a50f05110d2
-	github.com/ace2z/GOGO/Gadgets v0.0.0-20240922221754-d8203f9bb94d
+	github.com/ace2z/GOGO/Gadgets v0.0.0-20240922222632-160584507b98
 )
 
 require (
