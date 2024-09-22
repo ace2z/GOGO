@@ -1,9 +1,9 @@
 module github.com/ace2z/GOGO/Gadgets/Mongolian
 
-go 1.22.5
+go 1.23.1
 
 require (
-	github.com/ace2z/GOGO/Gadgets v0.0.0-20240922221825-f92936bf1b53
+	github.com/ace2z/GOGO/Gadgets v0.0.0-20240922222711-f1eea82a0c7a
 	go.mongodb.org/mongo-driver v1.14.0 // Pinned via _PINNED_VERSIONS.conf
 )
 
