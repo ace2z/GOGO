@@ -69,6 +69,10 @@ func GET_REPO_MetaDATA() {
 
 	Y.Println("msplit is: ")
 	SHOW_STRUCT(msplit)
+	ind := 0
+	if len(msplit) > 1 {
+		ind = 1
+	}
 
 	MOD_DIRPATH = strings.TrimPrefix(msplit[1], "/")
 
