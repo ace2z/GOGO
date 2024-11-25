@@ -74,7 +74,7 @@ func GET_REPO_MetaDATA() {
 		ind = 1
 	}
 
-	MOD_DIRPATH = strings.TrimPrefix(msplit[1], "/")
+	MOD_DIRPATH = strings.TrimPrefix(msplit[ind], "/")
 
 	C.Println("Now MOD_DIRPATH is: ", MOD_DIRPATH)
 
