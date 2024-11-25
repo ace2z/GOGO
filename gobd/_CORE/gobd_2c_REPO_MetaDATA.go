@@ -67,8 +67,9 @@ func GET_REPO_MetaDATA() {
 	MOD_LOCAL_BASEDIR = strings.TrimSuffix(filepath.Base(res2), "\n")
 	msplit := strings.Split(cwd, MOD_LOCAL_BASEDIR)
 
-	Y.Println("msplit is: ")
-	SHOW_STRUCT(msplit)
+	// Y.Println("msplit is: ")
+	// SHOW_STRUCT(msplit)
+	
 	ind := 0
 	if len(msplit) > 1 {
 		ind = 1
@@ -76,7 +77,7 @@ func GET_REPO_MetaDATA() {
 
 	MOD_DIRPATH = strings.TrimPrefix(msplit[ind], "/")
 
-	C.Println("Now MOD_DIRPATH is: ", MOD_DIRPATH)
+	//C.Println("Now MOD_DIRPATH is: ", MOD_DIRPATH)
 
 	MOD_LOCAL_BASEDIR = MOD_DIRPATH
 
