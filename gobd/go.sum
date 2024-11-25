@@ -1,5 +1,5 @@
-github.com/ace2z/GOGO/Gadgets v0.0.0-20241125064145-97df9d6f7335 h1:7yZ6HscSP2VoOWUoouszGL4h+FVPlT1x28DtyL9iYYE=
-github.com/ace2z/GOGO/Gadgets v0.0.0-20241125064145-97df9d6f7335/go.mod h1:ErRhXpmB/sH/l1X8lvGHvZrgW+k9dq+oOmGyTLNtV7s=
+github.com/ace2z/GOGO/Gadgets v0.0.0-20241125064209-ab0be4824516 h1:loIU09Rvr2susE5LQwOfL8Pxlgy4SNh07/ikaERVYqk=
+github.com/ace2z/GOGO/Gadgets v0.0.0-20241125064209-ab0be4824516/go.mod h1:ErRhXpmB/sH/l1X8lvGHvZrgW+k9dq+oOmGyTLNtV7s=
 github.com/atotto/clipboard v0.1.4 h1:EH0zSVneZPSuFR11BlR9YppQTVDbh5+16AmcJi4g1z4=
 github.com/atotto/clipboard v0.1.4/go.mod h1:ZY9tmq7sm5xIbd9bOK4onWV4S6X0u6GY7Vn0Yu86PYI=
 github.com/briandowns/spinner v1.23.1 h1:t5fDPmScwUjozhDj4FA46p5acZWIPXYE30qW2Ptu650=
