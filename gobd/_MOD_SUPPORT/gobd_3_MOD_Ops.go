@@ -14,7 +14,7 @@ func QUIK_COMMIT() {
 
 	G.Println(PREFIX, "COMMITING To GIT Repo...")
 	_, date_obj := GET_CURRENT_TIME()
-	commdate, _ := SHOW_PRETTY_DATE(date_obj, "timestamp_nozone_noday")
+	commdate := SHOW_PRETTY_DATE(date_obj, "timestamp_nozone_noday")
 
 	MESSAGE := "Auto QuickCommit for GOMOD " + commdate
 	if COMMIT_MESSAGE != "" {
