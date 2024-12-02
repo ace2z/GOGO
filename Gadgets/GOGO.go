@@ -419,21 +419,6 @@ func GET_BINARY_BUILT_FOR() (string, string) {
 
 } //end of getOsType
 
-// Returns a randomly generated number within a given range (returns a STRING AND an int)
-func GenRandomRange(min int, max int) (int, string) {
-
-	resultNum := rand.Intn(max-min) + min
-	resultText := strconv.Itoa(resultNum)
-
-	// Always return a string with a 0 prefix
-	if resultNum < 10 {
-		resultText = "0" + resultText
-	}
-
-	return resultNum, resultText
-
-} //end of genRandomRange
-
 func SHOW_PROG_VERSION(vernum string) {
 	C.Print("     ")
 	BW.Print("                 ")

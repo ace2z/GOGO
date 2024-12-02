@@ -86,7 +86,8 @@ func ADD_LEADING_ZERO(myNum int) string {
 }
 
 /* SHOW_PRETTY_DATE Takes in a time.Time DATE_OBJ and returns a PRETTY formatted based on what you specify
-
+   Acceot: basic, simple, full, justdate, justtime, timestamp, british, nano, weekday
+   
    For FORMAT specifiy: basic, simple, full, nano, british, justtime, justdate, timestamp
    You can also modify format by adding:
    _noday   (ie, basic_noweek) - Prevents the weekday info from showing

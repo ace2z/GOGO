@@ -50,18 +50,18 @@ func FORMAT_NUM(num float64, precision int) float64 {
 	return FIX_FLOAT_PRECISION(num, precision)
 }
 
-// Easy way to get the UTC form of DATE_OBJ so there is no confusion.. Returns Time, String(pretty date) and Weekday all converted from the orig time
-func GET_DB_DATE_UTC(input_DATE_OBJ time.Time) (time.Time, string, string, string) {
+// // Easy way to get the UTC form of DATE_OBJ so there is no confusion.. Returns Time, String(pretty date) and Weekday all converted from the orig time
+// func GET_DB_DATE_UTC(input_DATE_OBJ time.Time) (time.Time, string, string, string) {
 
-	result_DATE_OBJ := input_DATE_OBJ.In(UTC_Location_OBJ)
+// 	result_DATE_OBJ := input_DATE_OBJ.In(UTC_Location_OBJ)
 
-	pretty, weekday := SHOW_PRETTY_DATE(result_DATE_OBJ)
+// 	pretty, weekday := SHOW_PRETTY_DATE(result_DATE_OBJ)
 
-	result_as_STRING := result_DATE_OBJ.String()
+// 	result_as_STRING := result_DATE_OBJ.String()
 
-	return result_DATE_OBJ, result_as_STRING, pretty, weekday
+// 	return result_DATE_OBJ, result_as_STRING, pretty, weekday
 
-}
+// }
 
 func GET_RATIO(smallNUM float64, bigNUM float64, EXTRA_ARGS ...bool) float64 {
 
