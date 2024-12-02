@@ -2,8 +2,9 @@ module github.com/ace2z/GOGO/Gadgets/MDC
 
 go 1.23.3
 
+require github.com/ace2z/GOGO/Gadgets v0.0.0-20241202020935-a9f7aa08dc01
+
 require (
-	github.com/ace2z/GOGO/Gadgets v0.0.0-20241202014226-577a5cb8f1eb // indirect
 	github.com/atotto/clipboard v0.1.4 // indirect
 	github.com/briandowns/spinner v1.23.1 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
