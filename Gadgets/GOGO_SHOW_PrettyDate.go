@@ -158,7 +158,9 @@ func SHOW_PRETTY_DATE(ALL_PARAMS ...interface{}) string {
 		// also accepts anything valid from the IANA TZ database
 		if n == 2 {
 			if IS_STRING {
-				requested_TZ = string_val
+				if string_val != "" {
+					requested_TZ = string_val
+				}
 
 			} else {
 				M.Println("Invalid input TZ to use! Try est, cst, pst, UTC, GMT... or anything from the IANA Database")
