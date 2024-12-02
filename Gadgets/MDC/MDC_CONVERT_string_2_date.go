@@ -79,7 +79,7 @@ func CONVERT_DATE_STRING(ALL_PARAMS ...interface{}) (time.Time, string) {
 			continue
 		}
 		// IF TZ is sent, use it
-		if n == 3 && IS_STRING {
+		if n == 2 && IS_STRING {
 			if string_val != "" {
 				requested_TZ = string_val
 			}
