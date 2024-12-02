@@ -87,7 +87,7 @@ func ADD_LEADING_ZERO(myNum int) string {
 
 /* SHOW_PRETTY_DATE Takes in a time.Time DATE_OBJ and returns a PRETTY formatted based on what you specify
    Acceot: basic, simple, full, justdate, justtime, timestamp, british, nano, weekday
-   
+
    For FORMAT specifiy: basic, simple, full, nano, british, justtime, justdate, timestamp
    You can also modify format by adding:
    _noday   (ie, basic_noweek) - Prevents the weekday info from showing
@@ -143,7 +143,9 @@ func SHOW_PRETTY_DATE(ALL_PARAMS ...interface{}) string {
 		//2nd param is always going to be what we need for the output format
 		if n == 1 {
 			if IS_STRING {
-				output_FORMAT = string_val
+				if string_val != "" {
+					output_FORMAT = string_val
+				}
 			} else {
 				M.Print(" Invalid input for OUTPUT_FORMAT")
 				Y.Println(" Need a STRING seperated by underscores")
@@ -168,7 +170,6 @@ func SHOW_PRETTY_DATE(ALL_PARAMS ...interface{}) string {
 
 	} // end of input forloop
 
-
 	// First determine what input type we are using.. If its a time.Time or an EPOCH
 	// We Default to converting to the time.. So if its EPOCH.. this is what we do
 	if convert_TIME == false {
@@ -180,10 +181,6 @@ func SHOW_PRETTY_DATE(ALL_PARAMS ...interface{}) string {
 			input_DATE = time.Unix(EPOCH64_input, 0)
 		}
 	}
-
-
-
-
 
 	// Now.. determine if we need to convert this timeObject to a NEW time zone
 	if requested_TZ != "" {
@@ -214,6 +211,12 @@ func SHOW_PRETTY_DATE(ALL_PARAMS ...interface{}) string {
 
 	//1c. Here is the default DELIMITER we use (can be overridden by hyphen or underscore)
 	delim := "/"
+
+	if strings.Contains(output_FORMAT, "hyphen") {
+		delim = "-"
+	} else if strings.Contains(output_FORMAT, "underscore") {
+		delim = "_"
+	}
 
 	//2. From this object, extract the M/D/Y HH:MM
 	montemp := int(input_DATE.Month())
@@ -290,7 +293,7 @@ func SHOW_PRETTY_DATE(ALL_PARAMS ...interface{}) string {
 
 		// Basic format is just that.. no zone no weekday
 		ADD_WEEKDAY = false
-		ADD_ZONE = false
+		//		ADD_ZONE = false
 
 		//9. FULL Format: //Wednesday, 11/20/2020 @ 13:56 EST (-5 Hours)
 	} else if strings.Contains(output_FORMAT, "full") {
