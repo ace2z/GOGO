@@ -64,6 +64,7 @@ func FORMAT_NUM(num float64, precision int) float64 {
 // }
 
 func GET_RATIO(smallNUM float64, bigNUM float64, EXTRA_ARGS ...bool) float64 {
+	PLACEHOLDER()
 
 	var do_invert = false
 
