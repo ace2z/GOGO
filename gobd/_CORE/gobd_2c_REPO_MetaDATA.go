@@ -69,7 +69,7 @@ func GET_REPO_MetaDATA() {
 
 	// Y.Println("msplit is: ")
 	// SHOW_STRUCT(msplit)
-	
+
 	ind := 0
 	if len(msplit) > 1 {
 		ind = 1
@@ -84,7 +84,7 @@ func GET_REPO_MetaDATA() {
 	//3. If we are in same directory as REPO LOCAL Root.. and trying to initalize a module
 	// Note: right now we're only supporting GITHUB ... for Azure, Gitlab and Bitbucket, we have different paths that are
 	// used for the "official module import name".. and need adjust accordingly
-	if INIT_MOD or TEST_MOD{
+	if INIT_MOD || TEST_MOD {
 		if REPO_LOCAL_ROOT == cwd {
 			MOD_LOCAL_BASEDIR = cwd
 			OFFICIAL_MODULE_IMPORT_NAME = PARENT_REPO_NAME
