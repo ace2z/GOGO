@@ -105,7 +105,7 @@ func GET_PROPER_TZONE_Logic(requested_TZ string) *time.Location {
 }
 
 // Handles the logic for the OUTPUT_Format requested
-func OUTPUT_Format_Logic(output_FORMAT string, input_DATE time.Time) string {
+func OUTPUT_Format_Pretty_Logic(output_FORMAT string, input_DATE time.Time) string {
 
 	//1c. Here is the default DELIMITER we use (can be overridden by hyphen or underscore)
 	delim := "/"
@@ -350,7 +350,7 @@ func SHOW_PRETTY_DATE(ALL_PARAMS ...interface{}) string {
 	input_DATE = tmptime
 
 	//2. Next... Run the OUTPUT_Format_Logic
-	result_TEXT := OUTPUT_Format_Logic(output_FORMAT, input_DATE)
+	result_TEXT := OUTPUT_Format_Pretty_Logic(output_FORMAT, input_DATE)
 
 	//12. As a bonus, we always return the weekday as a second variable
 	return result_TEXT

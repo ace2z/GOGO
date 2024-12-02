@@ -50,16 +50,19 @@ STRING format for the Date must be in one of the following or you will error:
 
     // USES THE SAME OUTPUT FORMATS and ZONE modifiers as the SHOW_PRETTY_DATE function
 */
-func CONVERT_DATE_STRING(ALL_PARAMS ...interface{}) time.Time {
+func CONVERT_DATE_STRING(ALL_PARAMS ...interface{}) (time.Time, string) {
 
 	STRING_input := ""
-	OUTPUT_format := "basic"		
+	output_format_2use := "basic"
+	requested_TZ := ""
+
+	TZ_2use := LOCAL_Location_OBJ
 
 	for n, param := range ALL_PARAMS {
 		string_val, IS_STRING := param.(string)
-		time_val, IS_TIME := param.(time.Time)
-		int_val, IS_INT := param.(int)
-		int64_val, IS_INT64 := param.(int64)
+		// time_val, IS_TIME := param.(time.Time)
+		// int_val, IS_INT := param.(int)
+		// int64_val, IS_INT64 := param.(int64)
 
 		// First param is ALWAYWs the string input
 		if n == 0 && IS_STRING {
@@ -69,24 +72,37 @@ func CONVERT_DATE_STRING(ALL_PARAMS ...interface{}) time.Time {
 
 		// 2nd param is the output format
 		if n == 1 && IS_STRING {
+			if string_val != "" {
+				output_format_2use = string_val
+			}
+			continue
+		}
+		// IF TZ is sent, use it
+		if n == 3 && IS_STRING {
+			if string_val != "" {
+				requested_TZ = string_val
+			}
 
-
-
-		
+			continue
+		}
 	}
 
-	//1. Remove all spaces in this string just in case
+	//1. Make sure they sent int a supported String format for the date
 	isVALID, pmap := CHECK_for_SUPPORTED_DATE_INPUT(STRING_input)
 	// errro handling
 	if isVALID == false {
-		M.Print("*** INVALID Date Format sent to: ")
+		M.Print("*** INVALID String Date Format sent to: ")
 		Y.Println("CONVERT_DATE")
-
 		Y.Print("Input was: ")
 		W.Println(STRING_input)
 
 		DO_EXIT()
 		//return "", "", time.Time{}
+	}
+
+	// determine the time zone to use (if passed) .. otherwise uses local TZ
+	if requested_TZ != "" {
+		TZ_2use = GET_PROPER_TZONE_Logic(requested_TZ)
 	}
 
 	var num_Mon = pmap["month"].(int)
@@ -97,11 +113,12 @@ func CONVERT_DATE_STRING(ALL_PARAMS ...interface{}) time.Time {
 	var num_Sec = pmap["sec"].(int)
 	monthObj := time.Month(num_Mon)
 
-	var LOCAL_Location_OBJ, _ = time.LoadLocation("Local")
+	date_OBJ := time.Date(num_Year, monthObj, num_Day, num_Hour, num_Min, num_Sec, 0, TZ_2use)
 
-	date_OBJ := time.Date(num_Year, monthObj, num_Day, num_Hour, num_Min, num_Sec, 0, LOCAL_Location_OBJ)
+	// Now... we'll make a pretty date. Based on output format (if sent)
+	pretty := OUTPUT_Format_Pretty_Logic(output_format_2use, date_OBJ)
 
-	return date_OBJ
+	return date_OBJ, pretty
 
 } //end of func
 
