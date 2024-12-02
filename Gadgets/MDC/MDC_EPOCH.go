@@ -22,11 +22,12 @@ import (
 	// = = = = = 3rd Party Libraries
 )
 
-func MAKE_Epoch_TIMESTAMP(dateobj time.Time) int {
+// Returns a DATE_OBJ as UnixTime ... and MILLISECONDS
+func MAKE_Epoch_TIMESTAMP(dateobj time.Time) (int64, int64) {
 
 	//	pretty, _ := SHOW_PRETTY_DATE(dateobj, "basic")
-	newEpoch := dateobj.Unix()
-	res_ts := int(newEpoch)
+	newUNIX := dateobj.Unix()
+	newMILLI := dateobj.UnixMilli()
 
-	return res_ts
+	return newUNIX, newMILLI
 }
