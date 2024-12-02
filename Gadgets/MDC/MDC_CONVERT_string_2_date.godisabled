@@ -9,7 +9,7 @@ NOTE: For Functions or Variables to be globally availble. The MUST start with a 
 
 */
 
-package GOGO_MDC
+package CUSTOM_GO_MODULE
 
 import (
 
@@ -20,6 +20,7 @@ import (
 	//"math/rand"
 
 	// = = = = = CUSTOM Libraries
+
 	. "github.com/ace2z/GOGO/Gadgets"
 	//. "github.com/ace2z/GOGO/Gadgets/StringOPS"
 	// = = = = = 3rd Party Libraries

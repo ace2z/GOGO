@@ -1,4 +1,4 @@
-package GOGO_MDC
+package CUSTOM_GO_MODULE
 
 import (
 	//"strings"

@@ -9,7 +9,7 @@ NOTE: For Functions or Variables to be globally availble. The MUST start with a 
 
 */
 
-package GOGO_MDC
+package CUSTOM_GO_MODULE
 
 import (
 

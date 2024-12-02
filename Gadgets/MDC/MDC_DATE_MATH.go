@@ -1,10 +1,10 @@
-package GOGO_MDC
+package CUSTOM_GO_MODULE
 
 import (
 	"strings"
 	"time"
 
-	. "github.com/ace2z/GOGO/Gadgets"
+	//. "github.com/ace2z/GOGO/Gadgets"
 )
 
 // Easy way to find if FIRST date is AFTER the PREV DATE
@@ -19,7 +19,7 @@ func DATE_IS_BEFORE(first, prev time.Time) bool {
 
 // Gets the difference between two dates (by days, hour or minutes)
 func GET_DATE_DIFF(mtype string, currDATE time.Time, prevDATE time.Time) int {
-	PLACEHOLDER()
+	
 
 	if strings.Contains(mtype, "day") {
 
