@@ -85,131 +85,27 @@ func ADD_LEADING_ZERO(myNum int) string {
 	return RESULT
 }
 
-/* SHOW_PRETTY_DATE Takes in a time.Time DATE_OBJ and returns a PRETTY formatted based on what you specify
-   Acceot: basic, simple, full, justdate, justtime, timestamp, british, nano, weekday
-
-   For FORMAT specifiy: basic, simple, full, nano, british, justtime, justdate, timestamp
-   You can also modify format by adding:
-   _noday   (ie, basic_noweek) - Prevents the weekday info from showing
-   _nozone   		- prevents the timezone info from showing
-   _reset_time 		- For situations where you want to omit the HH:MM cause you dont need it...resets time to 00:00
-
-*/
-
-// func SHOW_PRETTY_DATE(input_DATE time.Time, EXTRA_ARGS...string) string {
-func SHOW_PRETTY_DATE(ALL_PARAMS ...interface{}) string {
-	var output_FORMAT = "basic"
-
-	convert_TIME := false
-	convert_EPOCH := false
-	convert_64EPOCH := false
-
-	input_DATE := time.Now()
-	EPOCH_input := 0
-	var EPOCH64_input int64 = 0
+func GET_PROPER_TZONE_Logic(requested_TZ string) *time.Location {
 
 	TZ_2use := LOCAL_Location_OBJ
-	requested_TZ := ""
-
-	for n, param := range ALL_PARAMS {
-		string_val, IS_STRING := param.(string)
-		time_val, IS_TIME := param.(time.Time)
-		int_val, IS_INT := param.(int)
-		int64_val, IS_INT64 := param.(int64)
-
-		// First parama is always a time.Time DATE_OBJ or an int epoch
-		// Figure out if we are converting a STRING to a DATE_OBJ... or a DATE_OBJ to a string
-		if n == 0 {
-			if IS_TIME {
-				input_DATE = time_val
-				convert_TIME = true
-
-			} else if IS_INT {
-				EPOCH_input = int_val
-				convert_EPOCH = true
-
-			} else if IS_INT64 {
-				EPOCH64_input = int64_val
-				convert_64EPOCH = true
-
-			} else {
-				M.Print(" Invalid input sent for DATE!!!")
-				Y.Println(" Need either time.TIME DateOBJ ... or EPOCH as int or int64")
-				DO_EXIT()
-			}
-			continue
-		}
-
-		//2nd param is always going to be what we need for the output format
-		if n == 1 {
-			if IS_STRING {
-				if string_val != "" {
-					output_FORMAT = string_val
-				}
-			} else {
-				M.Print(" Invalid input for OUTPUT_FORMAT")
-				Y.Println(" Need a STRING seperated by underscores")
-				DO_EXIT()
-			}
-			continue
-		}
-
-		//3rd param is always going to be the timezone ... it accepts the basic ones like EST, CST, MST, PST
-		// also accepts anything valid from the IANA TZ database
-		if n == 2 {
-			if IS_STRING {
-				if string_val != "" {
-					requested_TZ = string_val
-				}
-
-			} else {
-				M.Println("Invalid input TZ to use! Try est, cst, pst, UTC, GMT... or anything from the IANA Database")
-				W.Println("https://en.wikipedia.org/wiki/List_of_tz_database_time_zones")
-				DO_EXIT()
-			}
-			continue
-		}
-
-	} // end of input forloop
-
-	// First determine what input type we are using.. If its a time.Time or an EPOCH
-	// We Default to converting to the time.. So if its EPOCH.. this is what we do
-	if convert_TIME == false {
-		if convert_EPOCH {
-			s64 := int64(EPOCH_input)
-			input_DATE = time.Unix(s64, 0)
-
-		} else if convert_64EPOCH {
-			input_DATE = time.Unix(EPOCH64_input, 0)
-		}
-	}
-
 	// Now.. determine if we need to convert this timeObject to a NEW time zone
 	if requested_TZ != "" {
-		valid_shortcut, NEW_TZ_OBJ := Check_for_TZ_shortcut_or_IANA(requested_TZ)
-		if valid_shortcut == false {
+		is_valid, NEW_TZ_OBJ := Check_for_TZ_shortcut_or_IANA(requested_TZ)
+		if is_valid == false {
+			M.Println("Invalid input for TIMEZONE requested! Try est, cst, pst, UTC, GMT... or anything from the IANA Database")
+			W.Println("https://en.wikipedia.org/wiki/List_of_tz_database_time_zones")
 			DO_EXIT()
+
 		} else {
 			TZ_2use = NEW_TZ_OBJ
 		}
 
 	}
-	// finally.. convert the time input to the NEW timeon object
-	tmptime := input_DATE.In(TZ_2use)
-	input_DATE = tmptime
+	return TZ_2use
+}
 
-	// //1. Parse out EXTRA_ARGS
-	// for _, VAL := range EXTRA_ARGS {
-
-	// 	//1e. only parameter this takes is the output format we want
-	// 	// If full is passed, we show this format: Wednesday, 11/20/2020 @ 13:56
-	// 	// if british or iso is passed, we show: 2015-05-30
-	// 	if VAL != "" {
-	// 		output_FORMAT = VAL
-	// 		continue
-	// 	}
-
-	// } // end of for
+// Handles the logic for the OUTPUT_Format requested
+func OUTPUT_Format_Logic(output_FORMAT string, input_DATE time.Time) string {
 
 	//1c. Here is the default DELIMITER we use (can be overridden by hyphen or underscore)
 	delim := "/"
@@ -330,6 +226,13 @@ func SHOW_PRETTY_DATE(ALL_PARAMS ...interface{}) string {
 		need_just_weekday = true
 	}
 
+	// = = =
+	// Error handling.. If we got this far and its empty.. means the REQUESTED output_format was invalid
+	if result_TEXT == "" {
+		M.Println(" ERROR: Requested OUTPUT_Format_Logic is INVALID!!!")
+		DO_EXIT()
+	}
+
 	if ADD_WEEKDAY && need_just_weekday == false {
 		result_TEXT = weekd + ", " + result_TEXT
 	}
@@ -339,12 +242,115 @@ func SHOW_PRETTY_DATE(ALL_PARAMS ...interface{}) string {
 		result_TEXT = result_TEXT + " " + TMP_ZONE_FULL
 	}
 
-	// error handling
-	if result_TEXT == "" {
+	return result_TEXT
+}
 
-		R.Println(" ERROR in SHOW_PRETTY_DATE: .. invalid output_FORMAT sent!!!")
-		DO_EXIT()
+/* SHOW_PRETTY_DATE Takes in a time.Time DATE_OBJ and returns a PRETTY formatted based on what you specify
+   Acceot: basic, simple, full, justdate, justtime, timestamp, british, nano, weekday
+
+   For FORMAT specifiy: basic, simple, full, nano, british, justtime, justdate, timestamp
+   You can also modify format by adding:
+   _noday   (ie, basic_noweek) - Prevents the weekday info from showing
+   _nozone   		- prevents the timezone info from showing
+   _reset_time 		- For situations where you want to omit the HH:MM cause you dont need it...resets time to 00:00
+
+*/
+
+// func SHOW_PRETTY_DATE(input_DATE time.Time, EXTRA_ARGS...string) string {
+func SHOW_PRETTY_DATE(ALL_PARAMS ...interface{}) string {
+	var output_FORMAT = "basic"
+
+	convert_TIME := false
+	convert_EPOCH := false
+	convert_64EPOCH := false
+
+	input_DATE := time.Now()
+	EPOCH_input := 0
+	var EPOCH64_input int64 = 0
+
+	TZ_2use := LOCAL_Location_OBJ
+	requested_TZ := ""
+
+	for n, param := range ALL_PARAMS {
+		string_val, IS_STRING := param.(string)
+		time_val, IS_TIME := param.(time.Time)
+		int_val, IS_INT := param.(int)
+		int64_val, IS_INT64 := param.(int64)
+
+		// First parama is always a time.Time DATE_OBJ or an int epoch
+		// Figure out if we are converting a STRING to a DATE_OBJ... or a DATE_OBJ to a string
+		if n == 0 {
+			if IS_TIME {
+				input_DATE = time_val
+				convert_TIME = true
+
+			} else if IS_INT {
+				EPOCH_input = int_val
+				convert_EPOCH = true
+
+			} else if IS_INT64 {
+				EPOCH64_input = int64_val
+				convert_64EPOCH = true
+
+			} else {
+				M.Print(" Invalid input sent for DATE!!!")
+				Y.Println(" Need either time.TIME DateOBJ ... or EPOCH as int or int64")
+				DO_EXIT()
+			}
+			continue
+		}
+
+		//2nd param is always going to be what we need for the output format
+		if n == 1 {
+			if IS_STRING {
+				if string_val != "" {
+					output_FORMAT = string_val
+				}
+			} else {
+				M.Print(" Invalid input for OUTPUT_FORMAT")
+				Y.Println(" Need a STRING seperated by underscores")
+				DO_EXIT()
+			}
+			continue
+		}
+
+		//3rd param is always going to be the timezone ... it accepts the basic ones like EST, CST, MST, PST
+		// also accepts anything valid from the IANA TZ database
+		if n == 2 {
+			if IS_STRING {
+				if string_val != "" {
+					requested_TZ = string_val
+				}
+			}
+			continue
+		}
+
+	} // end of input forloop
+
+	// First determine what input type we are using.. If its a time.Time or an EPOCH
+	// We Default to converting to the time.. So if its EPOCH.. this is what we do
+	if convert_TIME == false {
+		if convert_EPOCH {
+			s64 := int64(EPOCH_input)
+			input_DATE = time.Unix(s64, 0)
+
+		} else if convert_64EPOCH {
+			input_DATE = time.Unix(EPOCH64_input, 0)
+		}
 	}
+
+	// = = = = = == MAIN AREA
+	// get proper timezone to use (if one is passed)
+	if requested_TZ != "" {
+		TZ_2use = GET_PROPER_TZONE_Logic(requested_TZ)
+	}
+
+	// finally.. convert the time input to the TimeZone Object
+	tmptime := input_DATE.In(TZ_2use)
+	input_DATE = tmptime
+
+	//2. Next... Run the OUTPUT_Format_Logic
+	result_TEXT := OUTPUT_Format_Logic(output_FORMAT, input_DATE)
 
 	//12. As a bonus, we always return the weekday as a second variable
 	return result_TEXT

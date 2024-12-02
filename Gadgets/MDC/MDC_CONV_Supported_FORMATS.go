@@ -31,12 +31,11 @@ func CHECK_for_SUPPORTED_DATE_INPUT(inputDate string) (bool, map[string]interfac
 	var final_map map[string]interface{}
 
 	// add new formats here as needed
-	is_EPOCH, emap := have_EPOCH_FORMAT(inputDate)
-	is_DEFAULT, dmap := have_SUPPORTED_DEFAULT_FORMAT(inputDate)
+	//is_EPOCH, emap := have_EPOCH_FORMAT(inputDate)
+	is_valid_FORMAT, dmap := have_SUPPORTED_DEFAULT_FORMAT(inputDate)
 
-	if is_EPOCH {
-		final_map = emap
-	} else if is_DEFAULT {
+
+	if is_valid_FORMAT {
 		final_map = dmap
 
 		// Otherwise, we dont have a supported format

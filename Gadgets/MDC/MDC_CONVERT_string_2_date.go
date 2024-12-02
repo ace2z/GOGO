@@ -48,9 +48,32 @@ STRING format for the Date must be in one of the following or you will error:
 
   - XXXXX@18:05
 
-    // ALWAYS RETURNS A LOCAL TIME ZONE DATE_OBJ
+    // USES THE SAME OUTPUT FORMATS and ZONE modifiers as the SHOW_PRETTY_DATE function
 */
-func CONVERT_DATE_STRING(STRING_input string) time.Time {
+func CONVERT_DATE_STRING(ALL_PARAMS ...interface{}) time.Time {
+
+	STRING_input := ""
+	OUTPUT_format := "basic"		
+
+	for n, param := range ALL_PARAMS {
+		string_val, IS_STRING := param.(string)
+		time_val, IS_TIME := param.(time.Time)
+		int_val, IS_INT := param.(int)
+		int64_val, IS_INT64 := param.(int64)
+
+		// First param is ALWAYWs the string input
+		if n == 0 && IS_STRING {
+			STRING_input = string_val
+			continue
+		}
+
+		// 2nd param is the output format
+		if n == 1 && IS_STRING {
+
+
+
+		
+	}
 
 	//1. Remove all spaces in this string just in case
 	isVALID, pmap := CHECK_for_SUPPORTED_DATE_INPUT(STRING_input)
