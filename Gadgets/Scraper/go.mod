@@ -1,10 +1,10 @@
 module github.com/ace2z/GOGO/Gadgets/Scraper
 
-go 1.23.1
+go 1.23.3
 
 require (
 	github.com/PuerkitoBio/goquery v1.10.0
-	github.com/ace2z/GOGO/Gadgets v0.0.0-20240922222720-9bcfd890ef49
+	github.com/ace2z/GOGO/Gadgets v0.0.0-20241202014226-577a5cb8f1eb
 )
 
 require (
@@ -12,7 +12,7 @@ require (
 	github.com/atotto/clipboard v0.1.4 // indirect
 	github.com/briandowns/spinner v1.23.1 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
-	github.com/fatih/color v1.17.0 // indirect
+	github.com/fatih/color v1.18.0 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
