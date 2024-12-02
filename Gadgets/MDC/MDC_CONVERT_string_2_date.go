@@ -28,7 +28,8 @@ import (
 
 /*
 Converts the following
-  - a STRING date (in the proper format) to a time.Time DATE_OBJ
+  - a STRING date (in accepted format) to a time.Time DATE_OBJ
+  - PARAMS: STRING_input, output_format_2use, requested_TZ
 
 STRING format for the Date must be in one of the following or you will error:
 
