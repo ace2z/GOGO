@@ -88,7 +88,12 @@ func CONVERT_DATE_STRING(ALL_PARAMS ...interface{}) (time.Time, string) {
 	}
 
 	//1. Make sure they sent int a supported String format for the date
-	isVALID, pmap := CHECK_for_SUPPORTED_DATE_INPUT(STRING_input)
+	isVALID, includes_TIME, pmap := CHECK_for_SUPPORTED_DATE_INPUT(STRING_input)
+
+	if includes_TIME == false {
+		output_format_2use = output_format_2use + "reset_time"
+	}
+
 	// errro handling
 	if isVALID == false {
 		M.Print("*** INVALID String Date Format sent to: ")

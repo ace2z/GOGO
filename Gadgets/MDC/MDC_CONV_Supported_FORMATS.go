@@ -22,9 +22,11 @@ import (
 	// = = = = = 3rd Party Libraries
 )
 
-func CHECK_for_SUPPORTED_DATE_INPUT(inputDate string) (bool, map[string]interface{}) {
+func CHECK_for_SUPPORTED_DATE_INPUT(inputDate string) (bool, bool, map[string]interface{}) {
 
 	var res_MAP map[string]interface{}
+
+	var includes_TIME = false
 
 	//1. Otherwise.. lets determine which input format this is
 	// add new formats here as needed
@@ -32,16 +34,16 @@ func CHECK_for_SUPPORTED_DATE_INPUT(inputDate string) (bool, map[string]interfac
 
 	// add new formats here as needed
 	//is_EPOCH, emap := have_EPOCH_FORMAT(inputDate)
-	is_valid_FORMAT, dmap := have_SUPPORTED_DEFAULT_FORMAT(inputDate)
-
+	is_valid_FORMAT, timefound, dmap := have_SUPPORTED_DEFAULT_FORMAT(inputDate)
 
 	if is_valid_FORMAT {
 		final_map = dmap
 
 		// Otherwise, we dont have a supported format
 	} else {
-		return false, res_MAP
+		return false, false, res_MAP
 	}
+	includes_TIME = timefound
 
 	//5. First cast to a string from the map
 	var sMON = final_map["month"].(string)
@@ -67,5 +69,5 @@ func CHECK_for_SUPPORTED_DATE_INPUT(inputDate string) (bool, map[string]interfac
 		"min":   num_Min,
 		"sec":   num_Sec,
 	}
-	return true, res_MAP
+	return true, includes_TIME, res_MAP
 }

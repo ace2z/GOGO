@@ -74,8 +74,9 @@ func check_for_VERBOSE_DATE(input string) (bool, string, string, string, string,
 func MASTER_SPLIT_delims(r rune) bool {
 	return r == '@' || r == ':' || r == '_' || r == '-' || r == '/' || r == ' '
 }
-func have_SUPPORTED_DEFAULT_FORMAT(inputDate string) (bool, map[string]interface{}) {
+func have_SUPPORTED_DEFAULT_FORMAT(inputDate string) (bool, bool, map[string]interface{}) {
 
+	var includes_TIME = false
 	var resMAP map[string]interface{}
 
 	sMon := ""
@@ -96,7 +97,7 @@ func have_SUPPORTED_DEFAULT_FORMAT(inputDate string) (bool, map[string]interface
 		sd := strings.FieldsFunc(inputDate, MASTER_SPLIT_delims)
 		//error handling check to see if we have enough items
 		if len(sd) < 3 {
-			return false, resMAP
+			return false, false, resMAP
 		}
 
 		// This will fix the parts of the date... if we have 5 .. we get 05 in return
@@ -122,6 +123,7 @@ func have_SUPPORTED_DEFAULT_FORMAT(inputDate string) (bool, map[string]interface
 				sHour = FIX_if_needed(sd[3])
 				sMin = FIX_if_needed(sd[4])
 				skip_check_time = true
+				includes_TIME = true
 			}
 
 			//3. else check for normal xx/yy/zzzz  format
@@ -136,7 +138,7 @@ func have_SUPPORTED_DEFAULT_FORMAT(inputDate string) (bool, map[string]interface
 			}
 
 		} else {
-			return false, resMAP
+			return false, false, resMAP
 		}
 
 		//4. Now determine if we have a TIME appended.. via the :
@@ -149,6 +151,7 @@ func have_SUPPORTED_DEFAULT_FORMAT(inputDate string) (bool, map[string]interface
 				if strings.Count(inputDate, ":") == 2 {
 					sSec = strings.TrimSpace(sd[5])
 				}
+				includes_TIME = true
 			}
 		}
 	}
@@ -163,7 +166,7 @@ func have_SUPPORTED_DEFAULT_FORMAT(inputDate string) (bool, map[string]interface
 		"sec":   sSec,
 	}
 
-	return true, resMAP
+	return true, includes_TIME, resMAP
 }
 
 func epoch_SPLIT_delims(r rune) bool {
