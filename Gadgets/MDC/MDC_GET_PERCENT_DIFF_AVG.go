@@ -159,6 +159,56 @@ func GET_INCDEC_PERCENT(ALL_PARAMS ...interface{}) (float64, string, string, flo
 	return res_PERC, changeTYPE, res_DESC, res_diff
 }
 
+// Gets the MIDDLE value between 2 numbers
+func GET_MIDDLE(ALL_PARAMS ...interface{}) float64 {
+	var first float64
+	var sec float64
+
+	var precision = 1
+
+	for n, param := range ALL_PARAMS {
+		int_val, IS_INT := param.(int)
+		float_val, IS_FLOAT := param.(float64)
+		//string_val, IS_STRING := param.(string)
+
+		// Must be first anad second num  (for n == 0 and n == 1)
+		if n == 0 {
+			if IS_INT {
+				first = float64(int_val)
+			} else if IS_FLOAT {
+				first = float_val
+			}
+			continue
+		}
+
+		if n == 1 {
+			if IS_INT {
+				sec = float64(int_val)
+			} else if IS_FLOAT {
+				sec = float_val
+			}
+			continue
+		}
+
+		// Must be an int.. this is for preceission
+		if n == 2 {
+
+			precision = int_val
+		}
+
+	} //end of params
+
+	// Error handling
+	if first == sec {
+		return 0.0
+	}
+
+	middle := (first + sec) / 2
+	final_val := FIX_FLOAT_PRECISION(middle, precision)
+
+	return final_val
+}
+
 // Ultimate get diff of two dumbers
 // Pass 1st num, sec num... and if desired, int for decimal precision of output
 func GET_DIFF(ALL_PARAMS ...interface{}) float64 {
