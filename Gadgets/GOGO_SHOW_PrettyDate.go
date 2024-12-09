@@ -189,10 +189,6 @@ func OUTPUT_Format_Pretty_Logic(output_FORMAT string, input_DATE time.Time) stri
 
 		result_TEXT = cMon + delim + cDay + delim + cYear + " @ " + cHour + ":" + cMin
 
-		// Basic format is just that.. no zone no weekday
-		ADD_WEEKDAY = false
-		//		ADD_ZONE = false
-
 		//9. FULL Format: //Wednesday, 11/20/2020 @ 13:56 EST (-5 Hours)
 	} else if strings.Contains(output_FORMAT, "full") {
 
