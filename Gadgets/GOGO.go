@@ -162,8 +162,9 @@ func DO_EXIT(ALL_PARAMS ...interface{}) {
 
 	if exit_message != "" {
 		M.Println(exit_message)
-		W.Println("")
+
 	}
+	W.Println("")
 	os.Exit(exit_code)
 }
 
