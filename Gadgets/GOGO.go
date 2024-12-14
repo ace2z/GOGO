@@ -121,31 +121,50 @@ func AM_I_ROOT() bool {
 
 }
 
+/*
+func CONVERT_DATE_STRING(ALL_PARAMS ...interface{}) (time.Time, string) {
+
+	STRING_input := ""
+	output_format_2use := "basic"
+	requested_TZ := ""
+
+	TZ_2use := LOCAL_Location_OBJ
+
+	for n, param := range ALL_PARAMS {
+		string_val, IS_STRING := param.(string)
+		// time_val, IS_TIME := param.(time.Time)
+		// int_val, IS_INT := param.(int)
+*/
+
 // Easy way to quick exit a program without having to remember to import os
-func DO_EXIT(EXTRA_ARGS ...string) {
+func DO_EXIT(ALL_PARAMS ...interface{}) {
+	var exit_code = 0 // defaults to 0
 
-	var verbose = false
+	var exit_message = ""
 
-	//1. Parse out EXTRA_ARGS
-	for _, VAL := range EXTRA_ARGS {
+	for _, param := range ALL_PARAMS {
+		string_val, IS_STRING := param.(string)
+		int_val, IS_INT := param.(int)
 
-		if VAL != "" {
-			if VAL == "-verbose" {
-				verbose = true
-			}
+		// If variable is a string.. this is a message that is shown to the user
+		if IS_STRING {
+			exit_message = string_val
+			continue
+
+		}
+		//If it is an int.. assume its an error code
+		if IS_INT {
+			exit_code = int_val
+			continue
 		}
 
-	} // end of for
+	} //end of for
 
-	if verbose {
-		SHOW_BOX("|red| DO_EXIT of Program!")
+	if exit_message != "" {
+		M.Println(exit_message)
+		W.Println("")
 	}
-	os.Exit(-9)
-}
-
-// alias
-func DOEXIT(EXTRA_ARGS ...string) {
-	DO_EXIT(EXTRA_ARGS...)
+	os.Exit(exit_code)
 }
 
 /*
@@ -172,7 +191,7 @@ func MAKE_Sure_Running_As_ROOT() {
 		M.Println(" WARNING: You HAVE to use sudo to run this program!")
 		C.Println("")
 		C.Println("")
-		DOEXIT("silent")
+		DO_EXIT(1)
 	}
 
 }
