@@ -57,6 +57,7 @@ func SUPER_RUN_COMMAND(ALL_PARAMS ...interface{}) (string, []string, string) {
 	}
 
 	var SHOW_OUTPUT = true // Output is shown.. unless the user specifies otherwise
+	var JUST_CLI_OUTPUT = false
 
 	for n, param := range ALL_PARAMS {
 		string_val, IS_STRING := param.(string)
@@ -80,6 +81,11 @@ func SUPER_RUN_COMMAND(ALL_PARAMS ...interface{}) (string, []string, string) {
 		if IS_STRING {
 			if string_val == "silent" || string_val == "quiet" || string_val == "nooutput" {
 				SHOW_OUTPUT = false
+				continue
+			}
+			if string_val == "justcli" || string_val == "justfeedback" || string_val == "justfeed" {
+				SHOW_OUTPUT = false
+				JUST_CLI_OUTPUT = true
 				continue
 			}
 
@@ -138,13 +144,13 @@ func SUPER_RUN_COMMAND(ALL_PARAMS ...interface{}) (string, []string, string) {
 		status := <-newComm.Start()
 		for _, line := range status.Stderr {
 			res_ERR = append(res_ERR, line)
-			if SHOW_OUTPUT {
+			if SHOW_OUTPUT || JUST_CLI_OUTPUT {
 				SHOW_ME(line, true)
 			}
 		}
 		for _, line := range status.Stdout {
 			res_STD = append(res_STD, line)
-			if SHOW_OUTPUT {
+			if SHOW_OUTPUT || JUST_CLI_OUTPUT {
 				SHOW_ME(line, false)
 			}
 		}
