@@ -381,7 +381,7 @@ func DETERMINE_Current_OS_and_PLATFORM() {
 
 	// First lets run uname. MAC and Linux always have this command
 	// so if it comes back as BLANK.. we know we are on windows
-	output, _, _ := RUN_COMMAND("uname -a")
+	output, _, _ := RUN_COMMAND("uname -a", "silent")
 	res_out := strings.ToLower(output)
 
 	if strings.Contains(res_out, "darwin") {
