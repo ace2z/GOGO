@@ -168,6 +168,11 @@ func DO_EXIT(ALL_PARAMS ...interface{}) {
 	os.Exit(exit_code)
 }
 
+// alias to DO_EXIT
+func DOEXIT(ALL_PARAMS ...interface{}) {
+	DO_EXIT(ALL_PARAMS...)
+}
+
 /*
 	TRIM_FIRST  not needed.. use
 	TrimSuffix  and TrimPrefix instead
