@@ -38,7 +38,7 @@ func Determine_PATHS_Engine(PARENT_REPO_NAME string, toplevel string) (string, s
 		}
 		TPATHS = append(TPATHS, tmp)
 	}
-	//	SHOW_STRUCT(TPATHS)
+	SHOW_STRUCT(TPATHS)
 
 	// Now go through TPATHS
 	for i := len(TPATHS) - 1; i >= 0; i-- {
