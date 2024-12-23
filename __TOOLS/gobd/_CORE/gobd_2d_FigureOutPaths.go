@@ -19,8 +19,8 @@ func Determine_PATHS_Engine(PARENT_REPO_NAME string, toplevel string) (string, s
 	lastEL := msplit[len(msplit)-1]
 
 	C.Println(PARENT_REPO_NAME)
-	Y.Println(toplevel)
-	G.Println(LOCAL_ABSOLUTE_PATH)
+	Y.Println("TopLevel: ", toplevel)
+	G.Println("ABS Path: ", LOCAL_ABSOLUTE_PATH)
 	W.Println("Last Element: **" + lastEL + "** ")
 
 	//for loop in reverse on LOCAL_ABSOLUTE_PATH output
