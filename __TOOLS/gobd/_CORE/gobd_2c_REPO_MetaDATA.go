@@ -1,7 +1,6 @@
 package _CORE
 
 import (
-	"os"
 	"strings"
 
 	. "github.com/ace2z/GOGO/Gadgets"
@@ -27,10 +26,8 @@ func url_delims(r rune) bool {
 	return r == '@'
 }
 func GET_REPO_MetaDATA() {
-	cwd, _ := os.Getwd()
 
 	Y.Println("   -| Determinig REPO Meta Data..")
-
 	result, _, _ := RUN_COMMAND("git remote show origin 2>&1", "silent")
 
 	sd := strings.FieldsFunc(result, repo_delims)
