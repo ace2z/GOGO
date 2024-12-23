@@ -16,7 +16,7 @@ func Determine_PATHS_Engine(PARENT_REPO_NAME string, toplevel string) {
 	G.Println(cwd)
 
 	msplit := strings.Split(toplevel, "/")
-	if msplit <= 0 {
+	if len(msplit) <= 0 {
 		M.Println("Error: Could not determine the top level of the repo")
 		return
 	}
