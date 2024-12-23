@@ -23,9 +23,15 @@ func Determine_PATHS_Engine(PARENT_REPO_NAME string, toplevel string) {
 	lastEL := msplit[len(msplit)-1]
 	C.Println("LastELE: ", lastEL)
 
-	for _, el := range msplit {
-		C.Println("ELE: ", el)
+	//for loop in reverse on cwd output
+	csplit := strings.Split(cwd, "/")
 
+	for i := len(csplit) - 1; i >= 0; i-- {
+		tmp := csplit[i]
+		Y.Println(tmp)
+		if tmp == lastEL {
+			break
+		}
 	}
 
 	PressAny()
