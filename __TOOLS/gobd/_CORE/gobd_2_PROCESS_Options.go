@@ -27,14 +27,14 @@ var EXTENSIONS = map[string]interface{}{
 
 func SET_VERSION_from_COMMIT() {
 	// Make sure we are in a git repo
-	result, _, _ := RUN_COMMAND("git status")
+	result, _, _ := RUN_COMMAND("git status", "silent")
 
 	if strings.Contains(result, "not found") || strings.Contains(result, "not a git repo") {
 		VERSION_to_USE = "v1.2.3-beta"
 
 		// Else.. lets get the version
 	} else {
-		commit_ver, _, _ := RUN_COMMAND("git rev-parse --short=6 HEAD")
+		commit_ver, _, _ := RUN_COMMAND("git rev-parse --short=6 HEAD", "silent")
 		VERSION_to_USE = strings.TrimSuffix(commit_ver, "\n")
 	}
 

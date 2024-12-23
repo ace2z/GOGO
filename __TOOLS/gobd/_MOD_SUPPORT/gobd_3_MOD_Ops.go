@@ -24,20 +24,20 @@ func QUIK_COMMIT() {
 	// Replace spaces in the message with _ .. for some reason git commit running this way has a problem with them
 	MESSAGE = strings.Replace(MESSAGE, " ", "_", -1)
 
-	RUN_COMMAND("git add -A")
-	RUN_COMMAND("git add .")
-	RUN_COMMAND("git add --all")
-	RUN_COMMAND("git add -u")
+	RUN_COMMAND("git add -A", "silent")
+	RUN_COMMAND("git add .", "silent")
+	RUN_COMMAND("git add --all", "silent")
+	RUN_COMMAND("git add -u", "silent")
 	COMMIT_COMM := "git commit -m '" + MESSAGE + "' ."
-	RUN_COMMAND(COMMIT_COMM)
-	RUN_COMMAND("git push -f", "-showoutput")
+	RUN_COMMAND(COMMIT_COMM, "silent")
+	RUN_COMMAND("git push -f", "-showoutput", "silent")
 
 }
 
 func RUN_GO_Test() bool {
 	SHOW_BOX(" TESTING Go MODULE/Program")
 
-	result, _, _ := RUN_COMMAND("go test")
+	result, _, _ := RUN_COMMAND("go test", "silent")
 
 	if strings.Contains(result, "no test files") || (strings.Contains(result, "PASS") && strings.Contains(result, "ok")) {
 		G.Println(PREFIX, "GO Test Compile SUCCESS!!")
@@ -64,8 +64,8 @@ func DO_GOMOD_Init() {
 	Y.Println(OFFICIAL_MODULE_IMPORT_NAME)
 	os.Remove("go.mod")
 	os.Remove("go.sum")
-	RUN_COMMAND("go mod init " + OFFICIAL_MODULE_IMPORT_NAME)
-	// RUN_COMMAND("go mod tidy")
+	RUN_COMMAND("go mod init "+OFFICIAL_MODULE_IMPORT_NAME, "silent")
+
 }
 
 // Takes care of manageming modules.. Uses either go mod tidy... (or go get if --usegoget is specified
@@ -96,9 +96,9 @@ func GOMOD_Dependency_Engine() {
 		SHOW_BOX("Running go mod tidy to find DEPENDENCIES")
 		START_Spinner()
 		if VERBOSE_MODE {
-			RUN_COMMAND("go mod tidy", "-showoutput")
+			RUN_COMMAND("go mod tidy", "-showoutput", "silent")
 		} else {
-			RUN_COMMAND("go mod tidy")
+			RUN_COMMAND("go mod tidy", "silent")
 		}
 	}
 

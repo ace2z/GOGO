@@ -2,7 +2,7 @@ module local
 
 go 1.23.3
 
-require github.com/ace2z/GOGO/Gadgets v0.0.0-20241223220743-1dae099aa4de
+require github.com/ace2z/GOGO/Gadgets v0.0.0-20241223220804-b1fc95b80c5c
 
 require (
 	github.com/atotto/clipboard v0.1.4 // indirect

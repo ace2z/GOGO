@@ -17,7 +17,7 @@ func CHECK_PreReqs() {
 	if VERBOSE_MODE {
 		C.Print(PREFIX, "Making sure Go is installed..  ")
 	}
-	result, _, _ := RUN_COMMAND("go version")
+	result, _, _ := RUN_COMMAND("go version", "silent")
 	if strings.Contains(result, "go version") == false {
 		W.Println("")
 		M.Print(PREFIX, " *** ERROR ***")
@@ -25,7 +25,7 @@ func CHECK_PreReqs() {
 		os.Exit(-9)
 	}
 
-	tmpComm, _, _ := RUN_COMMAND("which go")
+	tmpComm, _, _ := RUN_COMMAND("which go", "silent")
 	GO_BIN = strings.TrimSpace(tmpComm)
 
 	if VERBOSE_MODE {
@@ -34,7 +34,7 @@ func CHECK_PreReqs() {
 
 		C.Print(PREFIX, "Making sure GIT is Installed.. ")
 	}
-	tmpComm, _, _ = RUN_COMMAND("git version")
+	tmpComm, _, _ = RUN_COMMAND("git version", "silent")
 	if strings.Contains(tmpComm, "git version") == false {
 		W.Println("")
 		M.Print(PREFIX, " *** ERROR ***")

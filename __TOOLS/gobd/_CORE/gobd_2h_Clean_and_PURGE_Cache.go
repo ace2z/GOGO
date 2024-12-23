@@ -13,7 +13,7 @@ func CLEAN_CACHE(ctype string) {
 
 	SHOW_BOX(" CLEANING Go Caches")
 
-	RUN_COMMAND("go clean -modcache -i -r")
+	RUN_COMMAND("go clean -modcache -i -r", "silent")
 	os.Remove("go.mod")
 	os.Remove("go.sum")
 
@@ -29,9 +29,9 @@ func CLEAN_CACHE(ctype string) {
 
 		// Also lets delete the actual gocache and go mod cach directories
 		// They will get re-created
-		cachedir, _, _ := RUN_COMMAND("go env GOCACHE")
-		modcache, _, _ := RUN_COMMAND("go env GOMODCACHE")
-		gopath, _, _ := RUN_COMMAND("go env GOPATH")
+		cachedir, _, _ := RUN_COMMAND("go env GOCACHE", "silent")
+		modcache, _, _ := RUN_COMMAND("go env GOMODCACHE", "silent")
+		gopath, _, _ := RUN_COMMAND("go env GOPATH", "silent")
 
 		err := os.RemoveAll(cachedir)
 		if err != nil {

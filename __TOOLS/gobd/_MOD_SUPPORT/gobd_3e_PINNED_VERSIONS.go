@@ -152,6 +152,6 @@ func CHECK_for_PINNED_VERSIONS_Engine() {
 
 	//5. Run a final GO mod tidy
 	G.Println(GLOBAL_PREFIX, "Running GOMOD Tidy on PINNED versions")
-	RUN_COMMAND("go mod tidy")
+	RUN_COMMAND("go mod tidy", "silent")
 
 }

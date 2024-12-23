@@ -23,7 +23,7 @@ func RUN_GOGET_for_IMPORTS(PACKAGE_LIST []string) {
 		C.Print(PREFIX, "Now running: ")
 		Y.Println(COMM)
 
-		result, _, _ := RUN_COMMAND(COMM)
+		result, _, _ := RUN_COMMAND(COMM, "silent")
 
 		if VERBOSE_MODE {
 			Y.Println(result)

@@ -32,7 +32,7 @@ func GET_REPO_MetaDATA() {
 
 	Y.Println("   -| Determinig REPO Meta Data..")
 
-	result, _, _ := RUN_COMMAND("git remote show origin 2>&1")
+	result, _, _ := RUN_COMMAND("git remote show origin 2>&1", "silent")
 
 	sd := strings.FieldsFunc(result, repo_delims)
 	REPO_URL = strings.TrimSuffix(sd[5], "\n")
@@ -49,7 +49,7 @@ func GET_REPO_MetaDATA() {
 	}
 	PARENT_REPO_NAME = strings.TrimSuffix(tmprd, ".git")
 
-	res2, _, _ := RUN_COMMAND("git rev-parse --show-toplevel")
+	res2, _, _ := RUN_COMMAND("git rev-parse --show-toplevel", "silent")
 
 	//Error handling.. if we are NOT in a GIT repo, we dont do the remaining items
 	if strings.Contains(res2, "not a git repository") {
