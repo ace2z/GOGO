@@ -45,7 +45,7 @@ func Determine_PATHS_Engine(PARENT_REPO_NAME string, toplevel string) (string, s
 		TMP_OFF_MOD_PATH = TMP_OFF_MOD_PATH + "/" + TPATHS[i]
 	}
 
-	Y.Println("OFFICIAL: ", TMP_OFF_MOD_PATH)
+	Y.Println("TMP_OFF_MOD_PATH: ", TMP_OFF_MOD_PATH)
 	PressAny()
 
 	return TMP_OFF_MOD_PATH, LOCAL_ABSOLUTE_PATH
