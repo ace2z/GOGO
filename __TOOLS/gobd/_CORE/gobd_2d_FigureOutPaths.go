@@ -28,10 +28,10 @@ func Determine_PATHS_Engine(PARENT_REPO_NAME string, toplevel string) {
 
 	for i := len(csplit) - 1; i >= 0; i-- {
 		tmp := csplit[i]
-		Y.Println(tmp)
 		if tmp == lastEL {
 			break
 		}
+		Y.Println(tmp)
 	}
 
 	PressAny()
