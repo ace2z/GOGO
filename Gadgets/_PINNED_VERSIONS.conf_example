@@ -1,0 +1,6 @@
+
+# Pinned versions for TickWicks
+
+# on 4/14/2024  ... Mongo Driver broke for v1.15.0 .. so we use 1.14 stable version
+go.mongodb.org/mongo-driver v1.14.0
+
