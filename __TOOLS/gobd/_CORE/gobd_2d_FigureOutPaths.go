@@ -26,7 +26,7 @@ func Determine_PATHS_Engine(PARENT_REPO_NAME string, toplevel string) (string, s
 	//for loop in reverse on LOCAL_ABSOLUTE_PATH output
 	csplit := strings.Split(LOCAL_ABSOLUTE_PATH, "/")
 
-	var OFFICIAL_MOD_PATH = PARENT_REPO_NAME
+	var TMP_OFF_MOD_PATH = PARENT_REPO_NAME
 
 	var TPATHS []string
 
@@ -42,11 +42,11 @@ func Determine_PATHS_Engine(PARENT_REPO_NAME string, toplevel string) (string, s
 
 	// Now go through TPATHS
 	for i := len(TPATHS) - 1; i >= 0; i-- {
-		OFFICIAL_MOD_PATH = OFFICIAL_MOD_PATH + "/" + TPATHS[i]
+		TMP_OFF_MOD_PATH = TMP_OFF_MOD_PATH + "/" + TPATHS[i]
 	}
 
-	Y.Println("OFFICIAL: ", OFFICIAL_MOD_PATH)
+	Y.Println("OFFICIAL: ", TMP_OFF_MOD_PATH)
 	PressAny()
 
-	return OFFICIAL_MOD_PATH, LOCAL_ABSOLUTE_PATH
+	return TMP_OFF_MOD_PATH, LOCAL_ABSOLUTE_PATH
 }
