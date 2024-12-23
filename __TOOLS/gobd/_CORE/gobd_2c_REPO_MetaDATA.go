@@ -2,7 +2,6 @@ package _CORE
 
 import (
 	"os"
-	"path/filepath"
 	"strings"
 
 	. "github.com/ace2z/GOGO/Gadgets"
@@ -62,7 +61,7 @@ func GET_REPO_MetaDATA() {
 	}
 
 	//1e. Take all of this information and decipher the proper paths and whatnot
-	tmp_OFF_MOD_PATH, LOCAL_ABSOLUTE_PATH, := Determine_PATHS_Engine(PARENT_REPO_NAME, res2)
+	tmp_OFF_MOD_PATH, LOCAL_ABSOLUTE_PATH := Determine_PATHS_Engine(PARENT_REPO_NAME, res2)
 	OFFICIAL_MODULE_IMPORT_NAME = tmp_OFF_MOD_PATH
 
 	// //2. Need all this stuff as is and in this order.. dont change it
