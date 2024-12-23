@@ -33,7 +33,10 @@ func Determine_PATHS_Engine(PARENT_REPO_NAME string, toplevel string) (string, s
 	for i := len(csplit) - 1; i >= 0; i-- {
 		tmp := csplit[i]
 		//		W.Println("TMP is: **" + tmp + "**")
-		if tmp == lastEL {
+
+		lowTMP := strings.ToLower(tmp)
+		lowLAST := strings.ToLower(lastEL)
+		if lowTMP == lowLAST {
 			break
 		}
 		TPATHS = append(TPATHS, tmp)
