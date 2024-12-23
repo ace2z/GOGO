@@ -51,12 +51,7 @@ func GET_REPO_MetaDATA() {
 	if strings.Contains(res2, "not a git repository") {
 		M.Println(" ( NOT in a GIT REPO )")
 		return
-	} else {
-		if VERBOSE_MODE {
-			W.Println("")
-		}
 	}
-
 	//1e. Take all of this information and decipher the proper paths and whatnot
 	tmp_OFF_MOD_PATH, LOCAL_ABSOLUTE_PATH := Determine_PATHS_Engine(PARENT_REPO_NAME, res2)
 	OFFICIAL_MODULE_IMPORT_NAME = tmp_OFF_MOD_PATH
