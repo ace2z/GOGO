@@ -21,6 +21,7 @@ func Determine_PATHS_Engine(PARENT_REPO_NAME string, toplevel string) {
 		return
 	}
 	lastEL := msplit[len(msplit)-1]
+	W.Println("Last Element: ", lastEL)
 
 	//for loop in reverse on cwd output
 	csplit := strings.Split(cwd, "/")
@@ -36,6 +37,7 @@ func Determine_PATHS_Engine(PARENT_REPO_NAME string, toplevel string) {
 		}
 		TPATHS = append(TPATHS, tmp)
 	}
+	SHOW_STRUCT(TPATHS)
 
 	// Now go through TPATHS
 	for i := len(TPATHS) - 1; i >= 0; i-- {
