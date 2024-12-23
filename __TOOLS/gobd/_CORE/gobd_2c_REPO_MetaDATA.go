@@ -62,43 +62,44 @@ func GET_REPO_MetaDATA() {
 	}
 
 	//1e. Take all of this information and decipher the proper paths and whatnot
-	Determine_PATHS_Engine(PARENT_REPO_NAME, res2)
+	tmp_OFF_MOD_PATH, LOCAL_ABSOLUTE_PATH, := Determine_PATHS_Engine(PARENT_REPO_NAME, res2)
+	OFFICIAL_MODULE_IMPORT_NAME = tmp_OFF_MOD_PATH
 
-	//2. Need all this stuff as is and in this order.. dont change it
-	MOD_LOCAL_PATH = strings.TrimSuffix(res2, "\n")
-	REPO_LOCAL_ROOT := MOD_LOCAL_PATH
-	MOD_LOCAL_BASEDIR = strings.TrimSuffix(filepath.Base(res2), "\n")
-	msplit := strings.Split(cwd, MOD_LOCAL_BASEDIR)
+	// //2. Need all this stuff as is and in this order.. dont change it
+	// MOD_LOCAL_PATH = strings.TrimSuffix(res2, "\n")
+	// REPO_LOCAL_ROOT := MOD_LOCAL_PATH
+	// MOD_LOCAL_BASEDIR = strings.TrimSuffix(filepath.Base(res2), "\n")
+	// msplit := strings.Split(cwd, MOD_LOCAL_BASEDIR)
 
-	ind := 0
-	if len(msplit) > 1 {
-		ind = 1
-	}
+	// ind := 0
+	// if len(msplit) > 1 {
+	// 	ind = 1
+	// }
 
-	MOD_DIRPATH = strings.TrimPrefix(msplit[ind], "/")
+	// MOD_DIRPATH = strings.TrimPrefix(msplit[ind], "/")
 
-	//C.Println("Now MOD_DIRPATH is: ", MOD_DIRPATH)
+	// //C.Println("Now MOD_DIRPATH is: ", MOD_DIRPATH)
 
-	MOD_LOCAL_BASEDIR = MOD_DIRPATH
+	// MOD_LOCAL_BASEDIR = MOD_DIRPATH
 
-	//3. If we are in same directory as REPO LOCAL Root.. and trying to initalize a module
-	// Note: right now we're only supporting GITHUB ... for Azure, Gitlab and Bitbucket, we have different paths that are
-	// used for the "official module import name".. and need adjust accordingly
-	if INIT_MOD || TEST_MOD {
-		if REPO_LOCAL_ROOT == cwd {
-			MOD_LOCAL_BASEDIR = cwd
-			OFFICIAL_MODULE_IMPORT_NAME = PARENT_REPO_NAME
-		} else {
-			OFFICIAL_MODULE_IMPORT_NAME = PARENT_REPO_NAME + "/" + MOD_LOCAL_BASEDIR
-		}
+	// //3. If we are in same directory as REPO LOCAL Root.. and trying to initalize a module
+	// // Note: right now we're only supporting GITHUB ... for Azure, Gitlab and Bitbucket, we have different paths that are
+	// // used for the "official module import name".. and need adjust accordingly
+	// if INIT_MOD || TEST_MOD {
+	// 	if REPO_LOCAL_ROOT == cwd {
+	// 		MOD_LOCAL_BASEDIR = cwd
+	// 		OFFICIAL_MODULE_IMPORT_NAME = PARENT_REPO_NAME
+	// 	} else {
+	// 		OFFICIAL_MODULE_IMPORT_NAME = PARENT_REPO_NAME + "/" + MOD_LOCAL_BASEDIR
+	// 	}
 
-		//3b Cleanup
-		OFFICIAL_MODULE_IMPORT_NAME = strings.Replace(OFFICIAL_MODULE_IMPORT_NAME, "//", "/", -1)
-		// Remove lsat character if there is an extra /
-		OFFICIAL_MODULE_IMPORT_NAME = strings.TrimSuffix(OFFICIAL_MODULE_IMPORT_NAME, "/")
-	}
+	// 	//3b Cleanup
+	// 	OFFICIAL_MODULE_IMPORT_NAME = strings.Replace(OFFICIAL_MODULE_IMPORT_NAME, "//", "/", -1)
+	// 	// Remove lsat character if there is an extra /
+	// 	OFFICIAL_MODULE_IMPORT_NAME = strings.TrimSuffix(OFFICIAL_MODULE_IMPORT_NAME, "/")
+	// }
 
-	// Gets the module IMPORT name based on the Github service being used
+	// // Gets the module IMPORT name based on the Github service being used
 
 	if VERBOSE_MODE {
 		C.Print(PREFIX, "REPO_URL"+": ")
@@ -107,12 +108,10 @@ func GET_REPO_MetaDATA() {
 		}
 
 		Y.Println(REPO_URL)
-		C.Print(PREFIX, "REPO_LOCAL_ROOT"+": ")
-		Y.Println(REPO_LOCAL_ROOT)
+		C.Print(PREFIX, "LOCAL_ABSOLUTE_PATH"+": ")
+		Y.Println(LOCAL_ABSOLUTE_PATH)
 		C.Print(PREFIX, "PARENT_REPO_NAME"+": ")
 		Y.Println(PARENT_REPO_NAME)
-		C.Print(PREFIX, "MOD_LOCAL_BASEDIR"+": ")
-		Y.Println(MOD_LOCAL_BASEDIR)
 	}
 
 	if OFFICIAL_MODULE_IMPORT_NAME == "local" {
