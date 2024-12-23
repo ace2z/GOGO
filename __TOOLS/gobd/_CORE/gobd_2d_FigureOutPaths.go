@@ -18,11 +18,6 @@ func Determine_PATHS_Engine(PARENT_REPO_NAME string, toplevel string) (string, s
 	}
 	lastEL := msplit[len(msplit)-1]
 
-	C.Println(PARENT_REPO_NAME)
-	Y.Println("TopLevel: ", toplevel)
-	G.Println("ABS Path: ", LOCAL_ABSOLUTE_PATH)
-	W.Println("Last Element: **" + lastEL + "** ")
-
 	//for loop in reverse on LOCAL_ABSOLUTE_PATH output
 	csplit := strings.Split(LOCAL_ABSOLUTE_PATH, "/")
 
@@ -41,13 +36,17 @@ func Determine_PATHS_Engine(PARENT_REPO_NAME string, toplevel string) (string, s
 		}
 		TPATHS = append(TPATHS, tmp)
 	}
-	SHOW_STRUCT(TPATHS)
 
 	// Now go through TPATHS
 	for i := len(TPATHS) - 1; i >= 0; i-- {
 		TMP_OFF_MOD_PATH = TMP_OFF_MOD_PATH + "/" + TPATHS[i]
 	}
 
+	C.Println(PARENT_REPO_NAME)
+	Y.Println("git rev, TopLevel: ", toplevel)
+	G.Println("ABS Path: ", LOCAL_ABSOLUTE_PATH)
+	W.Println("Top Level LAST Element: **" + lastEL + "** ")
+	SHOW_STRUCT(TPATHS)
 	Y.Println("TMP_OFF_MOD_PATH: ", TMP_OFF_MOD_PATH)
 	PressAny()
 
