@@ -92,28 +92,23 @@ func GET_REPO_MetaDATA() {
 
 	// // Gets the module IMPORT name based on the Github service being used
 
-	if OFFICIAL_MODULE_IMPORT_NAME == "local" {
-		C.Print(PREFIX, "Regular GO Program (not module)"+": ")
-		G.Println("Yes!")
-	} else {
+	C.Print(PREFIX, "PARENT_REPO_NAME"+": ")
+	Y.Println(PARENT_REPO_NAME)
+	C.Print(PREFIX, "LOCAL_ABSOLUTE_PATH"+": ")
+	Y.Println(LOCAL_ABSOLUTE_PATH)
 
-		C.Print(PREFIX, "PARENT_REPO_NAME"+": ")
-		Y.Println(PARENT_REPO_NAME)
-		C.Print(PREFIX, "LOCAL_ABSOLUTE_PATH"+": ")
-		Y.Println(LOCAL_ABSOLUTE_PATH)
-
-		if VERBOSE_MODE {
-			C.Print(PREFIX, "REPO_URL"+": ")
-			if is_private {
-				M.Print("(PRIVATE!) ")
-			}
-
-			Y.Println(REPO_URL)
+	if VERBOSE_MODE {
+		C.Print(PREFIX, "REPO_URL"+": ")
+		if is_private {
+			M.Print("(PRIVATE!) ")
 		}
 
-		C.Print(PREFIX, "Official MODULE Name"+": ")
-		G.Println(OFFICIAL_MODULE_IMPORT_NAME)
+		Y.Println(REPO_URL)
 	}
+
+	C.Print(PREFIX, "Official MODULE Name"+": ")
+	G.Println(OFFICIAL_MODULE_IMPORT_NAME)
+
 	W.Println("")
 
 	// Debug till we have all this right

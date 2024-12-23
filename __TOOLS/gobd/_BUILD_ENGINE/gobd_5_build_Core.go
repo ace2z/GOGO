@@ -2,8 +2,8 @@ package _BUILD_ENGINE
 
 import (
 	"os"
-	"strings"
 	"path/filepath"
+	"strings"
 
 	"os/exec"
 
@@ -13,30 +13,29 @@ import (
 	. "github.com/ace2z/GOGO/Gadgets"
 )
 
-
 func GO_BUILD_Engine() {
-	SHOW_BOX("Buidling GO Program")
+
+	SHOW_BOX("Buidling Regular GO Program", "|green|Yes!")
 
 	GOMOD_Dependency_Engine()
 
-	FULL_COMMAND :="GOOS=" + BIN_TYPE + " GOARCH=" + ARCH + " go build -ldflags=\"-s -w -X main.VERSION_NUM=" + VERSION_to_USE + "\" -buildmode=exe -o " + FULL_DEST_FILE
+	FULL_COMMAND := "GOOS=" + BIN_TYPE + " GOARCH=" + ARCH + " go build -ldflags=\"-s -w -X main.VERSION_NUM=" + VERSION_to_USE + "\" -buildmode=exe -o " + FULL_DEST_FILE
 	C.Println(PREFIX, "GO build using: ")
 	Y.Println(PREFIX, FULL_COMMAND)
-	
-	cmd := exec.Command("go", "build", "-ldflags=-s -w -X main.VERSION_NUM=" + VERSION_to_USE, "-buildmode=exe", "-o", FULL_DEST_FILE )
+
+	cmd := exec.Command("go", "build", "-ldflags=-s -w -X main.VERSION_NUM="+VERSION_to_USE, "-buildmode=exe", "-o", FULL_DEST_FILE)
 	cmd.Env = os.Environ()
-	cmd.Env = append(cmd.Env, "GOOS=" + BIN_TYPE)
-	cmd.Env = append(cmd.Env, "GOARCH=" + ARCH)
+	cmd.Env = append(cmd.Env, "GOOS="+BIN_TYPE)
+	cmd.Env = append(cmd.Env, "GOARCH="+ARCH)
 	output, err := cmd.CombinedOutput()
 	if err != nil {
-		
+
 		R.Println(" Error in RUN COMMAND: ", err)
 	}
 
 	result_OUT := string(output)
 	C.Println(result_OUT)
 
-	
 	// Check for errors.. particularly: no required module provides package
 	if strings.Contains(result_OUT, "no required module provides package") {
 		C.Println("")
@@ -58,7 +57,7 @@ func GO_BUILD_Engine() {
 		W.Println("")
 		W.Println(" Check the error message carefully! Also for your convenience,")
 		W.Print(" Here is a list of all the ")
-		G.Print("go.mod ") 
+		G.Print("go.mod ")
 		W.Println("files from the previous directory down..")
 		W.Println("")
 		err := filepath.Walk("../", func(path string, info os.FileInfo, err error) error {
@@ -77,5 +76,4 @@ func GO_BUILD_Engine() {
 		}
 	}
 
-	
 }

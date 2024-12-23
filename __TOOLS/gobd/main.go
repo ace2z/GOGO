@@ -1,60 +1,61 @@
 package main
 
 import (
-    . "local/_CORE"
-    . "local/_BUILD_ENGINE"
-    . "local/_MOD_SUPPORT"
-    
-    //. "local/_DATABASE"
+	. "local/_BUILD_ENGINE"
+	. "local/_CORE"
+	. "local/_MOD_SUPPORT"
 
-    //. "local/_STOCKS"
-    //. "local/_ECONOMICS"
+	//. "local/_DATABASE"
 
-    . "github.com/ace2z/GOGO/Gadgets"
+	//. "local/_STOCKS"
+	//. "local/_ECONOMICS"
 
-    //. "github.com/ace2z/GOGO/Gadgets/EMBED_Ops"
+	. "github.com/ace2z/GOGO/Gadgets"
+	//. "github.com/ace2z/GOGO/Gadgets/EMBED_Ops"
 )
+
 var VERSION_NUM = ""
 
 func main() {
-    CLI_PARAMS_INIT()
+	CLI_PARAMS_INIT()
 
-    MASTER_INIT(" gobd - Golang Build Tools ( simplified! )", VERSION_NUM, "-showarch")
-    W.Println("")
+	MASTER_INIT(" gobd - Golang Build Tools ( simplified! )", VERSION_NUM, "-showarch")
+	W.Println("")
 
-    PROCESS_OPTIONS()
+	PROCESS_OPTIONS()
 
-    if DO_CLEAN || JUST_CLEAN {
-        CLEAN_CACHE("clean")
-        if JUST_CLEAN {
-            DOEXIT()
-        }        
-    } else if DO_PURGE || JUST_PURGE {
-        CLEAN_CACHE("purge")
-        if JUST_PURGE {
-            DOEXIT()
-        }
-    }
+	if DO_CLEAN || JUST_CLEAN {
+		CLEAN_CACHE("clean")
+		if JUST_CLEAN {
+			DOEXIT()
+		}
+	} else if DO_PURGE || JUST_PURGE {
+		CLEAN_CACHE("purge")
+		if JUST_PURGE {
+			DOEXIT()
+		}
+	}
 
-    CHECK_PreReqs()
-    
-    if JUST_TEST { 
-        GOMOD_Dependency_Engine()
-        RUN_GO_Test()
-        DOEXIT()
-    }
-   
-    
+	//2. Check for required Prerequisites
+	CHECK_PreReqs()
 
-    
-    if INIT_MOD || TEST_MOD { 
+	//3. Determine if we are buildinga  regular GO program.. or a GO Module
+	if INIT_MOD || TEST_MOD || JUST_TEST {
+		// If this is just a test.. we don't need to do anything else
+		if JUST_TEST {
+			GOMOD_Dependency_Engine()
+			RUN_GO_Test()
+			DOEXIT()
+		}
+		BUILD_BASIC_GO_PROGRAM = false
+		GET_REPO_MetaDATA()
+		GOMOD_Core_Ops()
+	}
 
-        BUILD_BASIC_GO_PROGRAM = false
-        GOMOD_Core_Ops() 
-    
-    } else {
+	//4. If this is a regular program
+	if BUILD_BASIC_GO_PROGRAM {
+		GO_BUILD_Engine()
+	}
+	//3. Get REPO data
 
-        GO_BUILD_Engine()
-
-    }
 }
