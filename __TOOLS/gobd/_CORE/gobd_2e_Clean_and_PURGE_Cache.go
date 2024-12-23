@@ -9,14 +9,13 @@ import (
 	. "github.com/ace2z/GOGO/Gadgets"
 )
 
-func CLEAN_CACHE( ctype string ) {
+func CLEAN_CACHE(ctype string) {
 
 	SHOW_BOX(" CLEANING Go Caches")
 
-	RUN_COMMAND("go clean -modcache -i -r")	
+	RUN_COMMAND("go clean -modcache -i -r")
 	os.Remove("go.mod")
-	os.Remove("go.sum")	
-
+	os.Remove("go.sum")
 
 	// If we are doing a basic 'clean' just clear the mod cache
 	if ctype == "clean" {
@@ -30,10 +29,10 @@ func CLEAN_CACHE( ctype string ) {
 
 		// Also lets delete the actual gocache and go mod cach directories
 		// They will get re-created
-		cachedir, _ := RUN_COMMAND("go env GOCACHE")
-		modcache, _ := RUN_COMMAND("go env GOMODCACHE")
-		gopath, _ := RUN_COMMAND("go env GOPATH")
-		
+		cachedir, _, _ := RUN_COMMAND("go env GOCACHE")
+		modcache, _, _ := RUN_COMMAND("go env GOMODCACHE")
+		gopath, _, _ := RUN_COMMAND("go env GOPATH")
+
 		err := os.RemoveAll(cachedir)
 		if err != nil {
 			C.Println("Cachedir ERR", err)
@@ -47,7 +46,7 @@ func CLEAN_CACHE( ctype string ) {
 		if err != nil {
 			C.Println("gopath ERR", err)
 		}
-		
+
 		SHOW_BOX("FULL Go Cache PURGE ", "|magenta|COMPLETED ..")
 
 	}
@@ -55,17 +54,15 @@ func CLEAN_CACHE( ctype string ) {
 
 	// cwd, _ := os.Getwd()
 	// files, err := ioutil.ReadDir(cwd)
-    // if err != nil {
+	// if err != nil {
 	// 	M.Println(" Cant read local dir: ", err)
-    // }
-    // for _, file := range files {
+	// }
+	// for _, file := range files {
 	// 	if file.IsDir() {
 	// 		continue
 	// 	}
-	// 	if strings.Contains(file.Name(), ".go") {			
+	// 	if strings.Contains(file.Name(), ".go") {
 	// 		FILE_LIST = append(FILE_LIST, file.Name())
-	// 	}        
-    // }
+	// 	}
+	// }
 }
-
-
