@@ -11,9 +11,9 @@ func Determine_PATHS_Engine(PARENT_REPO_NAME string, toplevel string) (string, s
 	LOCAL_ABSOLUTE_PATH, _ := os.Getwd()
 	PLACEHOLDER()
 
-	// C.Println(PARENT_REPO_NAME)
-	// Y.Println(toplevel)
-	// G.Println(LOCAL_ABSOLUTE_PATH)
+	C.Println(PARENT_REPO_NAME)
+	Y.Println(toplevel)
+	G.Println(LOCAL_ABSOLUTE_PATH)
 
 	msplit := strings.Split(toplevel, "/")
 	if len(msplit) <= 0 {
