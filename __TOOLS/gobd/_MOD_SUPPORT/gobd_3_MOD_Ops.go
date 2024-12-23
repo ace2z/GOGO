@@ -37,7 +37,7 @@ func QUIK_COMMIT() {
 func RUN_GO_Test() bool {
 	SHOW_BOX(" TESTING Go MODULE/Program")
 
-	result, _ := RUN_COMMAND("go test")
+	result, _, _ := RUN_COMMAND("go test")
 
 	if strings.Contains(result, "no test files") || (strings.Contains(result, "PASS") && strings.Contains(result, "ok")) {
 		G.Println(PREFIX, "GO Test Compile SUCCESS!!")
