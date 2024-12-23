@@ -61,14 +61,14 @@ func GET_REPO_MetaDATA() {
 		}
 	}
 
+	//1e. Take all of this information and decipher the proper paths and whatnot
+	Determine_PATHS_Engine(PARENT_REPO_NAME, res2)
+
 	//2. Need all this stuff as is and in this order.. dont change it
 	MOD_LOCAL_PATH = strings.TrimSuffix(res2, "\n")
 	REPO_LOCAL_ROOT := MOD_LOCAL_PATH
 	MOD_LOCAL_BASEDIR = strings.TrimSuffix(filepath.Base(res2), "\n")
 	msplit := strings.Split(cwd, MOD_LOCAL_BASEDIR)
-
-	Y.Println("msplit is: ")
-	SHOW_STRUCT(msplit)
 
 	ind := 0
 	if len(msplit) > 1 {
@@ -99,8 +99,6 @@ func GET_REPO_MetaDATA() {
 	}
 
 	// Gets the module IMPORT name based on the Github service being used
-	//WHAT_GIT_Service_Being_Used()
-	VERBOSE_MODE = true
 
 	if VERBOSE_MODE {
 		C.Print(PREFIX, "REPO_URL"+": ")
@@ -125,8 +123,6 @@ func GET_REPO_MetaDATA() {
 		C.Print(PREFIX, "Official MODULE Name"+": ")
 		G.Println(OFFICIAL_MODULE_IMPORT_NAME)
 	}
-
-	PressAny()
 
 	// Debug till we have all this right
 	//DO_EXIT()
