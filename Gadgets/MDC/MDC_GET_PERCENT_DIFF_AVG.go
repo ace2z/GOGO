@@ -270,68 +270,50 @@ func GET_DIFF(ALL_PARAMS ...interface{}) float64 {
 }
 
 // Ultimate percentage of two numbers
-// pass small num first... THEN large num
+// pass first_num... THEN SEC / large num (of which first_num is a percentage of)
 func PERCENT_OF(ALL_PARAMS ...interface{}) float64 {
-	var small float64
-	var large float64
+	var first_num float64
+	var of_secnum float64
 
 	var precision = 2
 	for n, param := range ALL_PARAMS {
 		int_val, IS_INT := param.(int)
 		float_val, IS_FLOAT := param.(float64)
-		string_val, IS_STRING := param.(string)
+		//string_val, IS_STRING := param.(string)
 
 		// Must be first anad second num  (for n == 0 and n == 1)
 		if n == 0 {
 			if IS_INT {
-				small = float64(int_val)
+				first_num = float64(int_val)
 			} else if IS_FLOAT {
-				small = float_val
+				first_num = float_val
 			}
 			continue
 		}
 
 		if n == 1 {
 			if IS_INT {
-				large = float64(int_val)
+				of_secnum = float64(int_val)
 			} else if IS_FLOAT {
-				large = float_val
+				of_secnum = float_val
 			}
 			continue
 		}
 
-		// Must be an int.. this is for preceission
+		// Must be an int.. this is for decimal  precision
 		if n == 2 {
 
 			precision = int_val
 		}
 
-		// PLACEHOLDER .. if a string is passed.. do something with it
-		if IS_STRING && string_val != "" {
-
-		}
-
 	} //end of params
 
-	// Error handling
-	if small == 0.0 && large == 0.0 {
-		return 0.0
-	}
-	if small == large {
-		return 99.9
-	}
-	if small == 0.0 {
-		return 0.0
-	}
-
-	// DONT FLIP THE NUMBERS automatically.. this returns an INACCURATE PERCENTAGE
-
-	divis := small / large
-	perc := divis * 100
-	perc = FIX_FLOAT_PRECISION(perc, precision)
+	// Now calc percent first is of secnum
+	divvy := first_num / of_secnum
+	mnum := divvy * 100.0
+	perc := FIX_FLOAT_PRECISION(mnum, precision)
 
 	return perc
-
 }
 
 // alias
