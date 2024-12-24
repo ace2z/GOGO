@@ -2,13 +2,14 @@ module github.com/ace2z/GOGO/Gadgets/MDC
 
 go 1.23.3
 
-require github.com/ace2z/GOGO/Gadgets v0.0.0-20241209080209-9e1dd4eed4d2
+require github.com/ace2z/GOGO/Gadgets v0.0.0-20241223231229-a845ffa33107
 
 require (
 	github.com/atotto/clipboard v0.1.4 // indirect
 	github.com/briandowns/spinner v1.23.1 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/fatih/color v1.18.0 // indirect
+	github.com/go-cmd/cmd v1.4.3 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect

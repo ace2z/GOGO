@@ -1,5 +1,5 @@
-github.com/ace2z/GOGO/Gadgets v0.0.0-20241209080209-9e1dd4eed4d2 h1:vsWdKHe1RNxXdNZoi1QA2t5uKqDOo/vs56d+y70OIjU=
-github.com/ace2z/GOGO/Gadgets v0.0.0-20241209080209-9e1dd4eed4d2/go.mod h1:Pf1UR4ttx4WktwUmz1PDMXpg/27kw8PAyMGG52XVDLE=
+github.com/ace2z/GOGO/Gadgets v0.0.0-20241223231229-a845ffa33107 h1:E8RIZNkYfr1PzavQZ1BHJbAeM7+54cooMa0HQ9fpadg=
+github.com/ace2z/GOGO/Gadgets v0.0.0-20241223231229-a845ffa33107/go.mod h1:qOnaRIdasEiPntll/9Cdh55EClL3ZB31xzOA03QtbnU=
 github.com/atotto/clipboard v0.1.4 h1:EH0zSVneZPSuFR11BlR9YppQTVDbh5+16AmcJi4g1z4=
 github.com/atotto/clipboard v0.1.4/go.mod h1:ZY9tmq7sm5xIbd9bOK4onWV4S6X0u6GY7Vn0Yu86PYI=
 github.com/briandowns/spinner v1.23.1 h1:t5fDPmScwUjozhDj4FA46p5acZWIPXYE30qW2Ptu650=
@@ -8,6 +8,10 @@ github.com/dustin/go-humanize v1.0.1 h1:GzkhY7T5VNhEkwH0PVJgjz+fX1rhBrR7pRT3mDkp
 github.com/dustin/go-humanize v1.0.1/go.mod h1:Mu1zIs6XwVuF/gI1OepvI0qD18qycQx+mFykh5fBlto=
 github.com/fatih/color v1.18.0 h1:S8gINlzdQ840/4pfAwic/ZE0djQEH3wM94VfqLTZcOM=
 github.com/fatih/color v1.18.0/go.mod h1:4FelSpRwEGDpQ12mAdzqdOukCy4u8WUtOY6lkT/6HfU=
+github.com/go-cmd/cmd v1.4.3 h1:6y3G+3UqPerXvPcXvj+5QNPHT02BUw7p6PsqRxLNA7Y=
+github.com/go-cmd/cmd v1.4.3/go.mod h1:u3hxg/ry+D5kwh8WvUkHLAMe2zQCaXd00t35WfQaOFk=
+github.com/go-test/deep v1.1.0 h1:WOcxcdHcvdgThNXjw0t76K42FXTU7HpNQWHpA2HHNlg=
+github.com/go-test/deep v1.1.0/go.mod h1:5C2ZWiW0ErCdrYzpqxLbTX7MG14M9iiw8DgHncVwcsE=
 github.com/google/uuid v1.6.0 h1:NIvaJDMOsjHA8n1jAhLSgzrAzy1Hgr+hNrb57e+94F0=
 github.com/google/uuid v1.6.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
 github.com/mattn/go-colorable v0.1.13 h1:fFA4WZxdEF4tXPZVKMLwD8oUnCTTo08duU7wxecdEvA=

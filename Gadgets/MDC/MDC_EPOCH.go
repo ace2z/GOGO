@@ -31,3 +31,10 @@ func MAKE_Epoch_TIMESTAMP(dateobj time.Time) (int64, int64) {
 
 	return newUNIX, newMILLI
 }
+
+func EPOCH_to_DATEOBJ(unix int64) time.Time {
+
+	newDATE := time.Unix(unix, 0)
+
+	return newDATE
+}
